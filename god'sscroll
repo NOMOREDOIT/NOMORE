@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoMore - Meme Coin Hub</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-neon: #ff00ff;
+            --secondary-neon: #404040;
+            --yellow-neon: #ffeb3b;
+            --dark-bg: #0a0a0a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100vh;
+            background: #110f18;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            color: white;
+            overflow: hidden;
+        }
+
+        #background-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 65%;
+            height: 65%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        #video-overlay {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 16.7vh;
+            background: #110f18;
+            z-index: 1;
+        }
+
+        #suggestionBanner {
+            width: 100%;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.95), rgba(10, 8, 16, 0.95), rgba(0, 0, 0, 0.95));
+            padding: 0.5rem 0;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+            mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+        }
+
+        .suggestion-scroll {
+            display: flex;
+            gap: 3rem;
+            animation: scrollSuggestions 25s linear infinite;
+            white-space: nowrap;
+        }
+
+        #suggestionBanner:hover .suggestion-scroll {
+            animation-play-state: paused;
+        }
+
+        @keyframes scrollSuggestions {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .suggestion-item {
+            color: white;
+            font-size: 1rem;
+            padding: 0.5rem 1.2rem;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: rgba(0, 0, 0, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 45px;
+            height: 60px;
+        }
+
+        .logo-nav-container {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .logo {
+            font-family: "Press Start 2P", cursive;
+            font-size: 1.7rem;
+            font-weight: 400;
+            color: white;
+            text-shadow: 
+                2px 2px 0 black,
+                -2px -2px 0 black,
+                2px -2px 0 black,
+                -2px 2px 0 black,
+                0 0 10px var(--primary-neon);
+            letter-spacing: 4px;
+            position: relative;
+            top: 3px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+            position: relative;
+            top: 3px;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary-neon);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-icon {
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .wallet-btn {
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--secondary-neon);
+            border-radius: 5px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            top: 3px;
+        }
+
+        .wallet-btn:hover {
+            background: var(--secondary-neon);
+            color: black;
+        }
+
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            height: calc(100vh - 165px);
+            overflow: hidden;
+        }
+
+        .main-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            gap: 2rem;
+        }
+
+        .leaderboard-section {
+            flex: 1;
+            display: flex;
+            justify-content: flex-start;
+            z-index: 1;
+            margin-bottom: 45px;
+        }
+
+        .text-buttons-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+            z-index: 2;
+        }
+
+        .main-heading {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+            margin-left: -50px;
+        }
+
+        .sub-heading {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 252, 0.8);
+            margin-left: 10px;
+        }
+
+        .leaderboard {
+            display: flex;
+            gap: 2rem;
+            align-items: flex-end;
+        }
+
+        .leaderboard-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            transform: translateY(10vh);
+        }
+
+        .leaderboard-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+        }
+
+        .leaderboard-item:nth-child(1) .leaderboard-icon {
+            background-image: url('pho1.jpg');
+            background-color: #fe8a66;
+        }
+
+        .leaderboard-item:nth-child(2) .leaderboard-icon {
+            background-image: url('pho2.jpg');
+            background-color: #ffeb3b;
+        }
+
+        .leaderboard-item:nth-child(3) .leaderboard-icon {
+            background-image: url('pho3.jpg');
+            background-color: #4caf50;
+        }
+
+        .leaderboard-bar {
+            width: 80px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .leaderboard-bar.first {
+            height: 120px;
+            background: #ff7b53;
+        }
+
+        .leaderboard-bar.second {
+            height: 180px;
+            background: #ffeb3b;
+        }
+
+        .leaderboard-bar.third {
+            height: 150px;
+            background: #4caf50;
+        }
+
+        .leaderboard-rank {
+            position: absolute;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: black;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .tabs-section {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: rgba(14, 15, 17, 0.95);
+            padding: 0.5rem 2rem;
+            z-index: 10;
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .tabs-links {
+            display: flex;
+            gap: 2rem;
+            justify-content: flex-start;
+        }
+
+        .tabs-links a {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 1.1rem;
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s ease;
+        }
+
+        .tabs-links a:hover {
+            color: var(--secondary-neon);
+        }
+
+        #popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #popup img {
+            max-width: 67%;
+            max-height: 67%;
+            border: none;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-left: 20px;
+        }
+
+        .action-btn {
+            padding: 0.6rem 1.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            border: none;
+        }
+
+        .launch-btn {
+            background: var(--yellow-neon);
+            color: black;
+        }
+
+        .launch-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .stake-btn {
+            background: white;
+            color: black;
+        }
+
+        .stake-btn:hover {
+            transform: scale(1.05);
+        }
+
+        footer {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .text-buttons-section {
+                align-items: center;
+                text-align: center;
+            }
+
+            .main-heading {
+                font-size: 1.5rem;
+                margin-left: 0;
+            }
+
+            .sub-heading {
+                font-size: 0.9rem;
+                margin-left: 0;
+            }
+
+            .leaderboard {
+                gap: 1rem;
+            }
+
+            .leaderboard-icon {
+                width: 80px;
+                height: 80px;
+            }
+
+            .leaderboard-bar {
+                width: 60px;
+            }
+
+            .leaderboard-bar.first {
+                height: 90px;
+            }
+
+            .leaderboard-bar.second {
+                height: 120px;
+            }
+
+            .leaderboard-bar.third {
+                height: 105px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                margin-left: 0;
+            }
+
+            .action-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .header-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+                height: auto;
+                padding: 0.5rem 1rem;
+            }
+
+            .logo-nav-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            #background-video {
+                width: 90%;
+                height: 60%;
+            }
+
+            #popup img {
+                max-width: 60%;
+                max-height: 60%;
+            }
+
+            .suggestion-item {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .suggestion-scroll {
+                gap: 2rem;
+            }
+
+            .tabs-section {
+                flex-direction: column;
+                bottom: 0;
+                height: 180px;
+                padding: 0.5rem 1rem;
+                align-items: flex-start;
+            }
+
+            .tabs-links {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+
+            .tabs-links a {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <video id="background-video" autoplay loop muted playsinline>
+        <source src="sha.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div id="video-overlay"></div>
+
+    <div id="popup">
+        <img id="popup-image" src="" alt="Popup Image">
+    </div>
+
+    <div id="suggestionBanner">
+        <div class="suggestion-scroll">
+            <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
+            <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
+            <div class="suggestion-item"><i class="fas fa-ban"></i> Stop Shilling Friends Rugs</div>
+            <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
+            <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add By Marketcap Tab</div>
+            <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
+            <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
+            <div class="suggestion-item"><i class="fas fa-ban"></i> Stop Shilling Friends Rugs</div>
+            <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
+            <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add Top Marketcap Tab</div>
+        </div>
+    </div>
+
+    <div class="header-section">
+        <div class="logo-nav-container">
+            <div class="logo">NoMore</div>
+            <div class="nav-links">
+                <a href="#" data-image="111.jpg">MemeFeed</a>
+                <a href="#" data-image="222.jpg">Staking</a>
+                <a href="#" data-image="333.jpg">Docs</a>
+            </div>
+        </div>
+        <div class="header-right">
+            <i class="fas fa-search search-icon" data-image="100.jpg"></i>
+            <button class="wallet-btn" data-image="mog.jpg">Select Wallet</button>
+        </div>
+    </div>
+
+    <main>
+        <div class="main-container">
+            <div class="leaderboard-section">
+                <div class="leaderboard">
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-icon" data-image="pho1.jpg"></div>
+                        <div class="leaderboard-bar first">
+                            <div class="leaderboard-rank">#1</div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-icon" data-image="pho2.jpg"></div>
+                        <div class="leaderboard-bar second">
+                            <div class="leaderboard-rank">#2</div>
+                        </div>
+                    </div>
+                    <div class="leaderboard-item">
+                        <div class="leaderboard-icon" data-image="pho3.jpg"></div>
+                        <div class="leaderboard-bar third">
+                            <div class="leaderboard-rank">#3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-buttons-section">
+                <h1 class="main-heading">where memes come to disappear</h1>
+                <p class="sub-heading">Earn your share of 100% of all abandonded coins</p>
+                <div class="action-buttons">
+                    <button class="action-btn launch-btn" data-image="122.jpg">Launch shitcoin</button>
+                    <button class="action-btn stake-btn" data-image="999.jpg">Stake $NOMORE</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="tabs-section">
+        <div class="tabs-links">
+            <a href="#" data-image="444.jpg">New</a>
+            <a href="#" data-image="555.jpg">Top Traded</a>
+            <a href="#" data-image="666.jpg">Top Market Cap</a>
+            <a href="#" data-image="777.jpg">Trending</a>
+            <a href="#" data-image="888.jpg">Graduated</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-left">
+            <button class="footer-btn">New</button>
+            <button class="footer-btn">Graduated</button>
+        </div>
+        <div class="footer-right">
+            <button class="footer-btn">Type <i class="fas fa-chevron-down"></i></button>
+            <button class="footer-btn">Bonding <i class="fas fa-chevron-down"></i></button>
+            <button class="footer-btn">Fair <i class="fas fa-chevron-down"></i></button>
+        </div>
+    </footer>
+
+    <script>
+        // Duplicate suggestion items for scrolling effect
+        const suggestionScroll = document.querySelector('.suggestion-scroll');
+        const suggestionItems = document.querySelectorAll('.suggestion-item');
+        suggestionItems.forEach(item => {
+            const clone = item.cloneNode(true);
+            suggestionScroll.appendChild(clone);
+        });
+
+        // Popup functionality
+        const popup = document.getElementById('popup');
+        const popupImage = document.getElementById('popup-image');
+        const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .action-btn, .search-icon');
+
+        // Add click event to each clickable element to open the popup
+        clickableElements.forEach(element => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault(); // Prevent default behavior for anchors and buttons
+                const imageSrc = element.getAttribute('data-image');
+                popupImage.src = imageSrc;
+                popup.style.display = 'flex';
+            });
+        });
+
+        // Close the popup when clicking anywhere on the screen
+        popup.addEventListener('click', () => {
+            popup.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
