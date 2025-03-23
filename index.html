@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-neon: #ff00ff;
+            --primary-neon: #a5f0ff;
             --secondary-neon: #404040;
             --yellow-neon: #ffeb3b;
             --dark-bg: #0a0a0a;
@@ -222,7 +222,7 @@
 
         .leaderboard {
             display: flex;
-            gap: 2rem;
+            gap: 1.5rem;
             align-items: flex-end;
         }
 
@@ -356,10 +356,11 @@
             display: flex;
             gap: 1rem;
             margin-left: 20px;
+            margin-top: 20px;
         }
 
         .action-btn {
-            padding: 0.6rem 1.5rem;
+            padding: 0.8rem 1.7rem; /* Increased from 0.6rem 1.5rem for larger background */
             font-size: 1rem;
             font-weight: bold;
             text-transform: uppercase;
@@ -389,6 +390,21 @@
 
         footer {
             display: none;
+        }
+
+        /* Styles for bottom.jpg overlay at the bottom, topmost layer */
+        .bottom-image-overlay {
+            position: fixed;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            z-index: 30;
+        }
+
+        .bottom-image-overlay img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         @media (max-width: 768px) {
@@ -441,10 +457,11 @@
             .action-buttons {
                 flex-direction: column;
                 margin-left: 0;
+                margin-top: 20px;
             }
 
             .action-btn {
-                padding: 0.5rem 1rem;
+                padding: 0.7rem 1.2rem; /* Increased from 0.5rem 1rem for larger background on mobile */
                 font-size: 0.9rem;
             }
 
@@ -496,6 +513,10 @@
 
             .tabs-links a {
                 font-size: 1rem;
+            }
+
+            .bottom-image-overlay {
+                bottom: -40px;
             }
         }
     </style>
@@ -585,6 +606,10 @@
             <a href="#" data-image="777.jpg">Trending</a>
             <a href="#" data-image="888.jpg">Graduated</a>
         </div>
+    </div>
+
+    <div class="bottom-image-overlay">
+        <img src="bottom.jpg" alt="Bottom Overlay">
     </div>
 
     <footer>
