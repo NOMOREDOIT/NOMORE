@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-neon: #a5f0ff;
+            --primary-neon: #ff00ff;
             --secondary-neon: #404040;
             --yellow-neon: #ffeb3b;
             --dark-bg: #0a0a0a;
@@ -21,11 +21,11 @@
         }
 
         html, body {
-            height: 100vh;
+            height: 100%;
             background: #110f18;
             font-family: "Comic Sans MS", "Comic Sans", cursive;
             color: white;
-            overflow: hidden;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
         #background-video {
@@ -33,8 +33,9 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 65%;
-            height: 65%;
+            width: 65vw; /* Relative to viewport width */
+            max-width: 1200px; /* Cap for larger screens */
+            height: auto;
             object-fit: cover;
             z-index: 0;
         }
@@ -81,7 +82,7 @@
 
         .suggestion-item {
             color: white;
-            font-size: 1rem;
+            font-size: clamp(0.8rem, 1vw, 1rem); /* Scales with viewport */
             padding: 0.5rem 1.2rem;
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.1);
@@ -99,17 +100,19 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: 45px;
             height: 60px;
+            max-width: 100%; /* Prevent overflow */
         }
 
         .logo-nav-container {
             display: flex;
             align-items: center;
             gap: 2rem;
+            flex-shrink: 0; /* Prevent shrinking */
         }
 
         .logo {
             font-family: "Press Start 2P", cursive;
-            font-size: 1.7rem;
+            font-size: clamp(1.2rem, 2vw, 1.7rem); /* Responsive font size */
             font-weight: 400;
             color: white;
             text-shadow: 
@@ -135,6 +138,7 @@
             transition: color 0.3s ease;
             position: relative;
             top: 3px;
+            font-size: clamp(0.9rem, 1.5vw, 1rem); /* Responsive */
         }
 
         .nav-links a:hover {
@@ -145,6 +149,7 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            flex-shrink: 0;
         }
 
         .search-icon {
@@ -176,7 +181,7 @@
             justify-content: center;
             align-items: center;
             padding: 2rem;
-            height: calc(100vh - 165px);
+            min-height: calc(100vh - 165px); /* Use min-height to avoid overflow */
             overflow: hidden;
         }
 
@@ -185,8 +190,9 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            max-width: 1200px;
+            max-width: 1200px; /* Cap width for larger screens */
             gap: 2rem;
+            flex-wrap: wrap; /* Allow wrapping if needed */
         }
 
         .leaderboard-section {
@@ -194,7 +200,7 @@
             display: flex;
             justify-content: flex-start;
             z-index: 1;
-            margin-bottom: 45px;
+            min-width: 300px; /* Prevent collapse on smaller screens */
         }
 
         .text-buttons-section {
@@ -204,18 +210,19 @@
             align-items: flex-start;
             gap: 1rem;
             z-index: 2;
+            min-width: 300px;
         }
 
         .main-heading {
             font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1.8rem;
+            font-size: clamp(1.5rem, 3vw, 1.8rem); /* Responsive */
             text-transform: uppercase;
             margin-bottom: 0.5rem;
             margin-left: -50px;
         }
 
         .sub-heading {
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
             color: rgba(255, 255, 252, 0.8);
             margin-left: 10px;
         }
@@ -224,6 +231,7 @@
             display: flex;
             gap: 1.5rem;
             align-items: flex-end;
+            justify-content: center; /* Center bars */
         }
 
         .leaderboard-item {
@@ -236,8 +244,8 @@
         }
 
         .leaderboard-icon {
-            width: 100px;
-            height: 100px;
+            width: clamp(80px, 10vw, 100px); /* Responsive width */
+            height: clamp(80px, 10vw, 100px);
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -263,7 +271,7 @@
         }
 
         .leaderboard-bar {
-            width: 80px;
+            width: clamp(60px, 8vw, 80px); /* Responsive width */
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
             border-bottom-left-radius: 0;
@@ -276,23 +284,23 @@
         }
 
         .leaderboard-bar.first {
-            height: 120px;
+            height: clamp(90px, 15vh, 120px); /* Responsive height */
             background: #ff7b53;
         }
 
         .leaderboard-bar.second {
-            height: 240px;
+            height: clamp(120px, 25vh, 240px);
             background: #ffeb3b;
         }
 
         .leaderboard-bar.third {
-            height: 170px;
+            height: clamp(105px, 20vh, 170px);
             background: #4caf50;
         }
 
         .leaderboard-rank {
             position: absolute;
-            font-size: 1.5rem;
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
             font-weight: bold;
             color: black;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
@@ -305,7 +313,7 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 120px;
+            height: clamp(120px, 15vh, 180px); /* Responsive height */
             background: rgba(14, 15, 17, 0.95);
             padding: 0.5rem 2rem;
             z-index: 10;
@@ -318,11 +326,12 @@
             display: flex;
             gap: 2rem;
             justify-content: flex-start;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
         }
 
         .tabs-links a {
             font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
             color: white;
             text-decoration: none;
             font-weight: 700;
@@ -357,11 +366,12 @@
             gap: 1rem;
             margin-left: 20px;
             margin-top: 20px;
+            flex-wrap: wrap; /* Allow wrapping */
         }
 
         .action-btn {
-            padding: 0.8rem 1.7rem; /* Increased from 0.6rem 1.5rem for larger background */
-            font-size: 1rem;
+            padding: clamp(0.6rem, 1vw, 0.8rem) clamp(1.5rem, 2vw, 1.7rem); /* Responsive padding */
+            font-size: clamp(0.9rem, 1.5vw, 1rem);
             font-weight: bold;
             text-transform: uppercase;
             border-radius: 10px;
@@ -392,7 +402,6 @@
             display: none;
         }
 
-        /* Styles for bottom.jpg overlay at the bottom, topmost layer */
         .bottom-image-overlay {
             position: fixed;
             bottom: -50px;
@@ -407,32 +416,30 @@
             display: block;
         }
 
-        @media (max-width: 768px) {
+        /* Media Queries for finer control */
+        @media (max-width: 1024px) {
             .main-container {
                 flex-direction: column;
                 align-items: center;
-                gap: 1rem;
+                gap: 1.5rem;
             }
 
             .text-buttons-section {
                 align-items: center;
                 text-align: center;
+                margin-left: 0;
             }
 
             .main-heading {
-                font-size: 1.5rem;
                 margin-left: 0;
             }
 
             .sub-heading {
-                font-size: 0.9rem;
                 margin-left: 0;
             }
+        }
 
-            .leaderboard {
-                gap: 1rem;
-            }
-
+        @media (max-width: 768px) {
             .leaderboard-icon {
                 width: 80px;
                 height: 80px;
@@ -457,12 +464,6 @@
             .action-buttons {
                 flex-direction: column;
                 margin-left: 0;
-                margin-top: 20px;
-            }
-
-            .action-btn {
-                padding: 0.7rem 1.2rem; /* Increased from 0.5rem 1rem for larger background on mobile */
-                font-size: 0.9rem;
             }
 
             .header-section {
@@ -479,44 +480,32 @@
             }
 
             #background-video {
-                width: 90%;
-                height: 60%;
-            }
-
-            #popup img {
-                max-width: 60%;
-                max-height: 60%;
-            }
-
-            .suggestion-item {
-                font-size: 0.85rem;
-                padding: 0.4rem 0.8rem;
-            }
-
-            .suggestion-scroll {
-                gap: 2rem;
+                width: 90vw;
             }
 
             .tabs-section {
-                flex-direction: column;
-                bottom: 0;
                 height: 180px;
                 padding: 0.5rem 1rem;
-                align-items: flex-start;
             }
 
             .tabs-links {
                 flex-direction: column;
                 gap: 0.5rem;
-                align-items: flex-start;
-            }
-
-            .tabs-links a {
-                font-size: 1rem;
             }
 
             .bottom-image-overlay {
                 bottom: -40px;
+            }
+        }
+
+        @media (min-width: 1440px) {
+            /* Larger screens */
+            .main-container {
+                gap: 3rem;
+            }
+
+            .leaderboard-section, .text-buttons-section {
+                min-width: 400px;
             }
         }
     </style>
@@ -638,17 +627,15 @@
         const popupImage = document.getElementById('popup-image');
         const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .action-btn, .search-icon');
 
-        // Add click event to each clickable element to open the popup
         clickableElements.forEach(element => {
             element.addEventListener('click', (e) => {
-                e.preventDefault(); // Prevent default behavior for anchors and buttons
+                e.preventDefault();
                 const imageSrc = element.getAttribute('data-image');
                 popupImage.src = imageSrc;
                 popup.style.display = 'flex';
             });
         });
 
-        // Close the popup when clicking anywhere on the screen
         popup.addEventListener('click', () => {
             popup.style.display = 'none';
         });
