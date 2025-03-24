@@ -26,7 +26,44 @@
             font-family: "Comic Sans MS", "Comic Sans", cursive;
             color: white;
             overflow-y: auto;
-            min-width: 1000px; /* Ensures content doesn’t shrink too much */
+            min-width: 1000px;
+        }
+
+        /* Hide all content by default, shown only if desktop */
+        body:not(.desktop) #content {
+            display: none;
+        }
+
+        /* Mobile message styling */
+        #mobile-message {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #110f18;
+            color: white;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            text-align: center;
+            padding: 20px;
+            z-index: 9999;
+        }
+
+        body:not(.desktop) #mobile-message {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #mobile-message h1 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        #mobile-message p {
+            font-size: 1.2rem;
         }
 
         #background-video {
@@ -411,136 +448,158 @@
     </style>
 </head>
 <body>
-    <video id="background-video" autoplay loop muted playsinline>
-        <source src="sha.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
-    <div id="video-overlay"></div>
-
-    <div id="popup">
-        <img id="popup-image" src="" alt="Popup Image">
+    <!-- Mobile-only message -->
+    <div id="mobile-message">
+        <h1>Sorry, Desktop Only!</h1>
+        <p>This site is only accessible on desktop devices. Please visit us from a computer.</p>
     </div>
 
-    <div id="suggestionBanner">
-        <div class="suggestion-scroll">
-            <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
-            <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
-            <div class="suggestion-item"><i class="fas fa-ban"></i> Stop Shilling Friends Rugs</div>
-            <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
-            <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add By Marketcap Tab</div>
-            <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
-            <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
-            <div class="suggestion-item"><i class="fas fa-ban"></i> Stop Shilling Friends Rugs</div>
-            <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
-            <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add Top Marketcap Tab</div>
+    <!-- Main content wrapped in a div -->
+    <div id="content">
+        <video id="background-video" autoplay loop muted playsinline>
+            <source src="sha.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <div id="video-overlay"></div>
+
+        <div id="popup">
+            <img id="popup-image" src="" alt="Popup Image">
         </div>
-    </div>
 
-    <div class="header-section">
-        <div class="logo-nav-container">
-            <div class="logo">NoMore</div>
-            <div class="nav-links">
-                <a href="#" data-image="111.jpg">MemeFeed</a>
-                <a href="#" data-image="222.jpg">Staking</a>
-                <a href="#" data-image="333.jpg">Docs</a>
+        <div id="suggestionBanner">
+            <div class="suggestion-scroll">
+                <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
+                <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
+                <div class="suggestion-item"><i class="fas fa-ban"></i> Stop Shilling Friends Rugs</div>
+                <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
+                <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add By Marketcap Tab</div>
+                <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
+                <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
+                <div class="suggestion-item"><i class="fas fa-ban"></i> Stop Shilling Friends Rugs</div>
+                <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
+                <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add Top Marketcap Tab</div>
             </div>
         </div>
-        <div class="header-right">
-            <i class="fas fa-search search-icon" data-image="100.jpg"></i>
-            <button class="wallet-btn" data-image="mog.jpg">Select Wallet</button>
-        </div>
-    </div>
 
-    <main>
-        <div class="main-container">
-            <div class="leaderboard-section">
-                <div class="leaderboard">
-                    <div class="leaderboard-item">
-                        <div class="leaderboard-icon" data-image="pho1.jpg"></div>
-                        <div class="leaderboard-bar first">
-                            <div class="leaderboard-rank">#1</div>
+        <div class="header-section">
+            <div class="logo-nav-container">
+                <div class="logo">NoMore</div>
+                <div class="nav-links">
+                    <a href="#" data-image="111.jpg">MemeFeed</a>
+                    <a href="#" data-image="222.jpg">Staking</a>
+                    <a href="#" data-image="333.jpg">Docs</a>
+                </div>
+            </div>
+            <div class="header-right">
+                <i class="fas fa-search search-icon" data-image="100.jpg"></i>
+                <button class="wallet-btn" data-image="mog.jpg">Select Wallet</button>
+            </div>
+        </div>
+
+        <main>
+            <div class="main-container">
+                <div class="leaderboard-section">
+                    <div class="leaderboard">
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-icon" data-image="pho1.jpg"></div>
+                            <div class="leaderboard-bar first">
+                                <div class="leaderboard-rank">#1</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="leaderboard-item">
-                        <div class="leaderboard-icon" data-image="pho2.jpg"></div>
-                        <div class="leaderboard-bar second">
-                            <div class="leaderboard-rank">#2</div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-icon" data-image="pho2.jpg"></div>
+                            <div class="leaderboard-bar second">
+                                <div class="leaderboard-rank">#2</div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="leaderboard-item">
-                        <div class="leaderboard-icon" data-image="pho3.jpg"></div>
-                        <div class="leaderboard-bar third">
-                            <div class="leaderboard-rank">#3</div>
+                        <div class="leaderboard-item">
+                            <div class="leaderboard-icon" data-image="pho3.jpg"></div>
+                            <div class="leaderboard-bar third">
+                                <div class="leaderboard-rank">#3</div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="text-buttons-section">
-                <h1 class="main-heading">where memes come to disappear</h1>
-                <p class="sub-heading">Earn your share of 100% of all abandonded coins</p>
-                <div class="action-buttons">
-                    <button class="action-btn launch-btn" data-image="122.jpg">Launch shitcoin</button>
-                    <button class="action-btn stake-btn" data-image="999.jpg">Stake $NOMORE</button>
+                <div class="text-buttons-section">
+                    <h1 class="main-heading">where memes come to disappear</h1>
+                    <p class="sub-heading">Earn your share of 100% of all abandonded coins</p>
+                    <div class="action-buttons">
+                        <button class="action-btn launch-btn" data-image="122.jpg">Launch shitcoin</button>
+                        <button class="action-btn stake-btn" data-image="999.jpg">Stake $NOMORE</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <div class="bottom-container">
-        <div class="tabs-section">
-            <div class="tabs-links">
-                <a href="#" data-image="444.jpg">New</a>
-                <a href="#" data-image="555.jpg">Top Traded</a>
-                <a href="#" data-image="666.jpg">Top Market Cap</a>
-                <a href="#" data-image="777.jpg">Trending</a>
-                <a href="#" data-image="888.jpg">Graduated</a>
+        <div class="bottom-container">
+            <div class="tabs-section">
+                <div class="tabs-links">
+                    <a href="#" data-image="444.jpg">New</a>
+                    <a href="#" data-image="555.jpg">Top Traded</a>
+                    <a href="#" data-image="666.jpg">Top Market Cap</a>
+                    <a href="#" data-image="777.jpg">Trending</a>
+                    <a href="#" data-image="888.jpg">Graduated</a>
+                </div>
+            </div>
+
+            <div class="bottom-image-overlay">
+                <img src="bottom.jpg" alt="Bottom Overlay">
             </div>
         </div>
 
-        <div class="bottom-image-overlay">
-            <img src="bottom.jpg" alt="Bottom Overlay">
-        </div>
+        <footer>
+            <div class="footer-left">
+                <button class="footer-btn">New</button>
+                <button class="footer-btn">Graduated</button>
+            </div>
+            <div class="footer-right">
+                <button class="footer-btn">Type <i class="fas fa-chevron-down"></i></button>
+                <button class="footer-btn">Bonding <i class="fas fa-chevron-down"></i></button>
+                <button class="footer-btn">Fair <i class="fas fa-chevron-down"></i></button>
+            </div>
+        </footer>
     </div>
-
-    <footer>
-        <div class="footer-left">
-            <button class="footer-btn">New</button>
-            <button class="footer-btn">Graduated</button>
-        </div>
-        <div class="footer-right">
-            <button class="footer-btn">Type <i class="fas fa-chevron-down"></i></button>
-            <button class="footer-btn">Bonding <i class="fas fa-chevron-down"></i></button>
-            <button class="footer-btn">Fair <i class="fas fa-chevron-down"></i></button>
-        </div>
-    </footer>
 
     <script>
+        // Device detection
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+        }
+
+        if (!isMobileDevice()) {
+            document.body.classList.add('desktop');
+        }
+
         // Duplicate suggestion items for scrolling effect
         const suggestionScroll = document.querySelector('.suggestion-scroll');
-        const suggestionItems = document.querySelectorAll('.suggestion-item');
-        suggestionItems.forEach(item => {
-            const clone = item.cloneNode(true);
-            suggestionScroll.appendChild(clone);
-        });
+        if (suggestionScroll) {
+            const suggestionItems = document.querySelectorAll('.suggestion-item');
+            suggestionItems.forEach(item => {
+                const clone = item.cloneNode(true);
+                suggestionScroll.appendChild(clone);
+            });
+        }
 
         // Popup functionality
         const popup = document.getElementById('popup');
-        const popupImage = document.getElementById('popup-image');
-        const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .action-btn, .search-icon');
+        if (popup) {
+            const popupImage = document.getElementById('popup-image');
+            const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .action-btn, .search-icon');
 
-        clickableElements.forEach(element => {
-            element.addEventListener('click', (e) => {
-                e.preventDefault();
-                const imageSrc = element.getAttribute('data-image');
-                popupImage.src = imageSrc;
-                popup.style.display = 'flex';
+            clickableElements.forEach(element => {
+                element.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const imageSrc = element.getAttribute('data-image');
+                    popupImage.src = imageSrc;
+                    popup.style.display = 'flex';
+                });
             });
-        });
 
-        popup.addEventListener('click', () => {
-            popup.style.display = 'none';
-        });
+            popup.addEventListener('click', () => {
+                popup.style.display = 'none';
+            });
+        }
     </script>
 </body>
 </html>
