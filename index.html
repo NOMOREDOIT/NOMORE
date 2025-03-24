@@ -21,11 +21,11 @@
         }
 
         html, body {
-            height: 100%;
+            height: 100vh;
             background: #110f18;
             font-family: "Comic Sans MS", "Comic Sans", cursive;
             color: white;
-            overflow-x: hidden; /* Prevent horizontal scroll */
+            overflow-y: auto;
         }
 
         #background-video {
@@ -33,9 +33,8 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 65vw; /* Relative to viewport width */
-            max-width: 1200px; /* Cap for larger screens */
-            height: auto;
+            width: 65%;
+            height: 65%;
             object-fit: cover;
             z-index: 0;
         }
@@ -82,7 +81,7 @@
 
         .suggestion-item {
             color: white;
-            font-size: clamp(0.8rem, 1vw, 1rem); /* Scales with viewport */
+            font-size: 1rem;
             padding: 0.5rem 1.2rem;
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.1);
@@ -100,19 +99,17 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: 45px;
             height: 60px;
-            max-width: 100%; /* Prevent overflow */
         }
 
         .logo-nav-container {
             display: flex;
             align-items: center;
             gap: 2rem;
-            flex-shrink: 0; /* Prevent shrinking */
         }
 
         .logo {
             font-family: "Press Start 2P", cursive;
-            font-size: clamp(1.2rem, 2vw, 1.7rem); /* Responsive font size */
+            font-size: 1.7rem;
             font-weight: 400;
             color: white;
             text-shadow: 
@@ -138,7 +135,6 @@
             transition: color 0.3s ease;
             position: relative;
             top: 3px;
-            font-size: clamp(0.9rem, 1.5vw, 1rem); /* Responsive */
         }
 
         .nav-links a:hover {
@@ -149,7 +145,6 @@
             display: flex;
             align-items: center;
             gap: 1rem;
-            flex-shrink: 0;
         }
 
         .search-icon {
@@ -181,8 +176,7 @@
             justify-content: center;
             align-items: center;
             padding: 2rem;
-            min-height: calc(100vh - 165px); /* Use min-height to avoid overflow */
-            overflow: hidden;
+            min-height: calc(100vh - 165px);
         }
 
         .main-container {
@@ -190,9 +184,8 @@
             justify-content: space-between;
             align-items: center;
             width: 100%;
-            max-width: 1200px; /* Cap width for larger screens */
+            max-width: 1200px;
             gap: 2rem;
-            flex-wrap: wrap; /* Allow wrapping if needed */
         }
 
         .leaderboard-section {
@@ -200,7 +193,7 @@
             display: flex;
             justify-content: flex-start;
             z-index: 1;
-            min-width: 300px; /* Prevent collapse on smaller screens */
+            margin-bottom: 45px;
         }
 
         .text-buttons-section {
@@ -210,19 +203,18 @@
             align-items: flex-start;
             gap: 1rem;
             z-index: 2;
-            min-width: 300px;
         }
 
         .main-heading {
             font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: clamp(1.5rem, 3vw, 1.8rem); /* Responsive */
+            font-size: 1.8rem;
             text-transform: uppercase;
             margin-bottom: 0.5rem;
             margin-left: -50px;
         }
 
         .sub-heading {
-            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            font-size: 1.1rem;
             color: rgba(255, 255, 252, 0.8);
             margin-left: 10px;
         }
@@ -231,7 +223,6 @@
             display: flex;
             gap: 1.5rem;
             align-items: flex-end;
-            justify-content: center; /* Center bars */
         }
 
         .leaderboard-item {
@@ -244,8 +235,8 @@
         }
 
         .leaderboard-icon {
-            width: clamp(80px, 10vw, 100px); /* Responsive width */
-            height: clamp(80px, 10vw, 100px);
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             display: flex;
             justify-content: center;
@@ -271,7 +262,7 @@
         }
 
         .leaderboard-bar {
-            width: clamp(60px, 8vw, 80px); /* Responsive width */
+            width: 80px;
             border-top-left-radius: 10px;
             border-top-right-radius: 10px;
             border-bottom-left-radius: 0;
@@ -284,23 +275,23 @@
         }
 
         .leaderboard-bar.first {
-            height: clamp(90px, 15vh, 120px); /* Responsive height */
+            height: 120px;
             background: #ff7b53;
         }
 
         .leaderboard-bar.second {
-            height: clamp(120px, 25vh, 240px);
+            height: 240px;
             background: #ffeb3b;
         }
 
         .leaderboard-bar.third {
-            height: clamp(105px, 20vh, 170px);
+            height: 170px;
             background: #4caf50;
         }
 
         .leaderboard-rank {
             position: absolute;
-            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            font-size: 1.5rem;
             font-weight: bold;
             color: black;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
@@ -308,30 +299,33 @@
             transform: translateY(-50%);
         }
 
-        .tabs-section {
-            position: fixed;
-            bottom: 0;
-            left: 0;
+        .bottom-container {
+            position: relative;
             width: 100%;
-            height: clamp(120px, 15vh, 180px); /* Responsive height */
+            z-index: 10;
+            margin-top: -50px; /* Previous adjustment for entire bottom section */
+        }
+
+        .tabs-section {
+            width: 100%;
             background: rgba(14, 15, 17, 0.95);
             padding: 0.5rem 2rem;
-            z-index: 10;
+            z-index: 15;
             display: flex;
             justify-content: flex-start;
             align-items: flex-start;
+            height: 120px;
         }
 
         .tabs-links {
             display: flex;
             gap: 2rem;
             justify-content: flex-start;
-            flex-wrap: wrap; /* Allow wrapping on smaller screens */
         }
 
         .tabs-links a {
             font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            font-size: 1.1rem;
             color: white;
             text-decoration: none;
             font-weight: 700;
@@ -366,12 +360,11 @@
             gap: 1rem;
             margin-left: 20px;
             margin-top: 20px;
-            flex-wrap: wrap; /* Allow wrapping */
         }
 
         .action-btn {
-            padding: clamp(0.6rem, 1vw, 0.8rem) clamp(1.5rem, 2vw, 1.7rem); /* Responsive padding */
-            font-size: clamp(0.9rem, 1.5vw, 1rem);
+            padding: 0.8rem 1.7rem;
+            font-size: 1rem;
             font-weight: bold;
             text-transform: uppercase;
             border-radius: 10px;
@@ -403,43 +396,46 @@
         }
 
         .bottom-image-overlay {
-            position: fixed;
-            bottom: -50px;
-            left: 0;
             width: 100%;
-            z-index: 30;
+            height: 20vh;
+            z-index: 5;
+            margin-top: -75px; /* Lowered from -100px to bring it down slightly */
         }
 
         .bottom-image-overlay img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
+            object-position: bottom;
             display: block;
         }
 
-        /* Media Queries for finer control */
-        @media (max-width: 1024px) {
+        @media (max-width: 768px) {
             .main-container {
                 flex-direction: column;
                 align-items: center;
-                gap: 1.5rem;
+                gap: 1rem;
             }
 
             .text-buttons-section {
                 align-items: center;
                 text-align: center;
-                margin-left: 0;
             }
 
             .main-heading {
+                font-size: 1.5rem;
                 margin-left: 0;
             }
 
             .sub-heading {
+                font-size: 0.9rem;
                 margin-left: 0;
             }
-        }
 
-        @media (max-width: 768px) {
+            .leaderboard {
+                gap: 1rem;
+            }
+
             .leaderboard-icon {
                 width: 80px;
                 height: 80px;
@@ -464,6 +460,12 @@
             .action-buttons {
                 flex-direction: column;
                 margin-left: 0;
+                margin-top: 20px;
+            }
+
+            .action-btn {
+                padding: 0.7rem 1.2rem;
+                font-size: 0.9rem;
             }
 
             .header-section {
@@ -480,32 +482,47 @@
             }
 
             #background-video {
-                width: 90vw;
+                width: 90%;
+                height: 60%;
+            }
+
+            #popup img {
+                max-width: 60%;
+                max-height: 60%;
+            }
+
+            .suggestion-item {
+                font-size: 0.85rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            .suggestion-scroll {
+                gap: 2rem;
             }
 
             .tabs-section {
+                flex-direction: column;
                 height: 180px;
                 padding: 0.5rem 1rem;
+                align-items: flex-start;
             }
 
             .tabs-links {
                 flex-direction: column;
                 gap: 0.5rem;
+                align-items: flex-start;
+            }
+
+            .tabs-links a {
+                font-size: 1rem;
+            }
+
+            .bottom-container {
+                margin-top: -50px; /* Maintain previous lift */
             }
 
             .bottom-image-overlay {
-                bottom: -40px;
-            }
-        }
-
-        @media (min-width: 1440px) {
-            /* Larger screens */
-            .main-container {
-                gap: 3rem;
-            }
-
-            .leaderboard-section, .text-buttons-section {
-                min-width: 400px;
+                margin-top: -75px; /* Maintain adjusted photo position on mobile */
             }
         }
     </style>
@@ -587,18 +604,20 @@
         </div>
     </main>
 
-    <div class="tabs-section">
-        <div class="tabs-links">
-            <a href="#" data-image="444.jpg">New</a>
-            <a href="#" data-image="555.jpg">Top Traded</a>
-            <a href="#" data-image="666.jpg">Top Market Cap</a>
-            <a href="#" data-image="777.jpg">Trending</a>
-            <a href="#" data-image="888.jpg">Graduated</a>
+    <div class="bottom-container">
+        <div class="tabs-section">
+            <div class="tabs-links">
+                <a href="#" data-image="444.jpg">New</a>
+                <a href="#" data-image="555.jpg">Top Traded</a>
+                <a href="#" data-image="666.jpg">Top Market Cap</a>
+                <a href="#" data-image="777.jpg">Trending</a>
+                <a href="#" data-image="888.jpg">Graduated</a>
+            </div>
         </div>
-    </div>
 
-    <div class="bottom-image-overlay">
-        <img src="bottom.jpg" alt="Bottom Overlay">
+        <div class="bottom-image-overlay">
+            <img src="bottom.jpg" alt="Bottom Overlay">
+        </div>
     </div>
 
     <footer>
@@ -627,6 +646,7 @@
         const popupImage = document.getElementById('popup-image');
         const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .action-btn, .search-icon');
 
+        // Add click event to each clickable element to open the popup
         clickableElements.forEach(element => {
             element.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -636,6 +656,7 @@
             });
         });
 
+        // Close the popup when clicking anywhere on the screen
         popup.addEventListener('click', () => {
             popup.style.display = 'none';
         });
