@@ -55,9 +55,6 @@
             padding: 0.5rem 0;
             overflow: hidden;
             border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            position: fixed;
-            top: 0;
-            left: 0;
             z-index: 10;
             -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
             mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
@@ -97,8 +94,8 @@
             padding: 1rem 2rem;
             background: rgba(0, 0, 0, 0.9);
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 45px;
             height: 60px;
+            position: relative;
         }
 
         .logo-nav-container {
@@ -303,7 +300,7 @@
             position: relative;
             width: 100%;
             z-index: 10;
-            margin-top: -50px; /* Previous adjustment for entire bottom section */
+            margin-top: -50px;
         }
 
         .tabs-section {
@@ -399,7 +396,7 @@
             width: 100%;
             height: 20vh;
             z-index: 5;
-            margin-top: -75px; /* Lowered from -100px to bring it down slightly */
+            margin-top: -75px;
         }
 
         .bottom-image-overlay img {
@@ -408,32 +405,135 @@
             object-fit: cover;
             object-position: bottom;
             display: block;
+            transform: translateX(50px);
         }
 
+        /* Mobile menu button */
+        .mobile-menu-btn {
+            display: none;
+            color: white;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Improved mobile responsiveness */
         @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 1rem;
+                top: 1rem;
+                z-index: 30;
+            }
+
             .main-container {
                 flex-direction: column;
                 align-items: center;
-                gap: 1rem;
+                gap: 3rem;
+                padding-top: 2rem;
             }
 
             .text-buttons-section {
                 align-items: center;
                 text-align: center;
+                order: 1; /* Text/buttons above leaderboard on mobile */
+            }
+
+            .leaderboard-section {
+                order: 2;
+                transform: scale(0.9);
             }
 
             .main-heading {
                 font-size: 1.5rem;
                 margin-left: 0;
+                text-align: center;
+                line-height: 1.3;
             }
 
             .sub-heading {
                 font-size: 0.9rem;
                 margin-left: 0;
+                text-align: center;
+                padding: 0 1rem;
             }
 
+            .header-section {
+                flex-direction: row;
+                height: 60px; /* Keep original height */
+                padding: 0.5rem 1rem;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .logo-nav-container {
+                flex-direction: row;
+                align-items: center;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.95);
+                flex-direction: column;
+                padding: 5rem 2rem;
+                gap: 2rem;
+                transition: left 0.3s ease;
+                z-index: 25;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .nav-links a {
+                font-size: 1.3rem;
+                padding: 1rem 0;
+            }
+
+            .header-right {
+                display: flex;
+                align-items: center;
+            }
+
+            .wallet-btn {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+
+            /* Hide search icon on mobile */
+            .search-icon {
+                display: none;
+            }
+
+            #background-video {
+                width: 100%;
+                height: 100%;
+                opacity: 0.3; /* Make video more subtle on mobile */
+            }
+
+            .action-buttons {
+                flex-direction: row; /* Keep buttons side by side */
+                margin-left: 0;
+                justify-content: center;
+                gap: 0.8rem;
+            }
+
+            .action-btn {
+                padding: 0.7rem 1rem;
+                font-size: 0.8rem;
+                white-space: nowrap;
+            }
+
+            /* Adjusted leaderboard sizing */
             .leaderboard {
-                gap: 1rem;
+                gap: 0.8rem;
+                transform: scale(0.8);
             }
 
             .leaderboard-icon {
@@ -441,88 +541,117 @@
                 height: 80px;
             }
 
-            .leaderboard-bar {
-                width: 60px;
-            }
-
-            .leaderboard-bar.first {
-                height: 90px;
-            }
-
-            .leaderboard-bar.second {
-                height: 120px;
-            }
-
-            .leaderboard-bar.third {
-                height: 105px;
-            }
-
-            .action-buttons {
-                flex-direction: column;
-                margin-left: 0;
-                margin-top: 20px;
-            }
-
-            .action-btn {
-                padding: 0.7rem 1.2rem;
-                font-size: 0.9rem;
-            }
-
-            .header-section {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-                height: auto;
-                padding: 0.5rem 1rem;
-            }
-
-            .logo-nav-container {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            #background-video {
-                width: 90%;
-                height: 60%;
-            }
-
-            #popup img {
-                max-width: 60%;
-                max-height: 60%;
-            }
-
-            .suggestion-item {
-                font-size: 0.85rem;
-                padding: 0.4rem 0.8rem;
-            }
-
-            .suggestion-scroll {
-                gap: 2rem;
-            }
-
             .tabs-section {
-                flex-direction: column;
-                height: 180px;
-                padding: 0.5rem 1rem;
-                align-items: flex-start;
+                height: auto;
+                padding: 1rem;
+                overflow-x: auto;
             }
 
             .tabs-links {
-                flex-direction: column;
-                gap: 0.5rem;
-                align-items: flex-start;
+                display: flex;
+                flex-direction: row;
+                padding-bottom: 1rem;
+                width: max-content;
             }
 
             .tabs-links a {
+                white-space: nowrap;
+                padding: 0.5rem 0;
                 font-size: 1rem;
             }
 
             .bottom-container {
-                margin-top: -50px; /* Maintain previous lift */
+                margin-top: -100px;
             }
 
             .bottom-image-overlay {
-                margin-top: -75px; /* Maintain adjusted photo position on mobile */
+                margin-top: -50px;
+                height: 15vh;
+            }
+
+            .bottom-image-overlay img {
+                transform: translateX(0);
+            }
+
+            #popup img {
+                max-width: 90%;
+                max-height: 80%;
+            }
+
+            /* Make suggestion banner more compact */
+            .suggestion-item {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.6rem;
+            }
+
+            .suggestion-scroll {
+                gap: 1.5rem;
+            }
+
+            /* Adjust main content area */
+            main {
+                padding: 1rem;
+                min-height: calc(100vh - 120px);
+            }
+        }
+
+        /* Additional media query for very small screens */
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .leaderboard {
+                transform: scale(0.7);
+                margin-left: -1.5rem;
+            }
+
+            .main-heading {
+                font-size: 1.3rem;
+            }
+
+            .action-btn {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.7rem;
+            }
+
+            .tabs-links a {
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Fix for navigation overlay */
+        .nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 20;
+            display: none;
+        }
+
+        .nav-overlay.active {
+            display: block;
+        }
+
+        /* Close button for mobile menu */
+        .close-menu {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: white;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .close-menu {
+                display: block;
             }
         }
     </style>
@@ -554,15 +683,19 @@
         </div>
     </div>
 
+    <div class="nav-overlay"></div>
+
     <div class="header-section">
         <div class="logo-nav-container">
             <div class="logo">NoMore</div>
             <div class="nav-links">
+                <button class="close-menu"><i class="fas fa-times"></i></button>
                 <a href="#" data-image="111.jpg">MemeFeed</a>
                 <a href="#" data-image="222.jpg">Staking</a>
                 <a href="#" data-image="333.jpg">Docs</a>
             </div>
         </div>
+        <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
         <div class="header-right">
             <i class="fas fa-search search-icon" data-image="100.jpg"></i>
             <button class="wallet-btn" data-image="mog.jpg">Select Wallet</button>
@@ -659,6 +792,39 @@
         // Close the popup when clicking anywhere on the screen
         popup.addEventListener('click', () => {
             popup.style.display = 'none';
+        });
+
+        // Mobile menu functionality
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const closeMenuBtn = document.querySelector('.close-menu');
+        const navLinks = document.querySelector('.nav-links');
+        const navOverlay = document.querySelector('.nav-overlay');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.add('active');
+            navOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        navOverlay.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            navOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Reset overflow when resizing to desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                navOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            }
         });
     </script>
 </body>
