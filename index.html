@@ -54,6 +54,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align against;
             align-items: center;
         }
 
@@ -64,6 +65,15 @@
 
         #mobile-message p {
             font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        #mobile-message img {
+            max-width: 50%;
+            height: auto;
+            border: 2px solid var(--primary-neon);
+            border-radius: 10px;
+            box-shadow: 0 0 15px var(--primary-neon);
         }
 
         #background-video {
@@ -342,7 +352,7 @@
         }
 
         .tabs-section {
-            width: 100%;
+            width:朴100%;
             background: rgba(14, 15, 17, 0.95);
             padding: 0.5rem 2rem;
             z-index: 15;
@@ -448,10 +458,11 @@
     </style>
 </head>
 <body>
-    <!-- Mobile-only message -->
+    <!-- Mobile-only message with image -->
     <div id="mobile-message">
-        <h1>Sorry, Desktop Only!</h1>
-        <p>This site is only accessible on desktop devices. Please visit us from a computer.</p>
+        <h1>Oops! Desktop Only!</h1>
+        <p>This site is built for desktops only. Switch to a computer to access the full NoMore experience!</p>
+        <img src="desktop.jpg" alt="Desktop Required">
     </div>
 
     <!-- Main content wrapped in a div -->
