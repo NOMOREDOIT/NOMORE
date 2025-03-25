@@ -29,6 +29,45 @@
             min-width: 1000px;
         }
 
+        /* Mobile/Tablet Block Styles */
+        #mobile-block {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #mobile-block img {
+            max-width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+        }
+
+        #mobile-block p {
+            font-size: 1.5rem;
+            color: var(--yellow-neon);
+            text-shadow: 0 0 10px var(--yellow-neon);
+        }
+
+        /* Hide main content on mobile/tablet */
+        @media only screen and (max-width: 1200px) {
+            body > *:not(#mobile-block) {
+                display: none !important;
+            }
+            #mobile-block {
+                display: flex;
+            }
+        }
+
+        /* Rest of your existing styles remain unchanged */
         #background-video {
             position: fixed;
             top: 50%;
@@ -241,7 +280,7 @@
             align-items: center;
             background-size: cover;
             background-position: center;
-            cursor коллектор: pointer;
+            cursor: pointer;
         }
 
         .leaderboard-item:nth-child(1) .leaderboard-icon {
@@ -575,6 +614,14 @@
     </style>
 </head>
 <body>
+    <!-- Mobile/Tablet Block Message -->
+    <div id="mobile-block">
+        <div>
+            <img src="desktop.jpg" alt="Desktop Required">
+            <p>Please use a desktop computer to access this site!</p>
+        </div>
+    </div>
+
     <video id="background-video" autoplay loop muted playsinline>
         <source src="sha.mp4" type="video/mp4">
         Your browser does not support the video tag.
@@ -672,7 +719,7 @@
                 <h1 class="main-heading">where memes coins come to be heard</h1>
                 <p class="sub-heading">A place to help make GFM all it can be and more</p>
                 <div class="action-buttons">
-                    <button class="action-btn vote-btn" id="voting-form-btn">Vote for a GFM Idea</button>
+                    <button class="action-btn vote-btn" id="voting-form-btn">Vote for a GFM Want</button>
                     <button class="action-btn launch-btn">Weekly Message</button>
                 </div>
             </div>
@@ -710,6 +757,16 @@
     </footer>
 
     <script>
+        // JavaScript to reinforce mobile/tablet block
+        function checkDevice() {
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 1200;
+            if (isMobile) {
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        checkDevice();
+        window.addEventListener('resize', checkDevice);
+
         const suggestionScroll = document.querySelector('.suggestion-scroll');
         if (suggestionScroll) {
             const suggestionItems = document.querySelectorAll('.suggestion-item');
@@ -834,8 +891,7 @@
             });
         }
 
-        window.u
-        pvote = function(proposalId) {
+        window.upvote = function(proposalId) {
             const proposals = loadProposals();
             const proposal = proposals[proposalId];
             if (!proposal.voters) {
