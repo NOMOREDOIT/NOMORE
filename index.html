@@ -34,9 +34,9 @@
             display: none;
         }
 
-        /* New mobile message styling */
+        /* Mobile message styling */
         #mobile-message {
-            display: none; /* Hidden by default, shown on mobile */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -47,7 +47,7 @@
             color: white;
             text-align: center;
             z-index: 9999;
-            overflow: hidden; /* Prevents scrolling */
+            overflow: hidden;
         }
 
         body:not(.desktop) #mobile-message {
@@ -57,7 +57,7 @@
         }
 
         body:not(.desktop) {
-            overflow: hidden; /* Disable scrolling on body when mobile message is shown */
+            overflow: hidden;
         }
 
         .mobile-message-content {
@@ -65,27 +65,25 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 90%; /* Fits within viewport with some padding */
-            max-width: 400px; /* Smaller max-width for mobile */
-            gap: 15px; /* Reduced gap for tighter fit */
+            width: 90%;
+            max-width: 400px;
+            gap: 15px;
         }
 
         #mobile-message h1 {
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: clamp(1.2rem, 4vw, 2rem); /* Smaller range for mobile */
+            font-size: clamp(1.2rem, 4vw, 2rem);
             line-height: 1.2;
         }
 
         #mobile-message p {
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: clamp(0.9rem, 2.5vw, 1.2rem); /* Smaller range for mobile */
+            font-size: clamp(0.9rem, 2.5vw, 1.2rem);
             line-height: 1.4;
             padding: 0 10px;
         }
 
         #mobile-message img {
             width: 100%;
-            max-width: 200px; /* Smaller max-width to fit better */
+            max-width: 200px;
             height: auto;
             border: 2px solid var(--primary-neon);
             border-radius: 10px;
@@ -308,7 +306,7 @@
         }
 
         .leaderboard-item:nth-child(1) .leaderboard-icon {
-            background-image: url('pho1.jpg');
+            background-image: url('333.jpg');
             background-color: #fe8a66;
         }
 
@@ -336,17 +334,17 @@
         }
 
         .leaderboard-bar.first {
-            height: 120px;
+            height: 120px; /* Original height */
             background: #ff7b53;
         }
 
         .leaderboard-bar.second {
-            height: 240px;
+            height: 240px; /* Original height */
             background: #ffeb3b;
         }
 
         .leaderboard-bar.third {
-            height: 170px;
+            height: 170px; /* Original height */
             background: #4caf50;
         }
 
@@ -397,7 +395,30 @@
             color: var(--secondary-neon);
         }
 
-        #popup {
+        /* Shiny gold effect for specific tabs */
+        .tabs-links a.gold-tab {
+            color: #FFD700; /* Base gold color */
+            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700, #FFBF00);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent; /* Ensures gradient shows through */
+            animation: shimmer 3s infinite linear;
+        }
+
+        .tabs-links a.gold-tab:hover {
+            color: #FFD700; /* Maintains gold on hover */
+            -webkit-text-fill-color: transparent;
+            filter: brightness(1.2); /* Brightens on hover */
+        }
+
+        @keyframes shimmer {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 100%; }
+            100% { background-position: 0% 0%; }
+        }
+
+        .quote-popup {
             display: none;
             position: fixed;
             top: 0;
@@ -410,10 +431,59 @@
             align-items: center;
         }
 
-        #popup img {
-            max-width: 67%;
-            max-height: 67%;
-            border: none;
+        .quote-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            max-width: 400px;
+            max-height: 300px;
+            width: 100%;
+            height: auto;
+            overflow-y: auto;
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--primary-neon);
+        }
+
+        #quote-text {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 1rem;
+            color: var(--primary-neon);
+            white-space: pre-wrap;
+        }
+
+        .image-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 20;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-content {
+            max-width: 400px;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image-content img {
+            max-width: 400px;
+            max-height: 300px;
+            width: auto;
+            height: auto;
+            object-fit: contain; /* Preserve aspect ratio */
+            display: block;
         }
 
         .action-buttons {
@@ -483,7 +553,7 @@
         </div>
     </div>
 
-    <!-- Main content wrapped in a div -->
+    <!-- Main content -->
     <div id="content">
         <video id="background-video" autoplay loop muted playsinline>
             <source src="sha.mp4" type="video/mp4">
@@ -492,8 +562,16 @@
 
         <div id="video-overlay"></div>
 
-        <div id="popup">
-            <img id="popup-image" src="" alt="Popup Image">
+        <div id="quote-popup" class="quote-popup">
+            <div class="quote-content">
+                <p id="quote-text"></p>
+            </div>
+        </div>
+
+        <div id="image-popup" class="image-popup">
+            <div class="image-content">
+                <img id="popup-image" src="" alt="Popup Image">
+            </div>
         </div>
 
         <div id="suggestionBanner">
@@ -513,7 +591,7 @@
 
         <div class="header-section">
             <div class="logo-nav-container">
-                <div class="logo">NoMore</div>
+                <div class="logo">JUSTDOIT</div>
                 <div class="nav-links">
                     <a href="#" data-image="111.jpg">MemeFeed</a>
                     <a href="#" data-image="222.jpg">Staking</a>
@@ -531,7 +609,7 @@
                 <div class="leaderboard-section">
                     <div class="leaderboard">
                         <div class="leaderboard-item">
-                            <div class="leaderboard-icon" data-image="pho1.jpg"></div>
+                            <div class="leaderboard-icon" data-image="333.jpg"></div>
                             <div class="leaderboard-bar first">
                                 <div class="leaderboard-rank">#1</div>
                             </div>
@@ -552,10 +630,10 @@
                 </div>
                 <div class="text-buttons-section">
                     <h1 class="main-heading">where memes come to disappear</h1>
-                    <p class="sub-heading">Earn your share of 100% of all abandonded coins</p>
+                    <p class="sub-heading">A place to make GFM all it can be and more</p>
                     <div class="action-buttons">
-                        <button class="action-btn launch-btn" data-image="122.jpg">Launch shitcoin</button>
-                        <button class="action-btn stake-btn" data-image="999.jpg">Stake $NOMORE</button>
+                        <button class="action-btn launch-btn">Launch Memecoin</button>
+                        <button class="action-btn stake-btn" data-image="999.jpg">Stake $DOIT</button>
                     </div>
                 </div>
             </div>
@@ -565,9 +643,9 @@
             <div class="tabs-section">
                 <div class="tabs-links">
                     <a href="#" data-image="444.jpg">New</a>
-                    <a href="#" data-image="555.jpg">Top Traded</a>
-                    <a href="#" data-image="666.jpg">Top Market Cap</a>
-                    <a href="#" data-image="777.jpg">Trending</a>
+                    <a href="#" data-image="555.jpg" class="gold-tab">Top Traded</a>
+                    <a href="#" data-image="666.jpg" class="gold-tab">Top Market Cap</a>
+                    <a href="#" data-image="777.jpg" class="gold-tab">Trending</a>
                     <a href="#" data-image="888.jpg">Graduated</a>
                 </div>
             </div>
@@ -611,22 +689,49 @@
         }
 
         // Popup functionality
-        const popup = document.getElementById('popup');
-        if (popup) {
-            const popupImage = document.getElementById('popup-image');
-            const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .action-btn, .search-icon');
+        const quotePopup = document.getElementById('quote-popup');
+        const quoteText = document.getElementById('quote-text');
+        const imagePopup = document.getElementById('image-popup');
+        const popupImage = document.getElementById('popup-image');
+        const launchBtn = document.querySelector('.launch-btn');
+        const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .stake-btn, .search-icon');
 
+        // Handle Launch Memecoin button (quote popup)
+        if (launchBtn) {
+            launchBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                quoteText.textContent = "Today is a day to JUST DOIT.\n\nA message to GFM:\n\nWe want a top market cap tab.\n\nA top trending tab.\n\nWe want you to highlight the committed projects that launched here.\n\nLots of love for GFM. Stay pure. Stay hard. DOIT";
+                quotePopup.style.display = 'flex';
+                imagePopup.style.display = 'none'; // Ensure image popup is hidden
+            });
+        }
+
+        // Handle clickable elements (image popup)
+        if (clickableElements.length > 0) {
             clickableElements.forEach(element => {
                 element.addEventListener('click', (e) => {
                     e.preventDefault();
                     const imageSrc = element.getAttribute('data-image');
-                    popupImage.src = imageSrc;
-                    popup.style.display = 'flex';
+                    if (imageSrc) {
+                        popupImage.src = imageSrc;
+                        imagePopup.style.display = 'flex';
+                        quotePopup.style.display = 'none'; // Ensure quote popup is hidden
+                    }
                 });
             });
+        }
 
-            popup.addEventListener('click', () => {
-                popup.style.display = 'none';
+        // Close quote popup on click
+        if (quotePopup) {
+            quotePopup.addEventListener('click', () => {
+                quotePopup.style.display = 'none';
+            });
+        }
+
+        // Close image popup on click
+        if (imagePopup) {
+            imagePopup.addEventListener('click', () => {
+                imagePopup.style.display = 'none';
             });
         }
     </script>
