@@ -259,7 +259,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center; /* Center the content */
             gap: 1rem;
             z-index: 2;
         }
@@ -269,13 +269,13 @@
             font-size: 1.8rem;
             text-transform: uppercase;
             margin-bottom: 0.5rem;
-            margin-left: -50px;
+            text-align: center; /* Center the text */
         }
 
         .sub-heading {
             font-size: 1.1rem;
             color: rgba(255, 255, 252, 0.8);
-            margin-left: 20px;
+            text-align: center; /* Center the text */
         }
 
         .leaderboard {
@@ -418,7 +418,7 @@
             100% { background-position: 0% 0%; }
         }
 
-        .quote-popup {
+        .quote-popup, .voting-form-popup, .voting-list-popup {
             display: none;
             position: fixed;
             top: 0;
@@ -431,25 +431,107 @@
             align-items: center;
         }
 
-        .quote-content {
+        .quote-content, .voting-form-content, .voting-list-content {
             background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: 10px;
+            padding: 2rem; /* Increased padding for better spacing */
+            border-radius: 15px; /* Slightly larger border radius */
             text-align: center;
-            max-width: 400px;
-            max-height: 300px;
+            max-width: 600px; /* Increased max-width for better layout */
+            max-height: 80vh;
             width: 100%;
             height: auto;
             overflow-y: auto;
             backdrop-filter: blur(5px);
-            border: 1px solid var(--primary-neon);
+            border: 2px solid var(--primary-neon); /* Thicker border */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* Added glow effect */
         }
 
-        #quote-text {
+        #quote-text, .voting-form-content p, .voting-list-content p {
             font-family: "Comic Sans MS", "Comic Sans", cursive;
             font-size: 1rem;
             color: var(--primary-neon);
             white-space: pre-wrap;
+        }
+
+        .voting-form-content textarea {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: #333;
+            color: white;
+            border: 1px solid var(--primary-neon);
+            border-radius: 5px;
+        }
+
+        .voting-form-content button, .voting-list-content button {
+            background: var(--yellow-neon);
+            color: black;
+            padding: 0.75rem 1.5rem; /* Increased padding for larger button */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+            font-family: "Comic Sans MS", "Comic Sans", cursive; /* Set font to Comic Sans */
+            font-size: 1.2rem; /* Increased text size */
+            transition: transform 0.3s ease, background 0.3s ease; /* Added transition for hover */
+        }
+
+        .voting-form-content button:hover, .voting-list-content button:hover {
+            transform: scale(1.05); /* Slight scale on hover */
+            background: #FFD700; /* Gold color on hover */
+        }
+
+        .voting-form-content .view-voting-btn {
+            background: #FFD700; /* Gold color to match the vote button style */
+            color: black;
+            margin-top: 1rem;
+            padding: 0.75rem 1.5rem; /* Increased padding for larger button */
+            font-family: "Comic Sans MS", "Comic Sans", cursive; /* Set font to Comic Sans */
+            font-size: 1.2rem; /* Increased text size */
+        }
+
+        .voting-form-content .view-voting-btn:hover {
+            transform: scale(1.05); /* Slight scale on hover */
+            background: var(--yellow-neon); /* Yellow on hover */
+        }
+
+        .voting-list-content h2 {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 1.5rem; /* Larger heading */
+            color: white; /* Changed to white */
+            margin-bottom: 1rem;
+        }
+
+        .voting-list-content .coming-soon-message {
+            font-size: 1rem; /* Slightly larger text */
+            color: #ffeb3b; /* Yellow to stand out */
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            background: rgba(0, 0, 0, 0.5); /* Dark background for contrast */
+            padding: 0.5rem;
+            border-radius: 5px;
+            border: 1px solid var(--yellow-neon); /* Yellow border */
+        }
+
+        .proposal {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.7); /* Darker background for contrast */
+            border-radius: 10px; /* Larger border radius */
+            border: 1px solid var(--primary-neon); /* Neon border */
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Subtle glow */
+            transition: transform 0.3s ease; /* Smooth transition for hover */
+        }
+
+        .proposal:hover {
+            transform: scale(1.02); /* Slight scale on hover */
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* Brighter glow on hover */
+        }
+
+        .proposal p {
+            font-size: 1.1rem; /* Larger text */
+            color: var(--primary-neon);
+            margin-bottom: 0.5rem;
         }
 
         .image-popup {
@@ -489,8 +571,8 @@
         .action-buttons {
             display: flex;
             gap: 1rem;
-            margin-left: 20px;
             margin-top: 20px;
+            justify-content: center; /* Center the buttons */
         }
 
         .action-btn {
@@ -513,12 +595,12 @@
             transform: scale(1.05);
         }
 
-        .stake-btn {
-            background: white;
+        .vote-btn {
+            background: white; /* Changed to white */
             color: black;
         }
 
-        .stake-btn:hover {
+        .vote-btn:hover {
             transform: scale(1.05);
         }
 
@@ -571,6 +653,25 @@
         <div id="image-popup" class="image-popup">
             <div class="image-content">
                 <img id="popup-image" src="" alt="Popup Image">
+            </div>
+        </div>
+
+        <div id="voting-form-popup" class="voting-form-popup">
+            <div class="voting-form-content">
+                <h2>Post Your GFM Want!</h2>
+                <form id="voting-form">
+                    <textarea id="proposal-text" placeholder="What should GFM add?" required></textarea>
+                    <button type="submit">Submit Want</button>
+                </form>
+                <button class="view-voting-btn" id="view-voting-btn">View Voting</button>
+            </div>
+        </div>
+
+        <div id="voting-list-popup" class="voting-list-popup">
+            <div class="voting-list-content">
+                <h2>Vote for GFM Wants!</h2>
+                <p class="coming-soon-message">This feature will be coming soon! Since it’s not on a live server yet, votes are stored locally in your browser.</p>
+                <div id="proposals-list"></div>
             </div>
         </div>
 
@@ -633,7 +734,7 @@
                     <p class="sub-heading">A place to help make GFM all it can be and more</p>
                     <div class="action-buttons">
                         <button class="action-btn launch-btn">Launch Memecoin</button>
-                        <button class="action-btn stake-btn" data-image="999.jpg">Stake $DOIT</button>
+                        <button class="action-btn vote-btn" id="voting-form-btn">Post a Want</button>
                     </div>
                 </div>
             </div>
@@ -671,11 +772,45 @@
     <script>
         // Device detection
         function isMobileDevice() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+            // Check user agent for mobile devices
+            const mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            
+            // Check for touch support
+            const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            
+            // Check pointer type
+            const pointerFine = window.matchMedia("(pointer: fine)").matches; // Mouse or precise pointing device
+            const pointerCoarse = window.matchMedia("(pointer: coarse)").matches; // Touchscreen
+            
+            // Check window width (desktops typically have larger screens)
+            const isLargeScreen = window.innerWidth >= 1024;
+
+            // Log detailed information for debugging
+            console.log("User Agent:", navigator.userAgent);
+            console.log("Has Touch Support:", hasTouch);
+            console.log("Navigator maxTouchPoints:", navigator.maxTouchPoints);
+            console.log("Pointer Fine (Mouse):", pointerFine);
+            console.log("Pointer Coarse (Touch):", pointerCoarse);
+            console.log("Window Width:", window.innerWidth);
+            console.log("Is Large Screen (>=1024px):", isLargeScreen);
+
+            // A device is considered mobile if:
+            // 1. User agent indicates a mobile device, OR
+            // 2. It has touch support AND a coarse pointer (touchscreen), AND
+            // 3. It's not a large screen (desktops often have wider screens)
+            const isMobile = (mobileUserAgent || (hasTouch && pointerCoarse)) && !isLargeScreen;
+
+            console.log("Is Mobile:", isMobile);
+
+            return isMobile;
         }
 
+        // Apply desktop class if not a mobile device
         if (!isMobileDevice()) {
             document.body.classList.add('desktop');
+            console.log("Detected as Desktop");
+        } else {
+            console.log("Detected as Mobile");
         }
 
         // Duplicate suggestion items for scrolling effect
@@ -694,7 +829,14 @@
         const imagePopup = document.getElementById('image-popup');
         const popupImage = document.getElementById('popup-image');
         const launchBtn = document.querySelector('.launch-btn');
-        const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .stake-btn, .search-icon');
+        const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .search-icon');
+
+        // Voting popups
+        const votingFormPopup = document.getElementById('voting-form-popup');
+        const votingListPopup = document.getElementById('voting-list-popup');
+        const votingFormBtn = document.getElementById('voting-form-btn');
+        const viewVotingBtn = document.getElementById('view-voting-btn');
+        const proposalsList = document.getElementById('proposals-list');
 
         // Handle Launch Memecoin button (quote popup)
         if (launchBtn) {
@@ -702,7 +844,9 @@
                 e.preventDefault();
                 quoteText.textContent = "Today is a day to JUST DOIT.\n\nA message to GFM:\n\nWe want a top market cap tab.\n\nA top trending tab.\n\nWe want you to highlight the committed projects that launched here.\n\nLots of love for GFM. Stay pure. Stay hard. DOIT";
                 quotePopup.style.display = 'flex';
-                imagePopup.style.display = 'none'; // Ensure image popup is hidden
+                imagePopup.style.display = 'none';
+                votingFormPopup.style.display = 'none';
+                votingListPopup.style.display = 'none';
             });
         }
 
@@ -715,24 +859,114 @@
                     if (imageSrc) {
                         popupImage.src = imageSrc;
                         imagePopup.style.display = 'flex';
-                        quotePopup.style.display = 'none'; // Ensure quote popup is hidden
+                        quotePopup.style.display = 'none';
+                        votingFormPopup.style.display = 'none';
+                        votingListPopup.style.display = 'none';
                     }
                 });
             });
         }
 
-        // Close quote popup on click
-        if (quotePopup) {
-            quotePopup.addEventListener('click', () => {
-                quotePopup.style.display = 'none';
+        // Open voting form popup
+        votingFormBtn.addEventListener('click', () => {
+            votingFormPopup.style.display = 'flex';
+            quotePopup.style.display = 'none';
+            imagePopup.style.display = 'none';
+            votingListPopup.style.display = 'none';
+        });
+
+        // Open voting list popup from within the voting form popup
+        viewVotingBtn.addEventListener('click', () => {
+            votingListPopup.style.display = 'flex';
+            quotePopup.style.display = 'none';
+            imagePopup.style.display = 'none';
+            votingFormPopup.style.display = 'none';
+            renderProposals();
+        });
+
+        // Close popups on click
+        [quotePopup, imagePopup, votingFormPopup, votingListPopup].forEach(popup => {
+            popup.addEventListener('click', (e) => {
+                if (e.target === popup) {
+                    popup.style.display = 'none';
+                }
+            });
+        });
+
+        // Local voting system using localStorage
+        // Generate or retrieve a unique user ID for voting
+        function getUserId() {
+            let userId = localStorage.getItem('userId');
+            if (!userId) {
+                userId = 'user-' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('userId', userId);
+            }
+            return userId;
+        }
+
+        const userId = getUserId();
+
+        // Load proposals from localStorage
+        function loadProposals() {
+            const proposals = localStorage.getItem('proposals');
+            return proposals ? JSON.parse(proposals) : {};
+        }
+
+        // Save proposals to localStorage
+        function saveProposals(proposals) {
+            localStorage.setItem('proposals', JSON.stringify(proposals));
+        }
+
+        // Handle proposal submission
+        document.getElementById('voting-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const text = document.getElementById('proposal-text').value;
+
+            const proposals = loadProposals();
+            const proposalId = 'prop-' + Math.random().toString(36).substr(2, 9);
+            proposals[proposalId] = {
+                text: text,
+                votes: 0,
+                voters: {}
+            };
+            saveProposals(proposals);
+
+            // Clear the form but keep the popup open
+            document.getElementById('proposal-text').value = '';
+            alert('Thank you for submitting your want! Your vote will go live soon. We are still working on the server, but you can view and upvote locally for now.');
+        });
+
+        // Render proposals from localStorage
+        function renderProposals() {
+            proposalsList.innerHTML = '';
+            const proposals = loadProposals();
+            Object.keys(proposals).forEach((key) => {
+                const p = proposals[key];
+                const div = document.createElement('div');
+                div.className = 'proposal';
+                div.innerHTML = `
+                    <p>${p.text}</p>
+                    <button onclick="upvote('${key}')">Upvote (<span id="vote-count-${key}">${p.votes || 0}</span>)</button>
+                `;
+                proposalsList.appendChild(div);
             });
         }
 
-        // Close image popup on click
-        if (imagePopup) {
-            imagePopup.addEventListener('click', () => {
-                imagePopup.style.display = 'none';
-            });
+        // Handle upvoting
+        function upvote(proposalId) {
+            const proposals = loadProposals();
+            const proposal = proposals[proposalId];
+            if (!proposal.voters) {
+                proposal.voters = {};
+            }
+            if (!proposal.voters[userId]) {
+                proposal.voters[userId] = true;
+                proposal.votes = (proposal.votes || 0) + 1;
+                saveProposals(proposals);
+                document.getElementById(`vote-count-${proposalId}`).textContent = proposal.votes;
+            } else {
+                alert('You already voted for this!');
+            }
         }
     </script>
 </body>
