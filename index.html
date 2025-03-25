@@ -486,17 +486,21 @@
         }
 
         .voting-form-content .view-voting-btn {
-            background: #FFD700;
+            background: white;
             color: black;
             margin-top: 1rem;
             padding: 0.75rem 1.5rem;
             font-family: "Comic Sans MS", "Comic Sans", cursive;
             font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
 
         .voting-form-content .view-voting-btn:hover {
             transform: scale(1.05);
-            background: var(--yellow-neon);
+            background: #f0f0f0;
         }
 
         .voting-list-content h2 {
@@ -663,7 +667,7 @@
                 <h2>Post Your GFM Want!</h2>
                 <h3>Share your top GFM idea! The idea with the most community votes by week’s end will kick off our weekly campaign to push for its update on GFM.</h3>
                 <form id="voting-form">
-                    <textarea id="proposal-text" placeholder="What should GFM add?" required></textarea>
+                    <textarea id="proposal-text" placeholder="What would you like GFM to add or improve?" required></textarea>
                     <button type="submit">Submit Idea</button>
                 </form>
                 <button class="view-voting-btn" id="view-voting-btn">View Voting</button>
@@ -912,7 +916,7 @@
             });
         }
 
-        function upvote(proposalId) {
+        window.upvote = function(proposalId) {
             const proposals = loadProposals();
             const proposal = proposals[proposalId];
             if (!proposal.voters) {
