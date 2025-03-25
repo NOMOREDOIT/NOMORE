@@ -29,12 +29,10 @@
             min-width: 1000px;
         }
 
-        /* Hide content unless desktop */
         body:not(.desktop) #content {
             display: none;
         }
 
-        /* Mobile message styling */
         #mobile-message {
             display: none;
             position: fixed;
@@ -259,7 +257,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center the content */
+            align-items: center;
             gap: 1rem;
             z-index: 2;
         }
@@ -269,13 +267,13 @@
             font-size: 1.8rem;
             text-transform: uppercase;
             margin-bottom: 0.5rem;
-            text-align: center; /* Center the text */
+            text-align: center;
         }
 
         .sub-heading {
             font-size: 1.1rem;
             color: rgba(255, 255, 252, 0.8);
-            text-align: center; /* Center the text */
+            text-align: center;
         }
 
         .leaderboard {
@@ -334,17 +332,17 @@
         }
 
         .leaderboard-bar.first {
-            height: 120px; /* Original height */
+            height: 120px;
             background: #ff7b53;
         }
 
         .leaderboard-bar.second {
-            height: 240px; /* Original height */
+            height: 240px;
             background: #ffeb3b;
         }
 
         .leaderboard-bar.third {
-            height: 170px; /* Original height */
+            height: 170px;
             background: #4caf50;
         }
 
@@ -395,21 +393,20 @@
             color: var(--secondary-neon);
         }
 
-        /* Shiny gold effect for specific tabs */
         .tabs-links a.gold-tab {
-            color: #FFD700; /* Base gold color */
+            color: #FFD700;
             background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700, #FFBF00);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             background-clip: text;
-            -webkit-text-fill-color: transparent; /* Ensures gradient shows through */
+            -webkit-text-fill-color: transparent;
             animation: shimmer 3s infinite linear;
         }
 
         .tabs-links a.gold-tab:hover {
-            color: #FFD700; /* Maintains gold on hover */
+            color: #FFD700;
             -webkit-text-fill-color: transparent;
-            filter: brightness(1.2); /* Brightens on hover */
+            filter: brightness(1.2);
         }
 
         @keyframes shimmer {
@@ -433,17 +430,17 @@
 
         .quote-content, .voting-form-content, .voting-list-content {
             background: rgba(255, 255, 255, 0.1);
-            padding: 2rem; /* Increased padding for better spacing */
-            border-radius: 15px; /* Slightly larger border radius */
+            padding: 2rem;
+            border-radius: 15px;
             text-align: center;
-            max-width: 600px; /* Increased max-width for better layout */
+            max-width: 600px;
             max-height: 80vh;
             width: 100%;
             height: auto;
             overflow-y: auto;
             backdrop-filter: blur(5px);
-            border: 2px solid var(--primary-neon); /* Thicker border */
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); /* Added glow effect */
+            border: 2px solid var(--primary-neon);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
         }
 
         #quote-text, .voting-form-content p, .voting-list-content p {
@@ -451,6 +448,13 @@
             font-size: 1rem;
             color: var(--primary-neon);
             white-space: pre-wrap;
+        }
+
+        .voting-form-content h3 {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 252, 0.8);
+            margin-bottom: 1rem;
         }
 
         .voting-form-content textarea {
@@ -466,70 +470,70 @@
         .voting-form-content button, .voting-list-content button {
             background: var(--yellow-neon);
             color: black;
-            padding: 0.75rem 1.5rem; /* Increased padding for larger button */
+            padding: 0.75rem 1.5rem;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             margin-top: 0.5rem;
-            font-family: "Comic Sans MS", "Comic Sans", cursive; /* Set font to Comic Sans */
-            font-size: 1.2rem; /* Increased text size */
-            transition: transform 0.3s ease, background 0.3s ease; /* Added transition for hover */
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease, background 0.3s ease;
         }
 
         .voting-form-content button:hover, .voting-list-content button:hover {
-            transform: scale(1.05); /* Slight scale on hover */
-            background: #FFD700; /* Gold color on hover */
+            transform: scale(1.05);
+            background: #FFD700;
         }
 
         .voting-form-content .view-voting-btn {
-            background: #FFD700; /* Gold color to match the vote button style */
+            background: #FFD700;
             color: black;
             margin-top: 1rem;
-            padding: 0.75rem 1.5rem; /* Increased padding for larger button */
-            font-family: "Comic Sans MS", "Comic Sans", cursive; /* Set font to Comic Sans */
-            font-size: 1.2rem; /* Increased text size */
+            padding: 0.75rem 1.5rem;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 1.2rem;
         }
 
         .voting-form-content .view-voting-btn:hover {
-            transform: scale(1.05); /* Slight scale on hover */
-            background: var(--yellow-neon); /* Yellow on hover */
+            transform: scale(1.05);
+            background: var(--yellow-neon);
         }
 
         .voting-list-content h2 {
             font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1.5rem; /* Larger heading */
-            color: white; /* Changed to white */
+            font-size: 1.5rem;
+            color: white;
             margin-bottom: 1rem;
         }
 
         .voting-list-content .coming-soon-message {
-            font-size: 1rem; /* Slightly larger text */
-            color: #ffeb3b; /* Yellow to stand out */
+            font-size: 1rem;
+            color: #ffeb3b;
             margin-bottom: 1.5rem;
             font-style: italic;
-            background: rgba(0, 0, 0, 0.5); /* Dark background for contrast */
+            background: rgba(0, 0, 0, 0.5);
             padding: 0.5rem;
             border-radius: 5px;
-            border: 1px solid var(--yellow-neon); /* Yellow border */
+            border: 1px solid var(--yellow-neon);
         }
 
         .proposal {
             margin: 1rem 0;
             padding: 1rem;
-            background: rgba(0, 0, 0, 0.7); /* Darker background for contrast */
-            border-radius: 10px; /* Larger border radius */
-            border: 1px solid var(--primary-neon); /* Neon border */
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1); /* Subtle glow */
-            transition: transform 0.3s ease; /* Smooth transition for hover */
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 10px;
+            border: 1px solid var(--primary-neon);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease;
         }
 
         .proposal:hover {
-            transform: scale(1.02); /* Slight scale on hover */
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3); /* Brighter glow on hover */
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
 
         .proposal p {
-            font-size: 1.1rem; /* Larger text */
+            font-size: 1.1rem;
             color: var(--primary-neon);
             margin-bottom: 0.5rem;
         }
@@ -564,7 +568,7 @@
             max-height: 300px;
             width: auto;
             height: auto;
-            object-fit: contain; /* Preserve aspect ratio */
+            object-fit: contain;
             display: block;
         }
 
@@ -572,7 +576,7 @@
             display: flex;
             gap: 1rem;
             margin-top: 20px;
-            justify-content: center; /* Center the buttons */
+            justify-content: center;
         }
 
         .action-btn {
@@ -587,7 +591,7 @@
         }
 
         .launch-btn {
-            background: var(--yellow-neon);
+            background: white;
             color: black;
         }
 
@@ -596,7 +600,7 @@
         }
 
         .vote-btn {
-            background: white; /* Changed to white */
+            background: var(--yellow-neon);
             color: black;
         }
 
@@ -626,7 +630,6 @@
     </style>
 </head>
 <body>
-    <!-- Mobile-only message -->
     <div id="mobile-message">
         <div class="mobile-message-content">
             <h1>Desktop Only!</h1>
@@ -635,7 +638,6 @@
         </div>
     </div>
 
-    <!-- Main content -->
     <div id="content">
         <video id="background-video" autoplay loop muted playsinline>
             <source src="sha.mp4" type="video/mp4">
@@ -659,9 +661,10 @@
         <div id="voting-form-popup" class="voting-form-popup">
             <div class="voting-form-content">
                 <h2>Post Your GFM Want!</h2>
+                <h3>Share your top GFM idea! The idea with the most community votes by week’s end will kick off our weekly campaign to push for its update on GFM.</h3>
                 <form id="voting-form">
                     <textarea id="proposal-text" placeholder="What should GFM add?" required></textarea>
-                    <button type="submit">Submit Want</button>
+                    <button type="submit">Submit Idea</button>
                 </form>
                 <button class="view-voting-btn" id="view-voting-btn">View Voting</button>
             </div>
@@ -730,11 +733,11 @@
                     </div>
                 </div>
                 <div class="text-buttons-section">
-                    <h1 class="main-heading">where memes come to disappear</h1>
+                    <h1 class="main-heading">where memes coins come to be heard</h1>
                     <p class="sub-heading">A place to help make GFM all it can be and more</p>
                     <div class="action-buttons">
-                        <button class="action-btn launch-btn">Launch Memecoin</button>
-                        <button class="action-btn vote-btn" id="voting-form-btn">Post a Want</button>
+                        <button class="action-btn vote-btn" id="voting-form-btn">Vote for a GFM Want</button>
+                        <button class="action-btn launch-btn">Weekly Message</button>
                     </div>
                 </div>
             </div>
@@ -770,50 +773,21 @@
     </div>
 
     <script>
-        // Device detection
         function isMobileDevice() {
-            // Check user agent for mobile devices
             const mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-            
-            // Check for touch support
             const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
-            
-            // Check pointer type
-            const pointerFine = window.matchMedia("(pointer: fine)").matches; // Mouse or precise pointing device
-            const pointerCoarse = window.matchMedia("(pointer: coarse)").matches; // Touchscreen
-            
-            // Check window width (desktops typically have larger screens)
+            const pointerFine = window.matchMedia("(pointer: fine)").matches;
+            const pointerCoarse = window.matchMedia("(pointer: coarse)").matches;
             const isLargeScreen = window.innerWidth >= 1024;
 
-            // Log detailed information for debugging
-            console.log("User Agent:", navigator.userAgent);
-            console.log("Has Touch Support:", hasTouch);
-            console.log("Navigator maxTouchPoints:", navigator.maxTouchPoints);
-            console.log("Pointer Fine (Mouse):", pointerFine);
-            console.log("Pointer Coarse (Touch):", pointerCoarse);
-            console.log("Window Width:", window.innerWidth);
-            console.log("Is Large Screen (>=1024px):", isLargeScreen);
-
-            // A device is considered mobile if:
-            // 1. User agent indicates a mobile device, OR
-            // 2. It has touch support AND a coarse pointer (touchscreen), AND
-            // 3. It's not a large screen (desktops often have wider screens)
             const isMobile = (mobileUserAgent || (hasTouch && pointerCoarse)) && !isLargeScreen;
-
-            console.log("Is Mobile:", isMobile);
-
             return isMobile;
         }
 
-        // Apply desktop class if not a mobile device
         if (!isMobileDevice()) {
             document.body.classList.add('desktop');
-            console.log("Detected as Desktop");
-        } else {
-            console.log("Detected as Mobile");
         }
 
-        // Duplicate suggestion items for scrolling effect
         const suggestionScroll = document.querySelector('.suggestion-scroll');
         if (suggestionScroll) {
             const suggestionItems = document.querySelectorAll('.suggestion-item');
@@ -823,7 +797,6 @@
             });
         }
 
-        // Popup functionality
         const quotePopup = document.getElementById('quote-popup');
         const quoteText = document.getElementById('quote-text');
         const imagePopup = document.getElementById('image-popup');
@@ -831,18 +804,16 @@
         const launchBtn = document.querySelector('.launch-btn');
         const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .search-icon');
 
-        // Voting popups
         const votingFormPopup = document.getElementById('voting-form-popup');
         const votingListPopup = document.getElementById('voting-list-popup');
         const votingFormBtn = document.getElementById('voting-form-btn');
         const viewVotingBtn = document.getElementById('view-voting-btn');
         const proposalsList = document.getElementById('proposals-list');
 
-        // Handle Launch Memecoin button (quote popup)
         if (launchBtn) {
             launchBtn.addEventListener('click', (e) => {
                 e.preventDefault();
-                quoteText.textContent = "Today is a day to JUST DOIT.\n\nA message to GFM:\n\nWe want a top market cap tab.\n\nA top trending tab.\n\nWe want you to highlight the committed projects that launched here.\n\nLots of love for GFM. Stay pure. Stay hard. DOIT";
+                quoteText.textContent = "This week is a time to JUST DOIT.\n\nWeekly message to GFM:\n\nWe want a top market cap tab.\n\nWe want a top traded & trending tab.\n\nWe want you to highlight the committed projects that launched here.\n\nLots of love for GFM. Stay pure. Stay hard. DOIT";
                 quotePopup.style.display = 'flex';
                 imagePopup.style.display = 'none';
                 votingFormPopup.style.display = 'none';
@@ -850,7 +821,6 @@
             });
         }
 
-        // Handle clickable elements (image popup)
         if (clickableElements.length > 0) {
             clickableElements.forEach(element => {
                 element.addEventListener('click', (e) => {
@@ -867,7 +837,6 @@
             });
         }
 
-        // Open voting form popup
         votingFormBtn.addEventListener('click', () => {
             votingFormPopup.style.display = 'flex';
             quotePopup.style.display = 'none';
@@ -875,7 +844,6 @@
             votingListPopup.style.display = 'none';
         });
 
-        // Open voting list popup from within the voting form popup
         viewVotingBtn.addEventListener('click', () => {
             votingListPopup.style.display = 'flex';
             quotePopup.style.display = 'none';
@@ -884,7 +852,6 @@
             renderProposals();
         });
 
-        // Close popups on click
         [quotePopup, imagePopup, votingFormPopup, votingListPopup].forEach(popup => {
             popup.addEventListener('click', (e) => {
                 if (e.target === popup) {
@@ -893,8 +860,6 @@
             });
         });
 
-        // Local voting system using localStorage
-        // Generate or retrieve a unique user ID for voting
         function getUserId() {
             let userId = localStorage.getItem('userId');
             if (!userId) {
@@ -906,18 +871,15 @@
 
         const userId = getUserId();
 
-        // Load proposals from localStorage
         function loadProposals() {
             const proposals = localStorage.getItem('proposals');
             return proposals ? JSON.parse(proposals) : {};
         }
 
-        // Save proposals to localStorage
         function saveProposals(proposals) {
             localStorage.setItem('proposals', JSON.stringify(proposals));
         }
 
-        // Handle proposal submission
         document.getElementById('voting-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const text = document.getElementById('proposal-text').value;
@@ -931,12 +893,10 @@
             };
             saveProposals(proposals);
 
-            // Clear the form but keep the popup open
             document.getElementById('proposal-text').value = '';
             alert('Thank you for submitting your want! Your vote will go live soon. We are still working on the server, but you can view and upvote locally for now.');
         });
 
-        // Render proposals from localStorage
         function renderProposals() {
             proposalsList.innerHTML = '';
             const proposals = loadProposals();
@@ -952,7 +912,6 @@
             });
         }
 
-        // Handle upvoting
         function upvote(proposalId) {
             const proposals = loadProposals();
             const proposal = proposals[proposalId];
