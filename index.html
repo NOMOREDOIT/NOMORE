@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=1200, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>DOIT - Coin GFM</title>
+    <title>DOIT - Coin Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
@@ -35,14 +35,14 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 100vw; /* Full viewport width */
-            height: 100vh; /* Full viewport height */
+            width: 100vw;
+            height: 100vh;
             background: rgba(0, 0, 0, 0.9);
             z-index: 1000;
             justify-content: center;
             align-items: center;
             text-align: center;
-            overflow: hidden; /* Prevent scrolling within the block */
+            overflow: hidden;
         }
 
         #mobile-block .mobile-content {
@@ -50,29 +50,28 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 90%; /* Ensure it fits within viewport with some margin */
-            max-height: 100vh; /* Limit to viewport height */
-            overflow: hidden; /* No scrolling within content */
+            width: 90%;
+            max-height: 100vh;
+            overflow: hidden;
         }
 
         #mobile-block img {
-            max-width: 80%; /* Responsive width */
-            max-height: 50vh; /* Limit height to half the viewport */
+            max-width: 80%;
+            max-height: 50vh;
             width: auto;
             height: auto;
             margin-bottom: 20px;
         }
 
         #mobile-block p {
-            font-size: 1.2rem; /* Slightly smaller for better fit on small screens */
+            font-size: 1.2rem;
             color: var(--yellow-neon);
             text-shadow: 0 0 10px var(--yellow-neon);
-            padding: 0 10px; /* Add padding for narrow screens */
-            word-wrap: break-word; /* Ensure text wraps */
-            max-width: 100%; /* Prevent text from exceeding container */
+            padding: 0 10px;
+            word-wrap: break-word;
+            max-width: 100%;
         }
 
-        /* Hide main content on mobile/tablet and show block */
         @media only screen and (max-width: 1200px) {
             body > *:not(#mobile-block) {
                 display: none !important;
@@ -81,7 +80,7 @@
                 display: flex;
             }
             body {
-                overflow: hidden !important; /* Prevent body scrolling */
+                overflow: hidden !important;
             }
         }
 
@@ -203,7 +202,7 @@
 
         .search-icon {
             color: white;
-            font-size: 1.2rem;
+            font IAMsize: 1.2rem;
             cursor: pointer;
         }
 
@@ -507,17 +506,6 @@
             margin-bottom: 1rem;
         }
 
-        .voting-list-content .coming-soon-message {
-            font-size: 1rem;
-            color: #ffeb3b;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 0.5rem;
-            border-radius: 5px;
-            border: 1px solid var(--yellow-neon);
-        }
-
         .proposal {
             margin: 1rem 0;
             padding: 1rem;
@@ -673,7 +661,6 @@
     <div id="voting-list-popup" class="voting-list-popup">
         <div class="voting-list-content">
             <h2>Vote for GFM Wants!</h2>
-            <p class="coming-soon-message">This feature will be coming soon! Since it’s not on a live server yet, votes are stored locally in your browser.</p>
             <div id="proposals-list"></div>
         </div>
     </div>
@@ -733,7 +720,7 @@
                 </div>
             </div>
             <div class="text-buttons-section">
-                <h1 class="main-heading">where meme coins come to be heard</h1>
+                <h1 class="main-heading">where memes coins come to be heard</h1>
                 <p class="sub-heading">A place to help make GFM all it can be and more</p>
                 <div class="action-buttons">
                     <button class="action-btn vote-btn" id="voting-form-btn">Vote for a GFM Want</button>
@@ -773,6 +760,7 @@
         </div>
     </footer>
 
+    <!-- Non-Firebase JavaScript -->
     <script>
         // JavaScript to reinforce mobile/tablet block
         function checkDevice() {
@@ -845,13 +833,16 @@
             quotePopup.style.display = 'none';
             imagePopup.style.display = 'none';
             votingFormPopup.style.display = 'none';
-            renderProposals();
+            window.startProposalsListener();
         });
 
         [quotePopup, imagePopup, votingFormPopup, votingListPopup].forEach(popup => {
             popup.addEventListener('click', (e) => {
                 if (e.target === popup) {
                     popup.style.display = 'none';
+                    if (popup === votingListPopup) {
+                        window.stopProposalsListener();
+                    }
                 }
             });
         });
@@ -864,65 +855,111 @@
             }
             return userId;
         }
+        window.getUserId = getUserId;
+    </script>
 
-        const userId = getUserId();
+    <!-- Firebase Configuration and Related Functions -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, runTransaction, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
 
-        function loadProposals() {
-            const proposals = localStorage.getItem('proposals');
-            return proposals ? JSON.parse(proposals) : {};
+        const firebaseConfig = {
+            apiKey: "AIzaSyAo6_0DUw8OMm4aiNxUtxO7Q660GowCr4o",
+            authDomain: "officialdoit.firebaseapp.com",
+            projectId: "officialdoit",
+            storageBucket: "officialdoit.firebasestorage.app",
+            messagingSenderId: "1034242279014",
+            appId: "1:1034242279014:web:30efccc9b08acb3a98cfa7",
+            measurementId: "G-NVSJD6HC3F"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const analytics = getAnalytics(app);
+
+        let unsubscribeProposals = null;
+
+        function startProposalsListener() {
+            if (unsubscribeProposals) {
+                unsubscribeProposals();
+            }
+            const q = query(collection(db, "proposals"), orderBy("votes", "desc"));
+            unsubscribeProposals = onSnapshot(q, (querySnapshot) => {
+                const proposalsList = document.getElementById('proposals-list');
+                proposalsList.innerHTML = '';
+                querySnapshot.forEach((doc) => {
+                    const p = doc.data();
+                    const div = document.createElement('div');
+                    div.className = 'proposal';
+                    div.innerHTML = `
+                        <p>${p.text}</p>
+                        <button onclick="window.upvote('${doc.id}')">Upvote (<span id="vote-count-${doc.id}">${p.votes || 0}</span>)</button>
+                    `;
+                    proposalsList.appendChild(div);
+                });
+            }, (error) => {
+                console.error("Error fetching proposals: ", error);
+                const proposalsList = document.getElementById('proposals-list');
+                proposalsList.innerHTML = '<p>Error loading proposals. Please try again later.</p>';
+            });
         }
 
-        function saveProposals(proposals) {
-            localStorage.setItem('proposals', JSON.stringify(proposals));
+        function stopProposalsListener() {
+            if (unsubscribeProposals) {
+                unsubscribeProposals();
+                unsubscribeProposals = null;
+            }
+        }
+
+        async function upvote(proposalId) {
+            const userId = window.getUserId();
+            const proposalRef = doc(db, "proposals", proposalId);
+            try {
+                await runTransaction(db, async (transaction) => {
+                    const docSnap = await getDoc(proposalRef);
+                    if (!docSnap.exists()) {
+                        throw "Proposal does not exist!";
+                    }
+                    const data = docSnap.data();
+                    if (data.voters.includes(userId)) {
+                        throw "You already voted for this proposal!";
+                    }
+                    transaction.update(proposalRef, {
+                        votes: data.votes + 1,
+                        voters: [...data.voters, userId]
+                    });
+                });
+                console.log("Vote added");
+            } catch (error) {
+                console.error("Error voting: ", error);
+                alert(error);
+            }
         }
 
         document.getElementById('voting-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const text = document.getElementById('proposal-text').value;
-
-            const proposals = loadProposals();
-            const proposalId = 'prop-' + Math.random().toString(36).substr(2, 9);
-            proposals[proposalId] = {
+            addDoc(collection(db, "proposals"), {
                 text: text,
                 votes: 0,
-                voters: {}
-            };
-            saveProposals(proposals);
-
-            document.getElementById('proposal-text').value = '';
-            alert('Thank you for submitting your want! Your vote will go live soon. We are still working on the server, but you can view and upvote locally for now.');
+                voters: [],
+                createdAt: serverTimestamp()
+            })
+            .then(() => {
+                document.getElementById('proposal-text').value = '';
+                alert('Thank you for submitting your idea! It’s now live for voting.');
+            })
+            .catch((error) => {
+                console.error("Error adding proposal: ", error);
+                alert('Oops, something went wrong. Please try again.');
+            });
         });
 
-        function renderProposals() {
-            proposalsList.innerHTML = '';
-            const proposals = loadProposals();
-            Object.keys(proposals).forEach((key) => {
-                const p = proposals[key];
-                const div = document.createElement('div');
-                div.className = 'proposal';
-                div.innerHTML = `
-                    <p>${p.text}</p>
-                    <button onclick="upvote('${key}')">Upvote (<span id="vote-count-${key}">${p.votes || 0}</span>)</button>
-                `;
-                proposalsList.appendChild(div);
-            });
-        }
-
-        window.upvote = function(proposalId) {
-            const proposals = loadProposals();
-            const proposal = proposals[proposalId];
-            if (!proposal.voters) {
-                proposal.voters = {};
-            }
-            if (!proposal.voters[userId]) {
-                proposal.voters[userId] = true;
-                proposal.votes = (proposal.votes || 0) + 1;
-                saveProposals(proposals);
-                document.getElementById(`vote-count-${proposalId}`).textContent = proposal.votes;
-            } else {
-                alert('You already voted for this!');
-            }
-        }
+        // Expose functions to global scope
+        window.startProposalsListener = startProposalsListener;
+        window.stopProposalsListener = stopProposalsListener;
+        window.upvote = upvote;
     </script>
 </body>
 </html>
