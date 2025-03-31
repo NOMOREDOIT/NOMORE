@@ -29,7 +29,6 @@
             min-width: 1000px;
         }
 
-        /* Updated Mobile/Tablet Block Styles */
         #mobile-block {
             display: none;
             position: fixed;
@@ -202,7 +201,7 @@
 
         .search-icon {
             color: white;
-            font IAMsize: 1.2rem;
+            font-size: 1.2rem;
             cursor: pointer;
         }
 
@@ -425,25 +424,30 @@
         }
 
         .quote-content, .voting-form-content, .voting-list-content {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
+            background: rgba(20, 20, 25, 0.95);
+            padding: 2.5rem;
+            border-radius: 20px;
             text-align: center;
-            max-width: 600px;
+            max-width: 700px;
             max-height: 80vh;
             width: 100%;
             height: auto;
             overflow-y: auto;
-            backdrop-filter: blur(5px);
-            border: 2px solid var(--primary-neon);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        #quote-text, .voting-form-content p, .voting-list-content p {
+        #quote-text {
             font-family: "Comic Sans MS", "Comic Sans", cursive;
             font-size: 1rem;
             color: var(--primary-neon);
             white-space: pre-wrap;
+        }
+
+        .voting-form-content h2, .voting-list-content h2 {
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 1rem;
         }
 
         .voting-form-content h3 {
@@ -453,18 +457,36 @@
             margin-bottom: 1rem;
         }
 
+        .voting-form-content input,
         .voting-form-content textarea {
             width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 0.5rem;
-            background: #333;
-            color: white;
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.05);
             border: 1px solid var(--primary-neon);
-            border-radius: 5px;
+            border-radius: 8px;
+            color: white;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
         }
 
-        .voting-form-content button, .voting-list-content button {
-            background: var(--yellow-neon);
+        .voting-form-content input:focus,
+        .voting-form-content textarea:focus {
+            outline: none;
+            border-color: #ffffff;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+        }
+
+        #word-count {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-align: right;
+        }
+
+        .voting-form-content button {
+            background: #ffffff;
             color: black;
             padding: 0.75rem 1.5rem;
             border: none;
@@ -476,9 +498,9 @@
             transition: transform 0.3s ease, background 0.3s ease;
         }
 
-        .voting-form-content button:hover, .voting-list-content button:hover {
+        .voting-form-content button:hover {
             transform: scale(1.05);
-            background: #FFD700;
+            background: #f0f0f0;
         }
 
         .voting-form-content .view-voting-btn {
@@ -499,32 +521,74 @@
             background: #f0f0f0;
         }
 
-        .voting-list-content h2 {
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1.5rem;
+        .voting-controls {
+            margin-bottom: 1.5rem;
+        }
+
+        .voting-controls select {
+            padding: 0.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--primary-neon);
+            border-radius: 5px;
             color: white;
-            margin-bottom: 1rem;
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
         }
 
         .proposal {
+            background: rgba(30, 30, 35, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
             margin: 1rem 0;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.7);
-            border-radius: 10px;
-            border: 1px solid var(--primary-neon);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .proposal:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
         }
 
-        .proposal p {
-            font-size: 1.1rem;
-            color: var(--primary-neon);
+        .proposal-title {
+            font-size: 1.3rem;
+            color: white;
             margin-bottom: 0.5rem;
+        }
+
+        .proposal-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1rem;
+            transition: max-height 0.3s ease;
+        }
+
+        .proposal-text.shortened {
+            max-height: 3em;
+            overflow: hidden;
+        }
+
+        .proposal-votes {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .proposal-votes button {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .proposal-votes button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .proposal-votes span {
+            color: rgba(255, 255, 255, 0.7);
         }
 
         .image-popup {
@@ -619,7 +683,6 @@
     </style>
 </head>
 <body>
-    <!-- Mobile/Tablet Block Message -->
     <div id="mobile-block">
         <div class="mobile-content">
             <img src="desktop.jpg" alt="Desktop Required">
@@ -649,9 +712,11 @@
     <div id="voting-form-popup" class="voting-form-popup">
         <div class="voting-form-content">
             <h2>Post Your GFM Want!</h2>
-            <h3>Share your top GFM idea! The idea with the most community votes by week’s end will kick off our weekly campaign to push for its update on GFM.</h3>
+            <h3>Share your top GFM idea! Top-voted idea each week kicks off our campaign. (500 word max)</h3>
             <form id="voting-form">
-                <textarea id="proposal-text" placeholder="What would you like GFM to add or improve?" required></textarea>
+                <input type="text" id="proposal-title" placeholder="Enter a Title" required>
+                <textarea id="proposal-text" placeholder="Describe your idea" maxlength="2500" required></textarea>
+                <div id="word-count">0/500 words</div>
                 <button type="submit">Submit Idea</button>
             </form>
             <button class="view-voting-btn" id="view-voting-btn">View Voting</button>
@@ -661,6 +726,14 @@
     <div id="voting-list-popup" class="voting-list-popup">
         <div class="voting-list-content">
             <h2>Vote for GFM Wants!</h2>
+            <div class="voting-controls">
+                <select id="sort-voting">
+                    <option value="votes-desc">Most Votes</option>
+                    <option value="votes-asc">Least Votes</option>
+                    <option value="date-desc">Newest</option>
+                    <option value="date-asc">Oldest</option>
+                </select>
+            </div>
             <div id="proposals-list"></div>
         </div>
     </div>
@@ -760,9 +833,7 @@
         </div>
     </footer>
 
-    <!-- Non-Firebase JavaScript -->
     <script>
-        // JavaScript to reinforce mobile/tablet block
         function checkDevice() {
             const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth <= 1200;
             if (isMobile) {
@@ -858,7 +929,6 @@
         window.getUserId = getUserId;
     </script>
 
-    <!-- Firebase Configuration and Related Functions -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
         import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, runTransaction, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
@@ -880,29 +950,82 @@
 
         let unsubscribeProposals = null;
 
-        function startProposalsListener() {
-            if (unsubscribeProposals) {
-                unsubscribeProposals();
+        function truncateText(text, wordLimit = 50) {
+            const words = text.split(/\s+/);
+            if (words.length > wordLimit) {
+                return {
+                    short: words.slice(0, wordLimit).join(' ') + '...',
+                    full: text,
+                    isTruncated: true
+                };
             }
-            const q = query(collection(db, "proposals"), orderBy("votes", "desc"));
-            unsubscribeProposals = onSnapshot(q, (querySnapshot) => {
-                const proposalsList = document.getElementById('proposals-list');
-                proposalsList.innerHTML = '';
-                querySnapshot.forEach((doc) => {
-                    const p = doc.data();
-                    const div = document.createElement('div');
-                    div.className = 'proposal';
-                    div.innerHTML = `
-                        <p>${p.text}</p>
-                        <button onclick="window.upvote('${doc.id}')">Upvote (<span id="vote-count-${doc.id}">${p.votes || 0}</span>)</button>
-                    `;
-                    proposalsList.appendChild(div);
+            return {
+                short: text,
+                full: text,
+                isTruncated: false
+            };
+        }
+
+        function startProposalsListener() {
+            if (unsubscribeProposals) unsubscribeProposals();
+            const sortSelect = document.getElementById('sort-voting');
+            let sortField = 'votes';
+            let sortDirection = 'desc';
+
+            function updateQuery() {
+                const sortValue = sortSelect.value;
+                if (sortValue === 'votes-desc') {
+                    sortField = 'votes';
+                    sortDirection = 'desc';
+                } else if (sortValue === 'votes-asc') {
+                    sortField = 'votes';
+                    sortDirection = 'asc';
+                } else if (sortValue === 'date-desc') {
+                    sortField = 'createdAt';
+                    sortDirection = 'desc';
+                } else {
+                    sortField = 'createdAt';
+                    sortDirection = 'asc';
+                }
+
+                const q = query(collection(db, "proposals"), orderBy(sortField, sortDirection));
+                unsubscribeProposals = onSnapshot(q, (querySnapshot) => {
+                    const proposalsList = document.getElementById('proposals-list');
+                    proposalsList.innerHTML = '';
+                    querySnapshot.forEach((doc) => {
+                        const p = doc.data();
+                        const textData = truncateText(p.text);
+                        const div = document.createElement('div');
+                        div.className = 'proposal';
+                        div.innerHTML = `
+                            <div class="proposal-title">${p.title || 'Untitled'}</div>
+                            <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
+                            <div class="proposal-votes">
+                                <button onclick="window.upvote('${doc.id}', event)">Upvote</button>
+                                <span>Votes: <span id="vote-count-${doc.id}">${p.votes || 0}</span></span>
+                            </div>
+                        `;
+                        div.addEventListener('click', (e) => {
+                            if (e.target.tagName !== 'BUTTON') {
+                                const textElement = div.querySelector('.proposal-text');
+                                if (textData.isTruncated) {
+                                    if (textElement.classList.contains('shortened')) {
+                                        textElement.textContent = textData.full;
+                                        textElement.classList.remove('shortened');
+                                    } else {
+                                        textElement.textContent = textData.short;
+                                        textElement.classList.add('shortened');
+                                    }
+                                }
+                            }
+                        });
+                        proposalsList.appendChild(div);
+                    });
                 });
-            }, (error) => {
-                console.error("Error fetching proposals: ", error);
-                const proposalsList = document.getElementById('proposals-list');
-                proposalsList.innerHTML = '<p>Error loading proposals. Please try again later.</p>';
-            });
+            }
+
+            sortSelect.addEventListener('change', updateQuery);
+            updateQuery();
         }
 
         function stopProposalsListener() {
@@ -912,7 +1035,8 @@
             }
         }
 
-        async function upvote(proposalId) {
+        async function upvote(proposalId, event) {
+            event.stopPropagation();
             const userId = window.getUserId();
             const proposalRef = doc(db, "proposals", proposalId);
             try {
@@ -939,24 +1063,39 @@
 
         document.getElementById('voting-form').addEventListener('submit', (e) => {
             e.preventDefault();
+            const title = document.getElementById('proposal-title').value;
             const text = document.getElementById('proposal-text').value;
+            const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+            
+            if (wordCount > 500) {
+                alert('Proposal exceeds 500 word limit!');
+                return;
+            }
+
             addDoc(collection(db, "proposals"), {
+                title: title,
                 text: text,
                 votes: 0,
                 voters: [],
                 createdAt: serverTimestamp()
             })
             .then(() => {
+                document.getElementById('proposal-title').value = '';
                 document.getElementById('proposal-text').value = '';
-                alert('Thank you for submitting your idea! It’s now live for voting.');
+                votingFormPopup.style.display = 'none';
+                alert('Idea submitted successfully!');
             })
             .catch((error) => {
                 console.error("Error adding proposal: ", error);
-                alert('Oops, something went wrong. Please try again.');
+                alert('Error submitting idea. Please try again.');
             });
         });
 
-        // Expose functions to global scope
+        document.getElementById('proposal-text').addEventListener('input', (e) => {
+            const words = e.target.value.split(/\s+/).filter(word => word.length > 0);
+            document.getElementById('word-count').textContent = `${words.length}/500 words`;
+        });
+
         window.startProposalsListener = startProposalsListener;
         window.stopProposalsListener = stopProposalsListener;
         window.upvote = upvote;
