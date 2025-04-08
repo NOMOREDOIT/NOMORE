@@ -1314,13 +1314,17 @@
         });
 
         mySubmissionsBtn.addEventListener('click', () => {
+            const userId = localStorage.getItem('authUserId');
+            if (!userId) {
+                showNotification('Please log in with X to view your submissions.');
+                return;
+            }
             mySubmissionsPopup.style.display = 'flex';
             quotePopup.style.display = 'none';
             imagePopup.style.display = 'none';
             votingFormPopup.style.display = 'none';
             votingListPopup.style.display = 'none';
-            const userId = localStorage.getItem('userId');
-            if (userId) window.loadMySubmissions(userId);
+            window.loadMySubmissions(userId);
         });
 
         closeMySubmissionsBtn.addEventListener('click', () => {
@@ -1431,7 +1435,7 @@
         let unsubscribeProposals = null;
         let unsubscribeSubmissions = null;
 
-        // Handle auth state changes
+        // Handle auth state changes (only for "My Submissions")
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('x-signin-btn').style.display = 'none';
@@ -1439,7 +1443,7 @@
                 document.getElementById('logout-btn').style.display = 'flex';
                 document.getElementById('user-profile').style.display = 'inline-block';
                 document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
-                localStorage.setItem('userId', user.uid);
+                localStorage.setItem('authUserId', user.uid);
                 loadMySubmissions(user.uid); // Load submissions on login
                 syncLeaderboardWithVoting();
             } else {
@@ -1449,7 +1453,7 @@
                 document.getElementById('user-profile').style.display = 'none';
                 document.getElementById('user-profile').textContent = '';
                 document.getElementById('submission-count-badge').textContent = '';
-                localStorage.removeItem('userId');
+                localStorage.removeItem('authUserId');
                 if (unsubscribeSubmissions) {
                     unsubscribeSubmissions();
                     unsubscribeSubmissions = null;
@@ -1462,7 +1466,7 @@
             try {
                 const result = await signInWithPopup(auth, twitterProvider);
                 const user = result.user;
-                localStorage.setItem('userId', user.uid);
+                localStorage.setItem('authUserId', user.uid);
                 showNotification(`Signed in as @${user.providerData[0].displayName}`);
                 document.getElementById('x-signin-btn').style.display = 'none';
                 document.getElementById('my-submissions-btn').style.display = 'flex';
@@ -1740,24 +1744,23 @@
             const proposalRef = doc(db, "proposals", proposalId);
             try {
                 await runTransaction(db, async (transaction) => {
-                    const docSnap = await transaction.get(proposalRef);
+                    const docSnap = await getDoc(proposalRef);
                     if (!docSnap.exists()) {
-                        throw new Error("Proposal does not exist!");
+                        throw "Proposal does not exist!";
                     }
                     const data = docSnap.data();
                     if (data.voters.includes(userId)) {
-                        throw new Error("You have already voted for this proposal!");
+                        throw "You already voted for this proposal!";
                     }
                     transaction.update(proposalRef, {
-                        votes: (data.votes || 0) + 1,
+                        votes: data.votes + 1,
                         voters: [...data.voters, userId]
                     });
                 });
-                console.log("Vote added successfully");
-                showNotification("Vote added successfully!");
+                console.log("Vote added");
             } catch (error) {
                 console.error("Error voting: ", error);
-                showNotification(error.message || "Error voting");
+                showNotification(error.message || error);
             }
         }
 
@@ -1773,7 +1776,7 @@
             e.preventDefault();
             const title = document.getElementById('proposal-title').value;
             const text = document.getElementById('proposal-text').value;
-            const userId = window.getUserId();
+            const userId = localStorage.getItem('authUserId') || window.getUserId(); // Use authUserId if logged in, otherwise use generated userId
             const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
             
             if (wordCount > 500) {
@@ -1794,7 +1797,9 @@
                 document.getElementById('proposal-text').value = '';
                 document.getElementById('word-count').textContent = '0/500 words';
                 showNotification('Idea submitted successfully!');
-                loadMySubmissions(userId); // Update badge immediately after submission
+                if (localStorage.getItem('authUserId')) {
+                    loadMySubmissions(localStorage.getItem('authUserId')); // Update badge if logged in
+                }
                 const viewVotingBtn = document.getElementById('view-voting-btn');
                 if (viewVotingBtn) {
                     console.log('Adding glow-effect class to View Voting button');
