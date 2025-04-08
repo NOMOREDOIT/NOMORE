@@ -1145,7 +1145,7 @@
             </button>
             <span id="user-profile" class="user-profile"></span>
             <button id="my-submissions-btn" class="my-submissions-btn">
-                My Submissions <span id="submission-count-badge" class="submission-count-badge">0</span>
+                My Submissions <span id="submission-count-badge" class="submission-count-badge"></span>
             </button>
             <button id="logout-btn" class="x-signin-btn" style="display: none;">Logout</button>
         </div>
@@ -1429,6 +1429,7 @@
                 document.getElementById('user-profile').style.display = 'inline-block';
                 document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
                 localStorage.setItem('userId', user.uid);
+                loadMySubmissions(user.uid); // Load submissions on login
                 syncLeaderboardWithVoting();
             } else {
                 document.getElementById('x-signin-btn').style.display = 'flex';
@@ -1436,7 +1437,12 @@
                 document.getElementById('logout-btn').style.display = 'none';
                 document.getElementById('user-profile').style.display = 'none';
                 document.getElementById('user-profile').textContent = '';
+                document.getElementById('submission-count-badge').textContent = '';
                 localStorage.removeItem('userId');
+                if (unsubscribeSubmissions) {
+                    unsubscribeSubmissions();
+                    unsubscribeSubmissions = null;
+                }
             }
         });
 
@@ -1452,6 +1458,7 @@
                 document.getElementById('logout-btn').style.display = 'flex';
                 document.getElementById('user-profile').style.display = 'inline-block';
                 document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
+                loadMySubmissions(user.uid); // Load submissions after sign-in
             } catch (error) {
                 console.error("X Sign-in error:", error.code, error.message);
                 showNotification(`Failed to sign in with X: ${error.code} - ${error.message}`);
@@ -1770,6 +1777,7 @@
                 document.getElementById('proposal-text').value = '';
                 document.getElementById('word-count').textContent = '0/500 words';
                 showNotification('Idea submitted successfully!');
+                loadMySubmissions(userId); // Update badge immediately after submission
                 const viewVotingBtn = document.getElementById('view-voting-btn');
                 if (viewVotingBtn) {
                     console.log('Adding glow-effect class to View Voting button');
