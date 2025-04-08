@@ -884,6 +884,12 @@
             transform: scale(1.05);
         }
 
+        .proposal-votes button:disabled {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
+        }
+
         .proposal-votes span {
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.95rem;
@@ -1484,13 +1490,15 @@
                 let submissionCount = 0;
                 querySnapshot.forEach((doc) => {
                     const data = doc.data();
+                    const hasVoted = data.voters && data.voters.includes(userId);
                     const div = document.createElement('div');
                     div.className = 'proposal';
                     div.innerHTML = `
                         <div class="proposal-title">${data.title || 'Untitled'}</div>
                         <div class="proposal-text">${data.text || ''}</div>
                         <div class="proposal-votes">
-                            <span>Votes: ${data.votes || 0}</span>
+                            <button onclick="window.upvote('${doc.id}', event)" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
+                            <span>Votes: <span id="vote-count-${doc.id}">${data.votes || 0}</span></span>
                         </div>
                     `;
                     mySubmissionsList.appendChild(div);
@@ -1574,6 +1582,7 @@
 
                         topThree.forEach((p, index) => {
                             const textData = truncateText(p.text);
+                            const hasVoted = p.voters && p.voters.includes(window.getUserId());
                             const div = document.createElement('div');
                             div.className = `proposal rank-${index + 1}`;
                             div.setAttribute('data-rank', `#${index + 1}`);
@@ -1581,7 +1590,7 @@
                                 <div class="proposal-title">${p.title || 'Untitled'}</div>
                                 <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
                                 <div class="proposal-votes">
-                                    <button onclick="window.upvote('${p.id}', event)">Upvote</button>
+                                    <button onclick="window.upvote('${p.id}', event)" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
                                     <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
                                 </div>
                                 <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
@@ -1602,13 +1611,14 @@
 
                         others.forEach((p) => {
                             const textData = truncateText(p.text);
+                            const hasVoted = p.voters && p.voters.includes(window.getUserId());
                             const div = document.createElement('div');
                             div.className = 'proposal';
                             div.innerHTML = `
                                 <div class="proposal-title">${p.title || 'Untitled'}</div>
                                 <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
                                 <div class="proposal-votes">
-                                    <button onclick="window.upvote('${p.id}', event)">Upvote</button>
+                                    <button onclick="window.upvote('${p.id}', event)" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
                                     <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
                                 </div>
                                 <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
@@ -1629,13 +1639,14 @@
                     } else {
                         proposals.forEach((p) => {
                             const textData = truncateText(p.text);
+                            const hasVoted = p.voters && p.voters.includes(window.getUserId());
                             const div = document.createElement('div');
                             div.className = 'proposal';
                             div.innerHTML = `
                                 <div class="proposal-title">${p.title || 'Untitled'}</div>
                                 <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
                                 <div class="proposal-votes">
-                                    <button onclick="window.upvote('${p.id}', event)">Upvote</button>
+                                    <button onclick="window.upvote('${p.id}', event)" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
                                     <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
                                 </div>
                                 <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
