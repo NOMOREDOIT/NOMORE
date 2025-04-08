@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
+        /* Your existing styles remain unchanged */
         :root {
             --primary-neon: #fdfdfd;
             --secondary-neon: #404040;
@@ -1435,7 +1436,6 @@
         let unsubscribeProposals = null;
         let unsubscribeSubmissions = null;
 
-        // Handle auth state changes (only for "My Submissions")
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 document.getElementById('x-signin-btn').style.display = 'none';
@@ -1444,7 +1444,7 @@
                 document.getElementById('user-profile').style.display = 'inline-block';
                 document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
                 localStorage.setItem('authUserId', user.uid);
-                loadMySubmissions(user.uid); // Load submissions on login
+                loadMySubmissions(user.uid);
                 syncLeaderboardWithVoting();
             } else {
                 document.getElementById('x-signin-btn').style.display = 'flex';
@@ -1473,7 +1473,7 @@
                 document.getElementById('logout-btn').style.display = 'flex';
                 document.getElementById('user-profile').style.display = 'inline-block';
                 document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
-                loadMySubmissions(user.uid); // Load submissions after sign-in
+                loadMySubmissions(user.uid);
             } catch (error) {
                 console.error("X Sign-in error:", error.code, error.message);
                 showNotification(`Failed to sign in with X: ${error.message}`);
@@ -1506,7 +1506,7 @@
                         <div class="proposal-title">${data.title || 'Untitled'}</div>
                         <div class="proposal-text">${data.text || ''}</div>
                         <div class="proposal-votes">
-                            <button onclick="window.upvote('${doc.id}', event)" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
+                            <button class="upvote-btn" data-proposal-id="${doc.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
                             <span>Votes: <span id="vote-count-${doc.id}">${data.votes || 0}</span></span>
                         </div>
                     `;
@@ -1599,7 +1599,7 @@
                                 <div class="proposal-title">${p.title || 'Untitled'}</div>
                                 <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
                                 <div class="proposal-votes">
-                                    <button onclick="window.upvote('${p.id}', event)" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
+                                    <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
                                     <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
                                 </div>
                                 <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
@@ -1627,7 +1627,7 @@
                                 <div class="proposal-title">${p.title || 'Untitled'}</div>
                                 <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
                                 <div class="proposal-votes">
-                                    <button onclick="window.upvote('${p.id}', event)" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
+                                    <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
                                     <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
                                 </div>
                                 <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
@@ -1655,7 +1655,7 @@
                                 <div class="proposal-title">${p.title || 'Untitled'}</div>
                                 <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
                                 <div class="proposal-votes">
-                                    <button onclick="window.upvote('${p.id}', event)" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
+                                    <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
                                     <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
                                 </div>
                                 <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
@@ -1740,27 +1740,43 @@
 
         async function upvote(proposalId, event) {
             event.stopPropagation();
+            event.preventDefault();
+            
             const userId = window.getUserId();
             const proposalRef = doc(db, "proposals", proposalId);
+            
             try {
                 await runTransaction(db, async (transaction) => {
-                    const docSnap = await getDoc(proposalRef);
+                    const docSnap = await transaction.get(proposalRef);
                     if (!docSnap.exists()) {
-                        throw "Proposal does not exist!";
+                        throw new Error("Proposal does not exist!");
                     }
+                    
                     const data = docSnap.data();
-                    if (data.voters.includes(userId)) {
-                        throw "You already voted for this proposal!";
+                    const voters = data.voters || [];
+                    
+                    if (voters.includes(userId)) {
+                        throw new Error("You already voted for this proposal!");
                     }
+                    
                     transaction.update(proposalRef, {
-                        votes: data.votes + 1,
-                        voters: [...data.voters, userId]
+                        votes: (data.votes || 0) + 1,
+                        voters: [...voters, userId]
                     });
                 });
-                console.log("Vote added");
+                
+                const voteCountElement = document.getElementById(`vote-count-${proposalId}`);
+                if (voteCountElement) {
+                    voteCountElement.textContent = parseInt(voteCountElement.textContent) + 1;
+                }
+                const button = event.target;
+                button.textContent = 'Voted';
+                button.disabled = true;
+                
+                showNotification("Vote recorded successfully!");
             } catch (error) {
                 console.error("Error voting: ", error);
-                showNotification(error.message || error);
+                showNotification(error.message || "Error recording vote. Please try again.");
             }
         }
 
@@ -1776,7 +1792,7 @@
             e.preventDefault();
             const title = document.getElementById('proposal-title').value;
             const text = document.getElementById('proposal-text').value;
-            const userId = localStorage.getItem('authUserId') || window.getUserId(); // Use authUserId if logged in, otherwise use generated userId
+            const userId = localStorage.getItem('authUserId') || window.getUserId();
             const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
             
             if (wordCount > 500) {
@@ -1798,14 +1814,11 @@
                 document.getElementById('word-count').textContent = '0/500 words';
                 showNotification('Idea submitted successfully!');
                 if (localStorage.getItem('authUserId')) {
-                    loadMySubmissions(localStorage.getItem('authUserId')); // Update badge if logged in
+                    loadMySubmissions(localStorage.getItem('authUserId'));
                 }
                 const viewVotingBtn = document.getElementById('view-voting-btn');
                 if (viewVotingBtn) {
-                    console.log('Adding glow-effect class to View Voting button');
                     viewVotingBtn.classList.add('glow-effect');
-                } else {
-                    console.error('View Voting button not found!');
                 }
             })
             .catch((error) => {
@@ -1817,6 +1830,15 @@
         document.getElementById('proposal-text').addEventListener('input', (e) => {
             const words = e.target.value.split(/\s+/).filter(word => word.length > 0);
             document.getElementById('word-count').textContent = `${words.length}/500 words`;
+        });
+
+        document.addEventListener('click', (event) => {
+            if (event.target.classList.contains('upvote-btn')) {
+                const proposalId = event.target.getAttribute('data-proposal-id');
+                if (proposalId) {
+                    window.upvote(proposalId, event);
+                }
+            }
         });
 
         window.startProposalsListener = startProposalsListener;
