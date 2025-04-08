@@ -188,7 +188,7 @@
             transform: scale(1.05);
         }
 
-        .my-votes-btn {
+        .my-submissions-btn {
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid var(--yellow-neon);
             padding: 0.5rem 1rem;
@@ -203,13 +203,13 @@
             top: 3px;
         }
 
-        .my-votes-btn:hover {
+        .my-submissions-btn:hover {
             background: var(--yellow-neon);
             color: black;
             transform: scale(1.05);
         }
 
-        .vote-badge {
+        .submission-count-badge {
             background: var(--yellow-neon);
             color: black;
             padding: 0.2rem 0.5rem;
@@ -514,7 +514,7 @@
             100% { background-position: 0% 0%; }
         }
 
-        .quote-popup, .voting-form-popup, .voting-list-popup, .my-votes-popup {
+        .quote-popup, .voting-form-popup, .voting-list-popup, .my-submissions-popup {
             display: none;
             position: fixed;
             top: 0;
@@ -527,7 +527,7 @@
             align-items: center;
         }
 
-        .quote-content, .voting-form-content, .voting-list-content, .my-votes-content {
+        .quote-content, .voting-form-content, .voting-list-content, .my-submissions-content {
             background: rgba(20, 20, 25, 0.95);
             padding: 3rem;
             border-radius: 24px;
@@ -548,7 +548,7 @@
             white-space: pre-wrap;
         }
 
-        .voting-form-content h2, .voting-list-content h2, .my-votes-content h2 {
+        .voting-form-content h2, .voting-list-content h2, .my-submissions-content h2 {
             font-size: 2rem;
             color: white;
             margin-bottom: 1rem;
@@ -743,7 +743,7 @@
             background: #606060;
         }
 
-        .voting-list-content .back-btn, .my-votes-content .back-btn {
+        .voting-list-content .back-btn, .my-submissions-content .back-btn {
             position: absolute;
             top: 1.2rem;
             left: 1.2rem;
@@ -758,16 +758,16 @@
             transition: all 0.3s ease;
         }
 
-        .voting-list-content .back-btn:hover, .my-votes-content .back-btn:hover {
+        .voting-list-content .back-btn:hover, .my-submissions-content .back-btn:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.05);
         }
 
-        .top-proposals, .my-votes-list {
+        .top-proposals, .my-submissions-list {
             margin-bottom: 1.2rem;
         }
 
-        .top-proposals .proposal, .my-votes-list .proposal {
+        .top-proposals .proposal, .my-submissions-list .proposal {
             position: relative;
             padding: 1.5rem 1rem;
             border-radius: 15px;
@@ -778,7 +778,7 @@
             margin: 0 auto 1rem;
         }
 
-        .top-proposals .proposal:hover, .my-votes-list .proposal:hover {
+        .top-proposals .proposal:hover, .my-submissions-list .proposal:hover {
             transform: translateY(-8px);
             box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
         }
@@ -812,13 +812,13 @@
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
 
-        .top-proposals .proposal-title, .my-votes-list .proposal-title {
+        .top-proposals .proposal-title, .my-submissions-list .proposal-title {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
 
-        .top-proposals .proposal-text, .my-votes-list .proposal-text {
+        .top-proposals .proposal-text, .my-submissions-list .proposal-text {
             font-size: 1rem;
         }
 
@@ -1106,11 +1106,11 @@
         </div>
     </div>
 
-    <div id="my-votes-popup" class="my-votes-popup">
-        <div class="my-votes-content">
-            <button class="back-btn" id="close-my-votes-btn">Close</button>
-            <h2>My Votes</h2>
-            <div id="my-votes-list" class="my-votes-list"></div>
+    <div id="my-submissions-popup" class="my-submissions-popup">
+        <div class="my-submissions-content">
+            <button class="back-btn" id="close-my-submissions-btn">Close</button>
+            <h2>My Submissions</h2>
+            <div id="my-submissions-list" class="my-submissions-list"></div>
         </div>
     </div>
 
@@ -1144,8 +1144,8 @@
                 Login with <img src="xlogo.png" alt="X" style="width: 16px; height: 16px; margin-left: 5px;">
             </button>
             <span id="user-profile" class="user-profile"></span>
-            <button id="my-votes-btn" class="my-votes-btn">
-                My Votes <span id="vote-count-badge" class="vote-badge">0</span>
+            <button id="my-submissions-btn" class="my-submissions-btn">
+                My Submissions <span id="submission-count-badge" class="submission-count-badge">0</span>
             </button>
             <button id="logout-btn" class="x-signin-btn" style="display: none;">Logout</button>
         </div>
@@ -1248,14 +1248,12 @@
 
         const votingFormPopup = document.getElementById('voting-form-popup');
         const votingListPopup = document.getElementById('voting-list-popup');
-        const myVotesPopup = document.getElementById('my-votes-popup');
+        const mySubmissionsPopup = document.getElementById('my-submissions-popup');
         const votingFormBtn = document.getElementById('voting-form-btn');
         const viewVotingBtn = document.getElementById('view-voting-btn');
         const backToFormBtn = document.getElementById('back-to-form-btn');
-        const myVotesBtn = document.getElementById('my-votes-btn');
-        const closeMyVotesBtn = document.getElementById('close-my-votes-btn');
-        const logoutBtn = document.getElementById('logout-btn');
-        const userProfile = document.getElementById('user-profile');
+        const mySubmissionsBtn = document.getElementById('my-submissions-btn');
+        const closeMySubmissionsBtn = document.getElementById('close-my-submissions-btn');
 
         if (launchBtn) {
             launchBtn.addEventListener('click', (e) => {
@@ -1265,7 +1263,7 @@
                 imagePopup.style.display = 'none';
                 votingFormPopup.style.display = 'none';
                 votingListPopup.style.display = 'none';
-                myVotesPopup.style.display = 'none';
+                mySubmissionsPopup.style.display = 'none';
             });
         }
 
@@ -1280,7 +1278,7 @@
                         quotePopup.style.display = 'none';
                         votingFormPopup.style.display = 'none';
                         votingListPopup.style.display = 'none';
-                        myVotesPopup.style.display = 'none';
+                        mySubmissionsPopup.style.display = 'none';
                     }
                 });
             });
@@ -1291,7 +1289,7 @@
             quotePopup.style.display = 'none';
             imagePopup.style.display = 'none';
             votingListPopup.style.display = 'none';
-            myVotesPopup.style.display = 'none';
+            mySubmissionsPopup.style.display = 'none';
         });
 
         viewVotingBtn.addEventListener('click', () => {
@@ -1299,7 +1297,7 @@
             quotePopup.style.display = 'none';
             imagePopup.style.display = 'none';
             votingFormPopup.style.display = 'none';
-            myVotesPopup.style.display = 'none';
+            mySubmissionsPopup.style.display = 'none';
             window.startProposalsListener();
         });
 
@@ -1309,26 +1307,30 @@
             window.stopProposalsListener();
         });
 
-        myVotesBtn.addEventListener('click', () => {
-            myVotesPopup.style.display = 'flex';
+        mySubmissionsBtn.addEventListener('click', () => {
+            mySubmissionsPopup.style.display = 'flex';
             quotePopup.style.display = 'none';
             imagePopup.style.display = 'none';
             votingFormPopup.style.display = 'none';
             votingListPopup.style.display = 'none';
             const userId = localStorage.getItem('userId');
-            if (userId) window.loadMyVotes(userId);
+            if (userId) window.loadMySubmissions(userId);
         });
 
-        closeMyVotesBtn.addEventListener('click', () => {
-            myVotesPopup.style.display = 'none';
+        closeMySubmissionsBtn.addEventListener('click', () => {
+            mySubmissionsPopup.style.display = 'none';
+            window.stopSubmissionsListener();
         });
 
-        [quotePopup, imagePopup, votingFormPopup, votingListPopup, myVotesPopup].forEach(popup => {
+        [quotePopup, imagePopup, votingFormPopup, votingListPopup, mySubmissionsPopup].forEach(popup => {
             popup.addEventListener('click', (e) => {
                 if (e.target === popup) {
                     popup.style.display = 'none';
                     if (popup === votingListPopup) {
                         window.stopProposalsListener();
+                    }
+                    if (popup === mySubmissionsPopup) {
+                        window.stopSubmissionsListener();
                     }
                 }
             });
@@ -1392,39 +1394,12 @@
                 }, 300);
             });
         });
-
-        // Handle auth state changes
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                document.getElementById('x-signin-btn').style.display = 'none';
-                document.getElementById('my-votes-btn').style.display = 'flex';
-                document.getElementById('logout-btn').style.display = 'flex';
-                document.getElementById('user-profile').style.display = 'inline-block';
-                document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
-                loadMyVotes(user.uid);
-            } else {
-                document.getElementById('x-signin-btn').style.display = 'flex';
-                document.getElementById('my-votes-btn').style.display = 'none';
-                document.getElementById('logout-btn').style.display = 'none';
-                document.getElementById('user-profile').style.display = 'none';
-                document.getElementById('user-profile').textContent = '';
-            }
-        });
-
-        document.getElementById('logout-btn').addEventListener('click', async () => {
-            await signOut(auth);
-            showNotification('Logged out successfully!');
-            document.getElementById('x-signin-btn').style.display = 'flex';
-            document.getElementById('my-votes-btn').style.display = 'none';
-            document.getElementById('logout-btn').style.display = 'none';
-            document.getElementById('user-profile').style.display = 'none';
-        });
     </script>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
         import { getAuth, signInWithPopup, TwitterAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, runTransaction, doc, getDoc, updateDoc, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, runTransaction, doc, getDoc, updateDoc, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
 
         const firebaseConfig = {
@@ -1443,6 +1418,27 @@
         const auth = getAuth(app);
 
         let unsubscribeProposals = null;
+        let unsubscribeSubmissions = null;
+
+        // Handle auth state changes
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('x-signin-btn').style.display = 'none';
+                document.getElementById('my-submissions-btn').style.display = 'flex';
+                document.getElementById('logout-btn').style.display = 'flex';
+                document.getElementById('user-profile').style.display = 'inline-block';
+                document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
+                localStorage.setItem('userId', user.uid);
+                syncLeaderboardWithVoting();
+            } else {
+                document.getElementById('x-signin-btn').style.display = 'flex';
+                document.getElementById('my-submissions-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'none';
+                document.getElementById('user-profile').style.display = 'none';
+                document.getElementById('user-profile').textContent = '';
+                localStorage.removeItem('userId');
+            }
+        });
 
         const twitterProvider = new TwitterAuthProvider();
         document.getElementById('x-signin-btn').addEventListener('click', async () => {
@@ -1452,39 +1448,62 @@
                 localStorage.setItem('userId', user.uid);
                 showNotification(`Signed in as @${user.providerData[0].displayName}`);
                 document.getElementById('x-signin-btn').style.display = 'none';
-                document.getElementById('my-votes-btn').style.display = 'flex';
+                document.getElementById('my-submissions-btn').style.display = 'flex';
                 document.getElementById('logout-btn').style.display = 'flex';
                 document.getElementById('user-profile').style.display = 'inline-block';
                 document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
-                loadMyVotes(user.uid);
             } catch (error) {
-                console.error("X Sign-in error:", error);
-                showNotification('Failed to sign in with X. Try again.');
+                console.error("X Sign-in error:", error.code, error.message);
+                showNotification(`Failed to sign in with X: ${error.code} - ${error.message}`);
             }
         });
 
-        async function loadMyVotes(userId) {
-            const myVotesList = document.getElementById('my-votes-list');
-            myVotesList.innerHTML = '';
-            const q = query(collection(db, "proposals"));
-            const querySnapshot = await getDocs(q);
-            let voteCount = 0;
-            querySnapshot.forEach((doc) => {
-                const data = doc.data();
-                if (data.voters && data.voters.includes(userId)) {
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await signOut(auth);
+            showNotification('Logged out successfully!');
+            document.getElementById('x-signin-btn').style.display = 'flex';
+            document.getElementById('my-submissions-btn').style.display = 'none';
+            document.getElementById('logout-btn').style.display = 'none';
+            document.getElementById('user-profile').style.display = 'none';
+        });
+
+        function loadMySubmissions(userId) {
+            if (unsubscribeSubmissions) unsubscribeSubmissions();
+            const mySubmissionsList = document.getElementById('my-submissions-list');
+            mySubmissionsList.innerHTML = '';
+            const q = query(collection(db, "proposals"), where("submitter", "==", userId));
+            unsubscribeSubmissions = onSnapshot(q, (querySnapshot) => {
+                mySubmissionsList.innerHTML = '';
+                let submissionCount = 0;
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
                     const div = document.createElement('div');
                     div.className = 'proposal';
                     div.innerHTML = `
                         <div class="proposal-title">${data.title || 'Untitled'}</div>
                         <div class="proposal-text">${data.text || ''}</div>
+                        <div class="proposal-votes">
+                            <span>Votes: ${data.votes || 0}</span>
+                        </div>
                     `;
-                    myVotesList.appendChild(div);
-                    voteCount++;
-                }
+                    mySubmissionsList.appendChild(div);
+                    submissionCount++;
+                });
+                document.getElementById('submission-count-badge').textContent = submissionCount;
+            }, (error) => {
+                console.error("Error loading submissions:", error);
+                showNotification("Error loading your submissions.");
             });
-            document.getElementById('vote-count-badge').textContent = voteCount;
         }
-        window.loadMyVotes = loadMyVotes;
+        window.loadMySubmissions = loadMySubmissions;
+
+        function stopSubmissionsListener() {
+            if (unsubscribeSubmissions) {
+                unsubscribeSubmissions();
+                unsubscribeSubmissions = null;
+            }
+        }
+        window.stopSubmissionsListener = stopSubmissionsListener;
 
         function truncateText(text, wordLimit = 50) {
             const words = text.split(/\s+/);
@@ -1692,8 +1711,6 @@
             });
         }
 
-        syncLeaderboardWithVoting();
-
         async function upvote(proposalId, event) {
             event.stopPropagation();
             const userId = window.getUserId();
@@ -1714,10 +1731,9 @@
                     });
                 });
                 console.log("Vote added");
-                loadMyVotes(userId); // Refresh My Votes
             } catch (error) {
                 console.error("Error voting: ", error);
-                showNotification(error);
+                showNotification(error.message || "Error voting");
             }
         }
 
@@ -1733,6 +1749,7 @@
             e.preventDefault();
             const title = document.getElementById('proposal-title').value;
             const text = document.getElementById('proposal-text').value;
+            const userId = window.getUserId();
             const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
             
             if (wordCount > 500) {
@@ -1745,6 +1762,7 @@
                 text: text,
                 votes: 0,
                 voters: [],
+                submitter: userId,
                 createdAt: serverTimestamp()
             })
             .then(() => {
