@@ -14,7 +14,6 @@
             --dark-bg: #0a0a0a;
             --neutral-grey: #606060;
         }
-
         * {
             margin: 0;
             padding: 0;
@@ -167,22 +166,66 @@
             cursor: pointer;
         }
 
-        .wallet-btn {
-            padding: 0.5rem 1rem;
+        .x-signin-btn {
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--secondary-neon);
-            border-radius: 5px;
+            border: 1px solid var(--primary-neon);
+            padding: 0.5rem 1rem;
             color: white;
             font-weight: 600;
+            border-radius: 5px;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
             position: relative;
             top: 3px;
         }
 
-        .wallet-btn:hover {
+        .x-signin-btn:hover {
             background: var(--secondary-neon);
             color: black;
+            transform: scale(1.05);
+        }
+
+        .my-submissions-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--yellow-neon);
+            padding: 0.5rem 1rem;
+            color: white;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: none;
+            align-items: center;
+            position: relative;
+            top: 3px;
+        }
+
+        .my-submissions-btn:hover {
+            background: var(--yellow-neon);
+            color: black;
+            transform: scale(1.05);
+        }
+
+        .submission-count-badge {
+            background: var(--yellow-neon);
+            color: black;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50%;
+            font-size: 0.8rem;
+            margin-left: 0.5rem;
+        }
+
+        .user-profile {
+            color: white;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.1);
+            display: none;
+            position: relative;
+            top: 3px;
         }
 
         main {
@@ -470,7 +513,7 @@
             100% { background-position: 0% 0%; }
         }
 
-        .quote-popup, .voting-form-popup, .voting-list-popup {
+        .quote-popup, .voting-form-popup, .voting-list-popup, .my-submissions-popup {
             display: none;
             position: fixed;
             top: 0;
@@ -483,7 +526,7 @@
             align-items: center;
         }
 
-        .quote-content, .voting-form-content, .voting-list-content {
+        .quote-content, .voting-form-content, .voting-list-content, .my-submissions-content {
             background: rgba(20, 20, 25, 0.95);
             padding: 3rem;
             border-radius: 24px;
@@ -504,7 +547,7 @@
             white-space: pre-wrap;
         }
 
-        .voting-form-content h2, .voting-list-content h2 {
+        .voting-form-content h2, .voting-list-content h2, .my-submissions-content h2 {
             font-size: 2rem;
             color: white;
             margin-bottom: 1rem;
@@ -575,11 +618,44 @@
             border-radius: 5px;
             cursor: pointer;
             transition: transform 0.3s ease, background 0.3s ease;
+            position: relative;
         }
 
         .voting-form-content .view-voting-btn:hover {
             transform: scale(1.05);
             background: #f0f0f0;
+        }
+
+        .voting-form-content .view-voting-btn.glow-effect {
+            animation: circulateGlow 2s linear infinite;
+        }
+
+        @keyframes circulateGlow {
+            0% {
+                box-shadow: 
+                    0 0 15px 8px var(--yellow-neon),
+                    0 -15px 20px -5px var(--yellow-neon);
+            }
+            25% {
+                box-shadow: 
+                    0 0 15px 8px var(--yellow-neon),
+                    15px 0 20px -5px var(--yellow-neon);
+            }
+            50% {
+                box-shadow: 
+                    0 0 15px 8px var(--yellow-neon),
+                    0 15px 20px -5px var(--yellow-neon);
+            }
+            75% {
+                box-shadow: 
+                    0 0 15px 8px var(--yellow-neon),
+                    -15px 0 20px -5px var(--yellow-neon);
+            }
+            100% {
+                box-shadow: 
+                    0 0 15px 8px var(--yellow-neon),
+                    0 -15px 20px -5px var(--yellow-neon);
+            }
         }
 
         .voting-controls {
@@ -666,7 +742,7 @@
             background: #606060;
         }
 
-        .voting-list-content .back-btn {
+        .voting-list-content .back-btn, .my-submissions-content .back-btn {
             position: absolute;
             top: 1.2rem;
             left: 1.2rem;
@@ -681,16 +757,16 @@
             transition: all 0.3s ease;
         }
 
-        .voting-list-content .back-btn:hover {
+        .voting-list-content .back-btn:hover, .my-submissions-content .back-btn:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.05);
         }
 
-        .top-proposals {
+        .top-proposals, .my-submissions-list {
             margin-bottom: 1.2rem;
         }
 
-        .top-proposals .proposal {
+        .top-proposals .proposal, .my-submissions-list .proposal {
             position: relative;
             padding: 1.5rem 1rem;
             border-radius: 15px;
@@ -698,10 +774,10 @@
             box-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             max-width: 500px;
-            margin: 0 auto;
+            margin: 0 auto 1rem;
         }
 
-        .top-proposals .proposal:hover {
+        .top-proposals .proposal:hover, .my-submissions-list .proposal:hover {
             transform: translateY(-8px);
             box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
         }
@@ -735,13 +811,13 @@
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
         }
 
-        .top-proposals .proposal-title {
+        .top-proposals .proposal-title, .my-submissions-list .proposal-title {
             font-size: 1.2rem;
             margin-bottom: 0.5rem;
             text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
         }
 
-        .top-proposals .proposal-text {
+        .top-proposals .proposal-text, .my-submissions-list .proposal-text {
             font-size: 1rem;
         }
 
@@ -805,6 +881,12 @@
         .proposal-votes button:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: scale(1.05);
+        }
+
+        .proposal-votes button:disabled {
+            background: rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.5);
+            cursor: not-allowed;
         }
 
         .proposal-votes span {
@@ -978,7 +1060,6 @@
         <source src="sha.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
-
     <div id="video-overlay"></div>
 
     <div id="notification-popup" class="notification-popup"></div>
@@ -1029,16 +1110,24 @@
         </div>
     </div>
 
+    <div id="my-submissions-popup" class="my-submissions-popup">
+        <div class="my-submissions-content">
+            <button class="back-btn" id="close-my-submissions-btn">Close</button>
+            <h2>My Submissions</h2>
+            <div id="my-submissions-list" class="my-submissions-list"></div>
+        </div>
+    </div>
+
     <div id="suggestionBanner">
         <div class="suggestion-scroll">
             <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
             <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
-            <div class="suggestion-item"><i class="fas fa-ban"></i> CTO</div>
+            <div class="suggestion-item"><i class="fas fa-heart"></i> CTO</div>
             <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
             <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add By Marketcap Tab</div>
             <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
             <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
-            <div class="suggestion-item"><i class="fas fa-ban"></i> CTO</div>
+            <div class="suggestion-item"><i class="fas fa-heart"></i> CTO</div>
             <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
             <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add By Marketcap Tab</div>
         </div>
@@ -1055,7 +1144,14 @@
         </div>
         <div class="header-right">
             <i class="fas fa-search search-icon" data-image="100.jpg"></i>
-            <button class="wallet-btn" data-image="mog.jpg">Select Wallet</button>
+            <button id="x-signin-btn" class="x-signin-btn">
+                Login with <img src="xlogo.png" alt="X" style="width: 16px; height: 16px; margin-left: 5px;">
+            </button>
+            <span id="user-profile" class="user-profile"></span>
+            <button id="my-submissions-btn" class="my-submissions-btn">
+                My Submissions <span id="submission-count-badge" class="submission-count-badge"></span>
+            </button>
+            <button id="logout-btn" class="x-signin-btn" style="display: none;">Logout</button>
         </div>
     </div>
 
@@ -1152,13 +1248,16 @@
         const imagePopup = document.getElementById('image-popup');
         const popupImage = document.getElementById('popup-image');
         const launchBtn = document.querySelector('.launch-btn');
-        const clickableElements = document.querySelectorAll('.leaderboard-icon, .wallet-btn, .nav-links a, .tabs-links a, .search-icon');
+        const clickableElements = document.querySelectorAll('.leaderboard-icon, .nav-links a, .tabs-links a, .search-icon');
 
         const votingFormPopup = document.getElementById('voting-form-popup');
         const votingListPopup = document.getElementById('voting-list-popup');
+        const mySubmissionsPopup = document.getElementById('my-submissions-popup');
         const votingFormBtn = document.getElementById('voting-form-btn');
         const viewVotingBtn = document.getElementById('view-voting-btn');
         const backToFormBtn = document.getElementById('back-to-form-btn');
+        const mySubmissionsBtn = document.getElementById('my-submissions-btn');
+        const closeMySubmissionsBtn = document.getElementById('close-my-submissions-btn');
 
         if (launchBtn) {
             launchBtn.addEventListener('click', (e) => {
@@ -1168,6 +1267,7 @@
                 imagePopup.style.display = 'none';
                 votingFormPopup.style.display = 'none';
                 votingListPopup.style.display = 'none';
+                mySubmissionsPopup.style.display = 'none';
             });
         }
 
@@ -1182,6 +1282,7 @@
                         quotePopup.style.display = 'none';
                         votingFormPopup.style.display = 'none';
                         votingListPopup.style.display = 'none';
+                        mySubmissionsPopup.style.display = 'none';
                     }
                 });
             });
@@ -1192,6 +1293,7 @@
             quotePopup.style.display = 'none';
             imagePopup.style.display = 'none';
             votingListPopup.style.display = 'none';
+            mySubmissionsPopup.style.display = 'none';
         });
 
         viewVotingBtn.addEventListener('click', () => {
@@ -1199,6 +1301,7 @@
             quotePopup.style.display = 'none';
             imagePopup.style.display = 'none';
             votingFormPopup.style.display = 'none';
+            mySubmissionsPopup.style.display = 'none';
             window.startProposalsListener();
         });
 
@@ -1208,12 +1311,34 @@
             window.stopProposalsListener();
         });
 
-        [quotePopup, imagePopup, votingFormPopup, votingListPopup].forEach(popup => {
+        mySubmissionsBtn.addEventListener('click', () => {
+            const userId = localStorage.getItem('authUserId');
+            if (!userId) {
+                showNotification('Please log in with X to view your submissions.');
+                return;
+            }
+            mySubmissionsPopup.style.display = 'flex';
+            quotePopup.style.display = 'none';
+            imagePopup.style.display = 'none';
+            votingFormPopup.style.display = 'none';
+            votingListPopup.style.display = 'none';
+            window.loadMySubmissions(userId);
+        });
+
+        closeMySubmissionsBtn.addEventListener('click', () => {
+            mySubmissionsPopup.style.display = 'none';
+            window.stopSubmissionsListener();
+        });
+
+        [quotePopup, imagePopup, votingFormPopup, votingListPopup, mySubmissionsPopup].forEach(popup => {
             popup.addEventListener('click', (e) => {
                 if (e.target === popup) {
                     popup.style.display = 'none';
                     if (popup === votingListPopup) {
                         window.stopProposalsListener();
+                    }
+                    if (popup === mySubmissionsPopup) {
+                        window.stopSubmissionsListener();
                     }
                 }
             });
@@ -1286,7 +1411,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, runTransaction, doc, getDoc, updateDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+        import { getAuth, signInWithPopup, TwitterAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, getDoc, updateDoc, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
 
         const firebaseConfig = {
@@ -1302,8 +1428,92 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
         const analytics = getAnalytics(app);
+        const auth = getAuth(app);
 
         let unsubscribeProposals = null;
+        let unsubscribeSubmissions = null;
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('x-signin-btn').style.display = 'none';
+                document.getElementById('my-submissions-btn').style.display = 'flex';
+                document.getElementById('logout-btn').style.display = 'flex';
+                document.getElementById('user-profile').style.display = 'inline-block';
+                document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
+                localStorage.setItem('authUserId', user.uid);
+                loadMySubmissions(user.uid);
+                syncLeaderboardWithVoting();
+            } else {
+                document.getElementById('x-signin-btn').style.display = 'flex';
+                document.getElementById('my-submissions-btn').style.display = 'none';
+                document.getElementById('logout-btn').style.display = 'none';
+                document.getElementById('user-profile').style.display = 'none';
+                document.getElementById('user-profile').textContent = '';
+                document.getElementById('submission-count-badge').textContent = '';
+                localStorage.removeItem('authUserId');
+                if (unsubscribeSubmissions) {
+                    unsubscribeSubmissions();
+                    unsubscribeSubmissions = null;
+                }
+            }
+        });
+
+        const twitterProvider = new TwitterAuthProvider();
+        document.getElementById('x-signin-btn').addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, twitterProvider);
+                const user = result.user;
+                localStorage.setItem('authUserId', user.uid);
+                showNotification(`Signed in as @${user.providerData[0].displayName}`);
+            } catch (error) {
+                console.error("X Sign-in error:", error.code, error.message);
+                showNotification(`Failed to sign in with X: ${error.message}`);
+            }
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', async () => {
+            await signOut(auth);
+            showNotification('Logged out successfully!');
+        });
+
+        function loadMySubmissions(userId) {
+            if (unsubscribeSubmissions) unsubscribeSubmissions();
+            const mySubmissionsList = document.getElementById('my-submissions-list');
+            mySubmissionsList.innerHTML = '';
+            const q = query(collection(db, "proposals"), where("submitter", "==", userId), orderBy("createdAt", "desc"));
+            unsubscribeSubmissions = onSnapshot(q, (querySnapshot) => {
+                mySubmissionsList.innerHTML = '';
+                let submissionCount = 0;
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    const hasVoted = data.voters && data.voters.includes(window.getUserId());
+                    const div = document.createElement('div');
+                    div.className = 'proposal';
+                    div.innerHTML = `
+                        <div class="proposal-title">${data.title || 'Untitled'}</div>
+                        <div class="proposal-text">${data.text || ''}</div>
+                        <div class="proposal-votes">
+                            <button class="upvote-btn" data-proposal-id="${doc.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
+                            <span>Votes: <span id="vote-count-${doc.id}">${data.votes || 0}</span></span>
+                        </div>
+                    `;
+                    mySubmissionsList.appendChild(div);
+                    submissionCount++;
+                });
+                document.getElementById('submission-count-badge').textContent = submissionCount;
+                addUpvoteListeners();
+            }, (error) => {
+                console.error("Error loading submissions:", error);
+                showNotification("Error loading your submissions.");
+            });
+        }
+
+        function stopSubmissionsListener() {
+            if (unsubscribeSubmissions) {
+                unsubscribeSubmissions();
+                unsubscribeSubmissions = null;
+            }
+        }
 
         function truncateText(text, wordLimit = 50) {
             const words = text.split(/\s+/);
@@ -1367,6 +1577,7 @@
 
                         topThree.forEach((p, index) => {
                             const textData = truncateText(p.text);
+                            const hasVoted = p.voters && p.voters.includes(window.getUserId());
                             const div = document.createElement('div');
                             div.className = `proposal rank-${index + 1}`;
                             div.setAttribute('data-rank', `#${index + 1}`);
@@ -1374,7 +1585,7 @@
                                 <div class="proposal-title">${p.title || 'Untitled'}</div>
                                 <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
                                 <div class="proposal-votes">
-                                    <button onclick="window.upvote('${p.id}', event)">Upvote</button>
+                                    <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
                                     <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
                                 </div>
                                 <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
@@ -1395,13 +1606,14 @@
 
                         others.forEach((p) => {
                             const textData = truncateText(p.text);
+                            const hasVoted = p.voters && p.voters.includes(window.getUserId());
                             const div = document.createElement('div');
                             div.className = 'proposal';
                             div.innerHTML = `
                                 <div class="proposal-title">${p.title || 'Untitled'}</div>
                                 <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
                                 <div class="proposal-votes">
-                                    <button onclick="window.upvote('${p.id}', event)">Upvote</button>
+                                    <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
                                     <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
                                 </div>
                                 <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
@@ -1422,13 +1634,14 @@
                     } else {
                         proposals.forEach((p) => {
                             const textData = truncateText(p.text);
+                            const hasVoted = p.voters && p.voters.includes(window.getUserId());
                             const div = document.createElement('div');
                             div.className = 'proposal';
                             div.innerHTML = `
                                 <div class="proposal-title">${p.title || 'Untitled'}</div>
                                 <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
                                 <div class="proposal-votes">
-                                    <button onclick="window.upvote('${p.id}', event)">Upvote</button>
+                                    <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
                                     <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
                                 </div>
                                 <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
@@ -1447,6 +1660,7 @@
                             otherProposalsContainer.appendChild(div);
                         });
                     }
+                    addUpvoteListeners();
                 });
             }
 
@@ -1470,7 +1684,6 @@
                 });
 
                 const topThree = proposals.slice(0, 3);
-
                 const leaderboardMap = [
                     { idPrefix: "1", rank: "#1" },
                     { idPrefix: "2", rank: "#2" },
@@ -1511,32 +1724,42 @@
             });
         }
 
-        syncLeaderboardWithVoting();
-
-        async function upvote(proposalId, event) {
-            event.stopPropagation();
+        async function upvote(proposalId) {
             const userId = window.getUserId();
             const proposalRef = doc(db, "proposals", proposalId);
             try {
-                await runTransaction(db, async (transaction) => {
-                    const docSnap = await getDoc(proposalRef);
-                    if (!docSnap.exists()) {
-                        throw "Proposal does not exist!";
-                    }
-                    const data = docSnap.data();
-                    if (data.voters && data.voters.includes(userId)) {
-                        throw "You already voted for this proposal!";
-                    }
-                    transaction.update(proposalRef, {
-                        votes: (data.votes || 0) + 1,
-                        voters: data.voters ? [...data.voters, userId] : [userId]
-                    });
+                const docSnap = await getDoc(proposalRef);
+                if (!docSnap.exists()) {
+                    throw new Error("Proposal does not exist!");
+                }
+                const data = docSnap.data();
+                if (data.voters && data.voters.includes(userId)) {
+                    showNotification("You already voted for this proposal!");
+                    return;
+                }
+
+                await updateDoc(proposalRef, {
+                    votes: (data.votes || 0) + 1,
+                    voters: [...(data.voters || []), userId]
                 });
-                console.log("Vote added");
+                showNotification("Vote recorded successfully!");
             } catch (error) {
                 console.error("Error voting: ", error);
-                showNotification(error);
+                showNotification(error.message || "Error recording vote");
             }
+        }
+
+        function addUpvoteListeners() {
+            document.querySelectorAll('.upvote-btn').forEach(button => {
+                button.removeEventListener('click', handleUpvoteClick);
+                button.addEventListener('click', handleUpvoteClick);
+            });
+        }
+
+        function handleUpvoteClick(event) {
+            event.stopPropagation();
+            const proposalId = this.getAttribute('data-proposal-id');
+            upvote(proposalId);
         }
 
         function shareOnX(title, text, event) {
@@ -1547,10 +1770,11 @@
             window.open(tweetUrl, '_blank');
         }
 
-        document.getElementById('voting-form').addEventListener('submit', (e) => {
+        document.getElementById('voting-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const title = document.getElementById('proposal-title').value;
             const text = document.getElementById('proposal-text').value;
+            const userId = localStorage.getItem('authUserId') || window.getUserId();
             const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
             
             if (wordCount > 500) {
@@ -1558,23 +1782,30 @@
                 return;
             }
 
-            addDoc(collection(db, "proposals"), {
-                title: title,
-                text: text,
-                votes: 0,
-                voters: [],
-                createdAt: serverTimestamp()
-            })
-            .then(() => {
+            try {
+                await addDoc(collection(db, "proposals"), {
+                    title: title,
+                    text: text,
+                    votes: 0,
+                    voters: [],
+                    submitter: userId,
+                    createdAt: serverTimestamp()
+                });
                 document.getElementById('proposal-title').value = '';
                 document.getElementById('proposal-text').value = '';
                 document.getElementById('word-count').textContent = '0/500 words';
                 showNotification('Idea submitted successfully!');
-            })
-            .catch((error) => {
+                if (localStorage.getItem('authUserId')) {
+                    loadMySubmissions(localStorage.getItem('authUserId'));
+                }
+                const viewVotingBtn = document.getElementById('view-voting-btn');
+                if (viewVotingBtn) {
+                    viewVotingBtn.classList.add('glow-effect');
+                }
+            } catch (error) {
                 console.error("Error adding proposal: ", error);
                 showNotification('Error submitting idea. Please try again.');
-            });
+            }
         });
 
         document.getElementById('proposal-text').addEventListener('input', (e) => {
@@ -1582,10 +1813,14 @@
             document.getElementById('word-count').textContent = `${words.length}/500 words`;
         });
 
+        syncLeaderboardWithVoting();
+
         window.startProposalsListener = startProposalsListener;
         window.stopProposalsListener = stopProposalsListener;
         window.upvote = upvote;
         window.shareOnX = shareOnX;
+        window.loadMySubmissions = loadMySubmissions;
+        window.stopSubmissionsListener = stopSubmissionsListener;
     </script>
 </body>
 </html>
