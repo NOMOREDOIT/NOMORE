@@ -1,3 +1,5 @@
+See new posts
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,1041 +21,1041 @@
             padding: 0;
             box-sizing: border-box;
         }
+    html, body {
+        height: 100vh;
+        background: #110f18;
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        color: white;
+        overflow-y: auto;
+        min-width: 1200px;
+        overflow-x: auto;
+    }
+
+    #cto-image {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 1;
+        z-index: 1;
+        max-width: 50%;
+        max-height: 50%;
+        width: auto;
+        height: auto;
+        filter: brightness(0.8);
+    }
+
+    #background-video {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 65%;
+        height: 65%;
+        object-fit: cover;
+        z-index: 0;
+    }
+
+    #video-overlay {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 16.7vh;
+        background: #110f18;
+        z-index: 1;
+    }
+
+    #suggestionBanner {
+        width: 100%;
+        background: linear-gradient(90deg, rgba(0, 0, 0, 0.95), rgba(10, 8, 16, 0.95), rgba(0, 0, 0, 0.95));
+        padding: 0.5rem 0;
+        overflow: hidden;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        z-index: 10;
+        -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+        mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
+    }
+
+    .suggestion-scroll {
+        display: flex;
+        gap: 3rem;
+        animation: scrollSuggestions 25s linear infinite;
+        white-space: nowrap;
+    }
+
+    #suggestionBanner:hover .suggestion-scroll {
+        animation-play-state: paused;
+    }
+
+    @keyframes scrollSuggestions {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+
+    .suggestion-item {
+        color: white;
+        font-size: 1rem;
+        padding: 0.5rem 1.2rem;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .header-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: rgba(0, 0, 0, 0.9);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        height: 60px;
+        position: relative;
+    }
+
+    .logo-nav-container {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .logo {
+        font-family: "Press Start 2P", cursive;
+        font-size: 1.7rem;
+        font-weight: 400;
+        color: white;
+        text-shadow: 
+            2px 2px 0 black,
+            -2px -2px 0 black,
+            2px -2px 0 black,
+            -2px 2px 0 black,
+            0 0 10px var(--primary-neon);
+        letter-spacing: 4px;
+        position: relative;
+        top: 3px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+    }
+
+    .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+        position: relative;
+        top: 3px;
+    }
+
+    .nav-links a:hover {
+        color: var(--secondary-neon);
+    }
+
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .search-icon {
+        color: white;
+        font-size: 1.2rem;
+        cursor: pointer;
+    }
+
+    .x-signin-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--primary-neon);
+        padding: 0.5rem 1rem;
+        color: white;
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        position: relative;
+        top: 3px;
+    }
+
+    .x-signin-btn:hover {
+        background: var(--secondary-neon);
+        color: black;
+        transform: scale(1.05);
+    }
+
+    .my-submissions-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--yellow-neon);
+        padding: 0.5rem 1rem;
+        color: white;
+        font-weight: 600;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: none;
+        align-items: center;
+        position: relative;
+        top: 3px;
+    }
+
+    .my-submissions-btn:hover {
+        background: var(--yellow-neon);
+        color: black;
+        transform: scale(1.05);
+    }
+
+    .submission-count-badge {
+        background: var(--yellow-neon);
+        color: black;
+        padding: 0.2rem 0.5rem;
+        border-radius: 50%;
+        font-size: 0.8rem;
+        margin-left: 0.5rem;
+    }
+
+    .user-profile {
+        color: white;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        background: rgba(255, 255, 255, 0.1);
+        display: none;
+        position: relative;
+        top: 3px;
+    }
+
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        min-height: calc(100vh - 165px);
+        position: relative;
+    }
+
+    .main-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        gap: 2rem;
+    }
+
+    .leaderboard-section {
+        flex: 1;
+        display: flex;
+        justify-content: flex-start;
+        z-index: 2;
+        margin-bottom: 45px;
+    }
+
+    .text-buttons-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        z-index: 2;
+    }
+
+    .main-heading {
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        font-size: 1.8rem;
+        text-transform: uppercase;
+        margin-bottom: 0.5rem;
+        text-align: center;
+    }
+
+    .sub-heading {
+        font-size: 1.1rem;
+        color: rgba(255, 255, 252, 0.8);
+        text-align: center;
+    }
+
+    .leaderboard {
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-end;
+    }
+
+    .leaderboard-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        position: relative;
+        transform: translateY(10vh);
+    }
+
+    .leaderboard-icon {
+        position: relative;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-size: cover;
+        background-position: center;
+        cursor: pointer;
+    }
+
+    .leaderboard-item:nth-child(1) .leaderboard-icon {
+        background-image: url('velma.jpg');
+        background-color: #fe8a66;
+    }
+
+    .leaderboard-item:nth-child(2) .leaderboard-icon {
+        background-image: url('sniff.jpg');
+        background-color: #ffeb3b;
+    }
+
+    .leaderboard-item:nth-child(3) .leaderboard-icon {
+        background-image: url('spider.jpg');
+        background-color: #4caf50;
+    }
+
+    .leaderboard-bar {
+        position: relative;
+        width: 80px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .leaderboard-bar.first {
+        height: 120px;
+        background: #ff7b53;
+    }
+
+    .leaderboard-bar.second {
+        height: 240px;
+        background: #ffeb3b;
+    }
+
+    .leaderboard-bar.third {
+        height: 170px;
+        background: #4caf50;
+    }
+
+    .leaderboard-rank {
+        position: absolute;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: black;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .leaderboard-tooltip {
+        display: none;
+        position: absolute;
+        background: rgba(20, 20, 25, 0.95);
+        color: white;
+        padding: 0.8rem 1.4rem;
+        border-radius: 8px;
+        font-size: 1rem;
+        white-space: nowrap;
+        z-index: 10;
+        text-align: center;
+        box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        cursor: pointer;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .leaderboard-tooltip .title {
+        font-size: 1.1rem;
+        font-weight: bold;
+        margin-bottom: 0.2rem;
+    }
+
+    .leaderboard-tooltip .stats {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .leaderboard-tooltip::after {
+        content: "Click to vote";
+        display: block;
+        font-size: 0.7rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 0.3rem;
+    }
+
+    .leaderboard-item:nth-child(1) .leaderboard-tooltip {
+        border: 2px solid #ff7b53;
+        animation: neonPulseOrange 1.5s infinite ease-in-out;
+    }
+
+    .leaderboard-item:nth-child(1) .leaderboard-tooltip .title::before {
+        content: "🏆 ";
+        font-size: 1rem;
+        text-shadow: 0 0 8px #ff7b53;
+    }
+
+    .leaderboard-item:nth-child(2) .leaderboard-tooltip {
+        border: 2px solid #ffeb3b;
+        animation: neonPulseYellow 1.5s infinite ease-in-out;
+    }
+
+    .leaderboard-item:nth-child(2) .leaderboard-tooltip .title::before {
+        content: "🏆 ";
+        font-size: 1rem;
+        text-shadow: 0 0 8px #ffeb3b;
+    }
+
+    .leaderboard-item:nth-child(3) .leaderboard-tooltip {
+        border: 2px solid #4caf50;
+        animation: neonPulseGreen 1.5s infinite ease-in-out;
+    }
+
+    .leaderboard-item:nth-child(3) .leaderboard-tooltip .title::before {
+        content: "🏆 ";
+        font-size: 1rem;
+        text-shadow: 0 0 8px #4caf50;
+    }
+
+    @keyframes neonPulseOrange {
+        0%, 100% { box-shadow: 0 0 10px #ff7b53; }
+        50% { box-shadow: 0 0 20px #ff7b53; }
+    }
+
+    @keyframes neonPulseYellow {
+        0%, 100% { box-shadow: 0 0 10px #ffeb3b; }
+        50% { box-shadow: 0 0 20px #ffeb3b; }
+    }
+
+    @keyframes neonPulseGreen {
+        0%, 100% { box-shadow: 0 0 10px #4caf50; }
+        50% { box-shadow: 0 0 20px #4caf50; }
+    }
+
+    .leaderboard-item:hover .leaderboard-tooltip {
+        display: block;
+        opacity: 1;
+    }
+
+    .leaderboard-icon:hover, .leaderboard-bar:hover {
+        transform: scale(1.05);
+        transition: transform 0.3s ease;
+    }
+
+    .bottom-container {
+        position: relative;
+        width: 100%;
+        z-index: 10;
+        margin-top: -50px;
+    }
+
+    .tabs-section {
+        width: 100%;
+        background: rgba(14, 15, 17, 0.95);
+        padding: 0.5rem 2rem;
+        z-index: 15;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: 120px;
+    }
+
+    .tabs-links {
+        display: flex;
+        gap: 2rem;
+        justify-content: flex-start;
+    }
+
+    .tabs-links a {
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        font-size: 1.1rem;
+        color: white;
+        text-decoration: none;
+        font-weight: 700;
+        transition: color 0.3s ease;
+    }
+
+    .tabs-links a:hover {
+        color: var(--secondary-neon);
+    }
+
+    .tabs-links a.gold-tab {
+        color: #FFD700;
+        background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700, #FFBF00);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: shimmer 3s infinite linear;
+    }
+
+    .tabs-links a.gold-tab:hover {
+        color: #FFD700;
+        -webkit-text-fill-color: transparent;
+        filter: brightness(1.2);
+    }
+
+    @keyframes shimmer {
+        0% { background-position: 0% 0%; }
+        50% { background-position: 100% 100%; }
+        100% { background-position: 0% 0%; }
+    }
+
+    .quote-popup, .voting-form-popup, .voting-list-popup, .my-submissions-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 20;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .quote-content, .voting-form-content, .voting-list-content, .my-submissions-content {
+        background: rgba(20, 20, 25, 0.95);
+        padding: 3rem;
+        border-radius: 24px;
+        text-align: center;
+        max-width: 800px;
+        max-height: 85vh;
+        width: 100%;
+        height: auto;
+        overflow-y: auto;
+        backdrop-filter: blur(8px);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    #quote-text {
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        font-size: 1rem;
+        color: var(--primary-neon);
+        white-space: pre-wrap;
+    }
+
+    .voting-form-content h2, .voting-list-content h2, .my-submissions-content h2 {
+        font-size: 2rem;
+        color: white;
+        margin-bottom: 1rem;
+    }
+
+    .voting-form-content h3 {
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        font-size: 1.1rem;
+        color: rgba(255, 255, 252, 0.8);
+        margin-bottom: 1rem;
+    }
+
+    .voting-form-content input,
+    .voting-form-content textarea {
+        width: 100%;
+        margin-bottom: 1rem;
+        padding: 0.8rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid var(--primary-neon);
+        border-radius: 8px;
+        color: white;
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        font-size: 1rem;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: 0 0 8px rgba(253, 253, 253, 0.5);
+    }
+
+    .voting-form-content input:focus,
+    .voting-form-content textarea:focus {
+        outline: none;
+        border-color: #ffffff;
+        box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+    }
+
+    #word-count {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        text-align: right;
+    }
+
+    .voting-form-content button {
+        background: #ffffff;
+        color: black;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 0.5rem;
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        font-size: 1.2rem;
+        transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .voting-form-content button:hover {
+        transform: scale(1.05);
+        background: #f0f0f0;
+    }
+
+    .voting-form-content .view-voting-btn {
+        background: white;
+        color: black;
+        margin-top: 1rem;
+        padding: 0.75rem 1.5rem;
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: transform 0.3s ease, background 0.3s ease;
+        position: relative;
+    }
+
+    .voting-form-content .view-voting-btn:hover {
+        transform: scale(1.05);
+        background: #f0f0f0;
+    }
+
+    .voting-form-content .view-voting-btn.glow-effect {
+        animation: circulateGlow 2s linear infinite;
+    }
+
+    @keyframes circulateGlow {
+        0% {
+            box-shadow: 
+                0 0 15px 8px var(--yellow-neon),
+                0 -15px 20px -5px var(--yellow-neon);
+        }
+        25% {
+            box-shadow: 
+                0 0 15px 8px var(--yellow-neon),
+                15px 0 20px -5px var(--yellow-neon);
+        }
+        50% {
+            box-shadow: 
+                0 0 15px 8px var(--yellow-neon),
+                0 15px 20px -5px var(--yellow-neon);
+        }
+        75% {
+            box-shadow: 
+                0 0 15px 8px var(--yellow-neon),
+                -15px 0 20px -5px var(--yellow-neon);
+        }
+        100% {
+            box-shadow: 
+                0 0 15px 8px var(--yellow-neon),
+                0 -15px 20px -5px var(--yellow-neon);
+        }
+    }
+
+    .voting-controls {
+        margin-bottom: 1.5rem;
+        position: relative;
+        display: flex;
+        justify-content: center;
+    }
+
+    .custom-select {
+        position: relative;
+        width: fit-content;
+    }
+
+    .select-button {
+        padding: 0.4rem 1.5rem 0.4rem 0.4rem;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid var(--primary-neon);
+        border-radius: 5px;
+        color: white;
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        font-size: 0.9rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 130px;
+        white-space: nowrap;
+    }
+
+    .select-button::after {
+        content: '\f078';
+        font-family: "Font Awesome 6 Free";
+        font-weight: 900;
+        margin-left: 0.8rem;
+        font-size: 0.7rem;
+    }
+
+    .options {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(20, 20, 25, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        max-height: 150px;
+        overflow-y: auto;
+        color: white;
+        z-index: 25;
+    }
+
+    .options div {
+        padding: 0.5rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        font-size: 0.9rem;
+    }
+
+    .options div:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+
+    .custom-select.open .options {
+        display: block;
+    }
+
+    .options::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .options::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 4px;
+    }
+
+    .options::-webkit-scrollbar-thumb {
+        background: var(--secondary-neon);
+        border-radius: 4px;
+    }
+
+    .options::-webkit-scrollbar-thumb:hover {
+        background: #606060;
+    }
+
+    .voting-list-content .back-btn, .my-submissions-content .back-btn {
+        position: absolute;
+        top: 1.2rem;
+        left: 1.2rem;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 0.5rem 1rem;
+        border: 2px solid var(--primary-neon);
+        border-radius: 6px;
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .voting-list-content .back-btn:hover, .my-submissions-content .back-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+    }
+
+    .top-proposals, .my-submissions-list {
+        margin-bottom: 1.2rem;
+    }
+
+    .top-proposals .proposal, .my-submissions-list .proposal {
+        position: relative;
+        padding: 1.5rem 1rem;
+        border-radius: 15px;
+        background: rgba(30, 30, 35, 0.95);
+        box-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        max-width: 500px;
+        margin: 0 auto 1rem;
+    }
+
+    .top-proposals .proposal:hover, .my-submissions-list .proposal:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
+    }
+
+    .top-proposals .proposal.rank-1 {
+        border: 4px solid #ffeb3b;
+        box-shadow: 0 0 24px #ffeb3b80;
+    }
+
+    .top-proposals .proposal.rank-2 {
+        border: 4px solid #4caf50;
+        box-shadow: 0 0 24px #4caf5080;
+    }
+
+    .top-proposals .proposal.rank-3 {
+        border: 4px solid #ff7b53;
+        box-shadow: 0 0 24px #ff7b5380;
+    }
+
+    .top-proposals .proposal::before {
+        content: attr(data-rank);
+        position: absolute;
+        top: -10px;
+        left: 12px;
+        background: rgba(0, 0, 0, 0.8);
+        color: white;
+        padding: 0.2rem 0.5rem;
+        border-radius: 6px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+    }
+
+    .top-proposals .proposal-title, .my-submissions-list .proposal-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+    }
+
+    .top-proposals .proposal-text, .my-submissions-list .proposal-text {
+        font-size: 1rem;
+    }
+
+    .proposal {
+        background: rgba(30, 30, 35, 0.9);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        padding: 1rem 0.8rem;
+        margin: 0.8rem 0;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        max-width: 500px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+    }
+
+    .proposal:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+    }
+
+    .proposal-title {
+        font-size: 1.2rem;
+        color: white;
+        margin-bottom: 0.4rem;
+    }
+
+    .proposal-text {
+        font-size: 1rem;
+        color: rgba(255, 255, 255, 0.9);
+        margin-bottom: 0.8rem;
+        transition: max-height 0.3s ease;
+    }
+
+    .proposal-text.shortened {
+        max-height: 2.5em;
+        overflow: hidden;
+    }
+
+    .proposal-text.shortened::after {
+        content: "...";
+        color: rgba(255, 255, 255, 0.7);
+    }
+
+    .proposal-votes {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+    }
+
+    .proposal-votes button {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        padding: 0.4rem 0.9rem;
+        font-size: 0.95rem;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .proposal-votes button:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+    }
+
+    .proposal-votes button:disabled {
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.5);
+        cursor: not-allowed;
+    }
+
+    .proposal-votes span {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.95rem;
+    }
+
+    .share-btn {
+        position: absolute;
+        bottom: 0.5rem;
+        right: 0.5rem;
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .share-btn img {
+        width: 12px;
+        height: 12px;
+    }
+
+    .proposal:not(.rank-1):not(.rank-2):not(.rank-3) .share-btn {
+        opacity: 0;
+        transition: opacity 0.2s ease;
+    }
+
+    .proposal:not(.rank-1):not(.rank-2):not(.rank-3):hover .share-btn {
+        opacity: 1;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .proposal:not(.rank-1):not(.rank-2):not(.rank-3):hover .share-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+    }
+
+    .proposal.rank-1 .share-btn,
+    .proposal.rank-2 .share-btn,
+    .proposal.rank-3 .share-btn {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .proposal.rank-1 .share-btn:hover,
+    .proposal.rank-2 .share-btn:hover,
+    .proposal.rank-3 .share-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: scale(1.05);
+    }
+
+    .image-popup {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 20;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image-content {
+        max-width: 400px;
+        max-height: 300px;
+        width: auto;
+        height: auto;
+        border-radius: 10px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .image-content img {
+        max-width: 400px;
+        max-height: 300px;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        display: block;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 20px;
+        justify-content: center;
+    }
+
+    .action-btn {
+        padding: 0.8rem 1.7rem;
+        font-size: 1rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        border: none;
+    }
+
+    .launch-btn {
+        background: white;
+        color: black;
+    }
+
+    .launch-btn:hover {
+        transform: scale(1.05);
+    }
+
+    .vote-btn {
+        background: var(--yellow-neon);
+        color: black;
+    }
+
+    .vote-btn:hover {
+        transform: scale(1.05);
+    }
+
+    footer {
+        display: none;
+    }
+
+    .bottom-image-overlay {
+        width: 100%;
+        height: 20vh;
+        z-index: 5;
+        margin-top: -75px;
+    }
+
+    .bottom-image-overlay img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: bottom;
+        display: block;
+        transform: translateX(50px);
+    }
+
+    .notification-popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(5px);
+        padding: 1rem 2rem;
+        border-radius: 10px;
+        color: white;
+        font-family: "Comic Sans MS", "Comic Sans", cursive;
+        font-size: 1.2rem;
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        pointer-events: none;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .notification-visible {
+        opacity: 1;
+    }
+</style>
 
-        html, body {
-            height: 100vh;
-            background: #110f18;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            color: white;
-            overflow-y: auto;
-            min-width: 1200px;
-            overflow-x: auto;
-        }
-
-        #cto-image {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            opacity: 1;
-            z-index: 1;
-            max-width: 50%;
-            max-height: 50%;
-            width: auto;
-            height: auto;
-            filter: brightness(0.8);
-        }
-
-        #background-video {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 65%;
-            height: 65%;
-            object-fit: cover;
-            z-index: 0;
-        }
-
-        #video-overlay {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 16.7vh;
-            background: #110f18;
-            z-index: 1;
-        }
-
-        #suggestionBanner {
-            width: 100%;
-            background: linear-gradient(90deg, rgba(0, 0, 0, 0.95), rgba(10, 8, 16, 0.95), rgba(0, 0, 0, 0.95));
-            padding: 0.5rem 0;
-            overflow: hidden;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-            z-index: 10;
-            -webkit-mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
-            mask: linear-gradient(90deg, transparent, white 10%, white 90%, transparent);
-        }
-
-        .suggestion-scroll {
-            display: flex;
-            gap: 3rem;
-            animation: scrollSuggestions 25s linear infinite;
-            white-space: nowrap;
-        }
-
-        #suggestionBanner:hover .suggestion-scroll {
-            animation-play-state: paused;
-        }
-
-        @keyframes scrollSuggestions {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        .suggestion-item {
-            color: white;
-            font-size: 1rem;
-            padding: 0.5rem 1.2rem;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .header-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: rgba(0, 0, 0, 0.9);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            height: 60px;
-            position: relative;
-        }
-
-        .logo-nav-container {
-            display: flex;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .logo {
-            font-family: "Press Start 2P", cursive;
-            font-size: 1.7rem;
-            font-weight: 400;
-            color: white;
-            text-shadow: 
-                2px 2px 0 black,
-                -2px -2px 0 black,
-                2px -2px 0 black,
-                -2px 2px 0 black,
-                0 0 10px var(--primary-neon);
-            letter-spacing: 4px;
-            position: relative;
-            top: 3px;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s ease;
-            position: relative;
-            top: 3px;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary-neon);
-        }
-
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .search-icon {
-            color: white;
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        .x-signin-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--primary-neon);
-            padding: 0.5rem 1rem;
-            color: white;
-            font-weight: 600;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            position: relative;
-            top: 3px;
-        }
-
-        .x-signin-btn:hover {
-            background: var(--secondary-neon);
-            color: black;
-            transform: scale(1.05);
-        }
-
-        .my-submissions-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--yellow-neon);
-            padding: 0.5rem 1rem;
-            color: white;
-            font-weight: 600;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: none;
-            align-items: center;
-            position: relative;
-            top: 3px;
-        }
-
-        .my-submissions-btn:hover {
-            background: var(--yellow-neon);
-            color: black;
-            transform: scale(1.05);
-        }
-
-        .submission-count-badge {
-            background: var(--yellow-neon);
-            color: black;
-            padding: 0.2rem 0.5rem;
-            border-radius: 50%;
-            font-size: 0.8rem;
-            margin-left: 0.5rem;
-        }
-
-        .user-profile {
-            color: white;
-            font-weight: 600;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.1);
-            display: none;
-            position: relative;
-            top: 3px;
-        }
-
-        main {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem;
-            min-height: calc(100vh - 165px);
-            position: relative;
-        }
-
-        .main-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            gap: 2rem;
-        }
-
-        .leaderboard-section {
-            flex: 1;
-            display: flex;
-            justify-content: flex-start;
-            z-index: 2;
-            margin-bottom: 45px;
-        }
-
-        .text-buttons-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            z-index: 2;
-        }
-
-        .main-heading {
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .sub-heading {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 252, 0.8);
-            text-align: center;
-        }
-
-        .leaderboard {
-            display: flex;
-            gap: 1.5rem;
-            align-items: flex-end;
-        }
-
-        .leaderboard-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            position: relative;
-            transform: translateY(10vh);
-        }
-
-        .leaderboard-icon {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
-        }
-
-        .leaderboard-item:nth-child(1) .leaderboard-icon {
-            background-image: url('velma.jpg');
-            background-color: #fe8a66;
-        }
-
-        .leaderboard-item:nth-child(2) .leaderboard-icon {
-            background-image: url('sniff.jpg');
-            background-color: #ffeb3b;
-        }
-
-        .leaderboard-item:nth-child(3) .leaderboard-icon {
-            background-image: url('spider.jpg');
-            background-color: #4caf50;
-        }
-
-        .leaderboard-bar {
-            position: relative;
-            width: 80px;
-            border-top-left-radius: 10px;
-            border-top-right-radius: 10px;
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .leaderboard-bar.first {
-            height: 120px;
-            background: #ff7b53;
-        }
-
-        .leaderboard-bar.second {
-            height: 240px;
-            background: #ffeb3b;
-        }
-
-        .leaderboard-bar.third {
-            height: 170px;
-            background: #4caf50;
-        }
-
-        .leaderboard-rank {
-            position: absolute;
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: black;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .leaderboard-tooltip {
-            display: none;
-            position: absolute;
-            background: rgba(20, 20, 25, 0.95);
-            color: white;
-            padding: 0.8rem 1.4rem;
-            border-radius: 8px;
-            font-size: 1rem;
-            white-space: nowrap;
-            z-index: 10;
-            text-align: center;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            opacity: 0;
-            transition: opacity 0.3s ease-in-out;
-            cursor: pointer;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-
-        .leaderboard-tooltip .title {
-            font-size: 1.1rem;
-            font-weight: bold;
-            margin-bottom: 0.2rem;
-        }
-
-        .leaderboard-tooltip .stats {
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .leaderboard-tooltip::after {
-            content: "Click to vote";
-            display: block;
-            font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 0.3rem;
-        }
-
-        .leaderboard-item:nth-child(1) .leaderboard-tooltip {
-            border: 2px solid #ff7b53;
-            animation: neonPulseOrange 1.5s infinite ease-in-out;
-        }
-
-        .leaderboard-item:nth-child(1) .leaderboard-tooltip .title::before {
-            content: "🏆 ";
-            font-size: 1rem;
-            text-shadow: 0 0 8px #ff7b53;
-        }
-
-        .leaderboard-item:nth-child(2) .leaderboard-tooltip {
-            border: 2px solid #ffeb3b;
-            animation: neonPulseYellow 1.5s infinite ease-in-out;
-        }
-
-        .leaderboard-item:nth-child(2) .leaderboard-tooltip .title::before {
-            content: "🏆 ";
-            font-size: 1rem;
-            text-shadow: 0 0 8px #ffeb3b;
-        }
-
-        .leaderboard-item:nth-child(3) .leaderboard-tooltip {
-            border: 2px solid #4caf50;
-            animation: neonPulseGreen 1.5s infinite ease-in-out;
-        }
-
-        .leaderboard-item:nth-child(3) .leaderboard-tooltip .title::before {
-            content: "🏆 ";
-            font-size: 1rem;
-            text-shadow: 0 0 8px #4caf50;
-        }
-
-        @keyframes neonPulseOrange {
-            0%, 100% { box-shadow: 0 0 10px #ff7b53; }
-            50% { box-shadow: 0 0 20px #ff7b53; }
-        }
-
-        @keyframes neonPulseYellow {
-            0%, 100% { box-shadow: 0 0 10px #ffeb3b; }
-            50% { box-shadow: 0 0 20px #ffeb3b; }
-        }
-
-        @keyframes neonPulseGreen {
-            0%, 100% { box-shadow: 0 0 10px #4caf50; }
-            50% { box-shadow: 0 0 20px #4caf50; }
-        }
-
-        .leaderboard-item:hover .leaderboard-tooltip {
-            display: block;
-            opacity: 1;
-        }
-
-        .leaderboard-icon:hover, .leaderboard-bar:hover {
-            transform: scale(1.05);
-            transition: transform 0.3s ease;
-        }
-
-        .bottom-container {
-            position: relative;
-            width: 100%;
-            z-index: 10;
-            margin-top: -50px;
-        }
-
-        .tabs-section {
-            width: 100%;
-            background: rgba(14, 15, 17, 0.95);
-            padding: 0.5rem 2rem;
-            z-index: 15;
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            height: 120px;
-        }
-
-        .tabs-links {
-            display: flex;
-            gap: 2rem;
-            justify-content: flex-start;
-        }
-
-        .tabs-links a {
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1.1rem;
-            color: white;
-            text-decoration: none;
-            font-weight: 700;
-            transition: color 0.3s ease;
-        }
-
-        .tabs-links a:hover {
-            color: var(--secondary-neon);
-        }
-
-        .tabs-links a.gold-tab {
-            color: #FFD700;
-            background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700, #FFBF00);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer 3s infinite linear;
-        }
-
-        .tabs-links a.gold-tab:hover {
-            color: #FFD700;
-            -webkit-text-fill-color: transparent;
-            filter: brightness(1.2);
-        }
-
-        @keyframes shimmer {
-            0% { background-position: 0% 0%; }
-            50% { background-position: 100% 100%; }
-            100% { background-position: 0% 0%; }
-        }
-
-        .quote-popup, .voting-form-popup, .voting-list-popup, .my-submissions-popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 20;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .quote-content, .voting-form-content, .voting-list-content, .my-submissions-content {
-            background: rgba(20, 20, 25, 0.95);
-            padding: 3rem;
-            border-radius: 24px;
-            text-align: center;
-            max-width: 800px;
-            max-height: 85vh;
-            width: 100%;
-            height: auto;
-            overflow-y: auto;
-            backdrop-filter: blur(8px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        #quote-text {
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1rem;
-            color: var(--primary-neon);
-            white-space: pre-wrap;
-        }
-
-        .voting-form-content h2, .voting-list-content h2, .my-submissions-content h2 {
-            font-size: 2rem;
-            color: white;
-            margin-bottom: 1rem;
-        }
-
-        .voting-form-content h3 {
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1.1rem;
-            color: rgba(255, 255, 252, 0.8);
-            margin-bottom: 1rem;
-        }
-
-        .voting-form-content input,
-        .voting-form-content textarea {
-            width: 100%;
-            margin-bottom: 1rem;
-            padding: 0.8rem;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--primary-neon);
-            border-radius: 8px;
-            color: white;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 0 8px rgba(253, 253, 253, 0.5);
-        }
-
-        .voting-form-content input:focus,
-        .voting-form-content textarea:focus {
-            outline: none;
-            border-color: #ffffff;
-            box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
-        }
-
-        #word-count {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            text-align: right;
-        }
-
-        .voting-form-content button {
-            background: #ffffff;
-            color: black;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 0.5rem;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1.2rem;
-            transition: transform 0.3s ease, background 0.3s ease;
-        }
-
-        .voting-form-content button:hover {
-            transform: scale(1.05);
-            background: #f0f0f0;
-        }
-
-        .voting-form-content .view-voting-btn {
-            background: white;
-            color: black;
-            margin-top: 1rem;
-            padding: 0.75rem 1.5rem;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1.2rem;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: transform 0.3s ease, background 0.3s ease;
-            position: relative;
-        }
-
-        .voting-form-content .view-voting-btn:hover {
-            transform: scale(1.05);
-            background: #f0f0f0;
-        }
-
-        .voting-form-content .view-voting-btn.glow-effect {
-            animation: circulateGlow 2s linear infinite;
-        }
-
-        @keyframes circulateGlow {
-            0% {
-                box-shadow: 
-                    0 0 15px 8px var(--yellow-neon),
-                    0 -15px 20px -5px var(--yellow-neon);
-            }
-            25% {
-                box-shadow: 
-                    0 0 15px 8px var(--yellow-neon),
-                    15px 0 20px -5px var(--yellow-neon);
-            }
-            50% {
-                box-shadow: 
-                    0 0 15px 8px var(--yellow-neon),
-                    0 15px 20px -5px var(--yellow-neon);
-            }
-            75% {
-                box-shadow: 
-                    0 0 15px 8px var(--yellow-neon),
-                    -15px 0 20px -5px var(--yellow-neon);
-            }
-            100% {
-                box-shadow: 
-                    0 0 15px 8px var(--yellow-neon),
-                    0 -15px 20px -5px var(--yellow-neon);
-            }
-        }
-
-        .voting-controls {
-            margin-bottom: 1.5rem;
-            position: relative;
-            display: flex;
-            justify-content: center;
-        }
-
-        .custom-select {
-            position: relative;
-            width: fit-content;
-        }
-
-        .select-button {
-            padding: 0.4rem 1.5rem 0.4rem 0.4rem;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--primary-neon);
-            border-radius: 5px;
-            color: white;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 0.9rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 130px;
-            white-space: nowrap;
-        }
-
-        .select-button::after {
-            content: '\f078';
-            font-family: "Font Awesome 6 Free";
-            font-weight: 900;
-            margin-left: 0.8rem;
-            font-size: 0.7rem;
-        }
-
-        .options {
-            display: none;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            width: 100%;
-            background: rgba(20, 20, 25, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            max-height: 150px;
-            overflow-y: auto;
-            color: white;
-            z-index: 25;
-        }
-
-        .options div {
-            padding: 0.5rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .options div:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .custom-select.open .options {
-            display: block;
-        }
-
-        .options::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .options::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 4px;
-        }
-
-        .options::-webkit-scrollbar-thumb {
-            background: var(--secondary-neon);
-            border-radius: 4px;
-        }
-
-        .options::-webkit-scrollbar-thumb:hover {
-            background: #606060;
-        }
-
-        .voting-list-content .back-btn, .my-submissions-content .back-btn {
-            position: absolute;
-            top: 1.2rem;
-            left: 1.2rem;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 0.5rem 1rem;
-            border: 2px solid var(--primary-neon);
-            border-radius: 6px;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .voting-list-content .back-btn:hover, .my-submissions-content .back-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
-
-        .top-proposals, .my-submissions-list {
-            margin-bottom: 1.2rem;
-        }
-
-        .top-proposals .proposal, .my-submissions-list .proposal {
-            position: relative;
-            padding: 1.5rem 1rem;
-            border-radius: 15px;
-            background: rgba(30, 30, 35, 0.95);
-            box-shadow: 0 0 18px rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            max-width: 500px;
-            margin: 0 auto 1rem;
-        }
-
-        .top-proposals .proposal:hover, .my-submissions-list .proposal:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 8px 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .top-proposals .proposal.rank-1 {
-            border: 4px solid #ffeb3b;
-            box-shadow: 0 0 24px #ffeb3b80;
-        }
-
-        .top-proposals .proposal.rank-2 {
-            border: 4px solid #4caf50;
-            box-shadow: 0 0 24px #4caf5080;
-        }
-
-        .top-proposals .proposal.rank-3 {
-            border: 4px solid #ff7b53;
-            box-shadow: 0 0 24px #ff7b5380;
-        }
-
-        .top-proposals .proposal::before {
-            content: attr(data-rank);
-            position: absolute;
-            top: -10px;
-            left: 12px;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: bold;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
-        }
-
-        .top-proposals .proposal-title, .my-submissions-list .proposal-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
-        }
-
-        .top-proposals .proposal-text, .my-submissions-list .proposal-text {
-            font-size: 1rem;
-        }
-
-        .proposal {
-            background: rgba(30, 30, 35, 0.9);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            padding: 1rem 0.8rem;
-            margin: 0.8rem 0;
-            border-radius: 12px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            max-width: 500px;
-            margin-left: auto;
-            margin-right: auto;
-            position: relative;
-        }
-
-        .proposal:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
-        }
-
-        .proposal-title {
-            font-size: 1.2rem;
-            color: white;
-            margin-bottom: 0.4rem;
-        }
-
-        .proposal-text {
-            font-size: 1rem;
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 0.8rem;
-            transition: max-height 0.3s ease;
-        }
-
-        .proposal-text.shortened {
-            max-height: 2.5em;
-            overflow: hidden;
-        }
-
-        .proposal-text.shortened::after {
-            content: "...";
-            color: rgba(255, 255, 255, 0.7);
-        }
-
-        .proposal-votes {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-        }
-
-        .proposal-votes button {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 0.4rem 0.9rem;
-            font-size: 0.95rem;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-
-        .proposal-votes button:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
-
-        .proposal-votes button:disabled {
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.5);
-            cursor: not-allowed;
-        }
-
-        .proposal-votes span {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.95rem;
-        }
-
-        .share-btn {
-            position: absolute;
-            bottom: 0.5rem;
-            right: 0.5rem;
-            padding: 0.3rem 0.6rem;
-            font-size: 0.8rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .share-btn img {
-            width: 12px;
-            height: 12px;
-        }
-
-        .proposal:not(.rank-1):not(.rank-2):not(.rank-3) .share-btn {
-            opacity: 0;
-            transition: opacity 0.2s ease;
-        }
-
-        .proposal:not(.rank-1):not(.rank-2):not(.rank-3):hover .share-btn {
-            opacity: 1;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .proposal:not(.rank-1):not(.rank-2):not(.rank-3):hover .share-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
-
-        .proposal.rank-1 .share-btn,
-        .proposal.rank-2 .share-btn,
-        .proposal.rank-3 .share-btn {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .proposal.rank-1 .share-btn:hover,
-        .proposal.rank-2 .share-btn:hover,
-        .proposal.rank-3 .share-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.05);
-        }
-
-        .image-popup {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 20;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .image-content {
-            max-width: 400px;
-            max-height: 300px;
-            width: auto;
-            height: auto;
-            border-radius: 10px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .image-content img {
-            max-width: 400px;
-            max-height: 300px;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            display: block;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 20px;
-            justify-content: center;
-        }
-
-        .action-btn {
-            padding: 0.8rem 1.7rem;
-            font-size: 1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.3s ease;
-            border: none;
-        }
-
-        .launch-btn {
-            background: white;
-            color: black;
-        }
-
-        .launch-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .vote-btn {
-            background: var(--yellow-neon);
-            color: black;
-        }
-
-        .vote-btn:hover {
-            transform: scale(1.05);
-        }
-
-        footer {
-            display: none;
-        }
-
-        .bottom-image-overlay {
-            width: 100%;
-            height: 20vh;
-            z-index: 5;
-            margin-top: -75px;
-        }
-
-        .bottom-image-overlay img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: bottom;
-            display: block;
-            transform: translateX(50px);
-        }
-
-        .notification-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            padding: 1rem 2rem;
-            border-radius: 10px;
-            color: white;
-            font-family: "Comic Sans MS", "Comic Sans", cursive;
-            font-size: 1.2rem;
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            pointer-events: none;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .notification-visible {
-            opacity: 1;
-        }
-    </style>
 </head>
 <body>
     <video id="background-video" autoplay loop muted playsinline>
@@ -1061,355 +1063,354 @@
         Your browser does not support the video tag.
     </video>
     <div id="video-overlay"></div>
+<div id="notification-popup" class="notification-popup"></div>
 
-    <div id="notification-popup" class="notification-popup"></div>
-
-    <div id="quote-popup" class="quote-popup">
-        <div class="quote-content">
-            <p id="quote-text"></p>
-        </div>
+<div id="quote-popup" class="quote-popup">
+    <div class="quote-content">
+        <p id="quote-text"></p>
     </div>
+</div>
 
-    <div id="image-popup" class="image-popup">
-        <div class="image-content">
-            <img id="popup-image" src="" alt="Popup Image">
-        </div>
+<div id="image-popup" class="image-popup">
+    <div class="image-content">
+        <img id="popup-image" src="" alt="Popup Image">
     </div>
+</div>
 
-    <div id="voting-form-popup" class="voting-form-popup">
-        <div class="voting-form-content">
-            <h2>Post Your GFM Idea!</h2>
-            <h3>Share your top GFM idea! Top-voted idea each week kicks off our campaign. (500 word max)</h3>
-            <form id="voting-form">
-                <input type="text" id="proposal-title" placeholder="Enter a Title" required>
-                <textarea id="proposal-text" placeholder="Describe your idea" maxlength="2500" required></textarea>
-                <div id="word-count">0/500 words</div>
-                <button type="submit">Submit Idea</button>
-            </form>
-            <button class="view-voting-btn" id="view-voting-btn">View Voting</button>
-        </div>
+<div id="voting-form-popup" class="voting-form-popup">
+    <div class="voting-form-content">
+        <h2>Post Your GFM Idea!</h2>
+        <h3>Share your top GFM idea! Top-voted idea each week kicks off our campaign. (500 word max)</h3>
+        <form id="voting-form">
+            <input type="text" id="proposal-title" placeholder="Enter a Title" required>
+            <textarea id="proposal-text" placeholder="Describe your idea" maxlength="2500" required></textarea>
+            <div id="word-count">0/500 words</div>
+            <button type="submit">Submit Idea</button>
+        </form>
+        <button class="view-voting-btn" id="view-voting-btn">View Voting</button>
     </div>
+</div>
 
-    <div id="voting-list-popup" class="voting-list-popup">
-        <div class="voting-list-content">
-            <button class="back-btn" id="back-to-form-btn">Back</button>
-            <h2>Vote for a GFM Idea!</h2>
-            <div class="voting-controls">
-                <div class="custom-select" id="sort-voting">
-                    <div class="select-button">Most Votes</div>
-                    <div class="options">
-                        <div data-value="votes-desc">Most Votes</div>
-                        <div data-value="votes-asc">Least Votes</div>
-                        <div data-value="date-desc">Newest</div>
-                        <div data-value="date-asc">Oldest</div>
-                    </div>
-                </div>
-            </div>
-            <div id="top-proposals" class="top-proposals"></div>
-            <div id="proposals-list" class="other-proposals"></div>
-        </div>
-    </div>
-
-    <div id="my-submissions-popup" class="my-submissions-popup">
-        <div class="my-submissions-content">
-            <button class="back-btn" id="close-my-submissions-btn">Close</button>
-            <h2>My Submissions</h2>
-            <div id="my-submissions-list" class="my-submissions-list"></div>
-        </div>
-    </div>
-
-    <div id="suggestionBanner">
-        <div class="suggestion-scroll">
-            <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
-            <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
-            <div class="suggestion-item"><i class="fas fa-heart"></i> CTO</div>
-            <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
-            <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add By Marketcap Tab</div>
-            <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
-            <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
-            <div class="suggestion-item"><i class="fas fa-heart"></i> CTO</div>
-            <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
-            <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add By Marketcap Tab</div>
-        </div>
-    </div>
-
-    <div class="header-section">
-        <div class="logo-nav-container">
-            <div class="logo">JUSTDOIT</div>
-            <div class="nav-links">
-                <a href="#" data-image="pho3.jpg">MemeFeed</a>
-                <a href="#" data-image="222.jpg">Staking</a>
-                <a href="#" data-image="velma.jpg">Docs</a>
-            </div>
-        </div>
-        <div class="header-right">
-            <i class="fas fa-search search-icon" data-image="100.jpg"></i>
-            <button id="x-signin-btn" class="x-signin-btn">
-                Login with <img src="xlogo.png" alt="X" style="width: 16px; height: 16px; margin-left: 5px;">
-            </button>
-            <span id="user-profile" class="user-profile"></span>
-            <button id="my-submissions-btn" class="my-submissions-btn">
-                My Submissions <span id="submission-count-badge" class="submission-count-badge"></span>
-            </button>
-            <button id="logout-btn" class="x-signin-btn" style="display: none;">Logout</button>
-        </div>
-    </div>
-
-    <main>
-        <img id="cto-image" src="CTO.png" alt="CTO Image">
-        <div class="main-container">
-            <div class="leaderboard-section">
-                <div class="leaderboard">
-                    <div class="leaderboard-item">
-                        <div class="leaderboard-icon" id="leaderboard-icon-3" data-image="velma.jpg"></div>
-                        <div class="leaderboard-bar first" id="leaderboard-bar-3">
-                            <div class="leaderboard-rank">#3</div>
-                        </div>
-                        <div class="leaderboard-tooltip" id="tooltip-3"></div>
-                    </div>
-                    <div class="leaderboard-item">
-                        <div class="leaderboard-icon" id="leaderboard-icon-1" data-image="sniff.jpg"></div>
-                        <div class="leaderboard-bar second" id="leaderboard-bar-1">
-                            <div class="leaderboard-rank">#1</div>
-                        </div>
-                        <div class="leaderboard-tooltip" id="tooltip-1"></div>
-                    </div>
-                    <div class="leaderboard-item">
-                        <div class="leaderboard-icon" id="leaderboard-icon-2" data-image="spider.jpg"></div>
-                        <div class="leaderboard-bar third" id="leaderboard-bar-2">
-                            <div class="leaderboard-rank">#2</div>
-                        </div>
-                        <div class="leaderboard-tooltip" id="tooltip-2"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="text-buttons-section">
-                <h1 class="main-heading">where meme coins come to be heard</h1>
-                <p class="sub-heading">A place to help make GFM all it can be and more</p>
-                <div class="action-buttons">
-                    <button class="action-btn vote-btn" id="voting-form-btn">Vote for a GFM Idea!</button>
-                    <button class="action-btn launch-btn">Weekly Message</button>
+<div id="voting-list-popup" class="voting-list-popup">
+    <div class="voting-list-content">
+        <button class="back-btn" id="back-to-form-btn">Back</button>
+        <h2>Vote for a GFM Idea!</h2>
+        <div class="voting-controls">
+            <div class="custom-select" id="sort-voting">
+                <div class="select-button">Most Votes</div>
+                <div class="options">
+                    <div data-value="votes-desc">Most Votes</div>
+                    <div data-value="votes-asc">Least Votes</div>
+                    <div data-value="date-desc">Newest</div>
+                    <div data-value="date-asc">Oldest</div>
                 </div>
             </div>
         </div>
-    </main>
+        <div id="top-proposals" class="top-proposals"></div>
+        <div id="proposals-list" class="other-proposals"></div>
+    </div>
+</div>
 
-    <div class="bottom-container">
-        <div class="tabs-section">
-            <div class="tabs-links">
-                <a href="#" data-image="444.jpg">New</a>
-                <a href="#" data-image="555.jpg" class="gold-tab">Top Traded</a>
-                <a href="#" data-image="666.jpg" class="gold-tab">Top Market Cap</a>
-                <a href="#" data-image="777.jpg" class="gold-tab">Trending</a>
-                <a href="#" data-image="888.jpg">Graduated</a>
+<div id="my-submissions-popup" class="my-submissions-popup">
+    <div class="my-submissions-content">
+        <button class="back-btn" id="close-my-submissions-btn">Close</button>
+        <h2>My Submissions</h2>
+        <div id="my-submissions-list" class="my-submissions-list"></div>
+    </div>
+</div>
+
+<div id="suggestionBanner">
+    <div class="suggestion-scroll">
+        <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
+        <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
+        <div class="suggestion-item"><i class="fas fa-heart"></i> CTO</div>
+        <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
+        <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add By Marketcap Tab</div>
+        <div class="suggestion-item"><i class="fas fa-sync-alt"></i> Update UI</div>
+        <div class="suggestion-item"><i class="fas fa-search"></i> Add Dynamic Search Engine</div>
+        <div class="suggestion-item"><i class="fas fa-heart"></i> CTO</div>
+        <div class="suggestion-item"><i class="fas fa-hands-helping"></i> Support Real Projects</div>
+        <div class="suggestion-item"><i class="fas fa-chart-bar"></i> Add By Marketcap Tab</div>
+    </div>
+</div>
+
+<div class="header-section">
+    <div class="logo-nav-container">
+        <div class="logo">JUSTDOIT</div>
+        <div class="nav-links">
+            <a href="#" data-image="pho3.jpg">MemeFeed</a>
+            <a href="#" data-image="222.jpg">Staking</a>
+            <a href="#" data-image="velma.jpg">Docs</a>
+        </div>
+    </div>
+    <div class="header-right">
+        <i class="fas fa-search search-icon" data-image="100.jpg"></i>
+        <button id="x-signin-btn" class="x-signin-btn">
+            Login with <img src="xlogo.png" alt="X" style="width: 16px; height: 16px; margin-left: 5px;">
+        </button>
+        <span id="user-profile" class="user-profile"></span>
+        <button id="my-submissions-btn" class="my-submissions-btn">
+            My Submissions <span id="submission-count-badge" class="submission-count-badge"></span>
+        </button>
+        <button id="logout-btn" class="x-signin-btn" style="display: none;">Logout</button>
+    </div>
+</div>
+
+<main>
+    <img id="cto-image" src="CTO.png" alt="CTO Image">
+    <div class="main-container">
+        <div class="leaderboard-section">
+            <div class="leaderboard">
+                <div class="leaderboard-item">
+                    <div class="leaderboard-icon" id="leaderboard-icon-3" data-image="velma.jpg"></div>
+                    <div class="leaderboard-bar first" id="leaderboard-bar-3">
+                        <div class="leaderboard-rank">#3</div>
+                    </div>
+                    <div class="leaderboard-tooltip" id="tooltip-3"></div>
+                </div>
+                <div class="leaderboard-item">
+                    <div class="leaderboard-icon" id="leaderboard-icon-1" data-image="sniff.jpg"></div>
+                    <div class="leaderboard-bar second" id="leaderboard-bar-1">
+                        <div class="leaderboard-rank">#1</div>
+                    </div>
+                    <div class="leaderboard-tooltip" id="tooltip-1"></div>
+                </div>
+                <div class="leaderboard-item">
+                    <div class="leaderboard-icon" id="leaderboard-icon-2" data-image="spider.jpg"></div>
+                    <div class="leaderboard-bar third" id="leaderboard-bar-2">
+                        <div class="leaderboard-rank">#2</div>
+                    </div>
+                    <div class="leaderboard-tooltip" id="tooltip-2"></div>
+                </div>
             </div>
         </div>
+        <div class="text-buttons-section">
+            <h1 class="main-heading">where meme coins come to be heard</h1>
+            <p class="sub-heading">A place to help make GFM all it can be and more</p>
+            <div class="action-buttons">
+                <button class="action-btn vote-btn" id="voting-form-btn">Vote for a GFM Idea!</button>
+                <button class="action-btn launch-btn">Weekly Message</button>
+            </div>
+        </div>
+    </div>
+</main>
 
-        <div class="bottom-image-overlay">
-            <a href="https://www.gofundmeme.io/campaigns/rLUC9upP2yww3sBiTwSeQ87JGp3R6TKX3XgwfLGoGFM" target="_blank">
-                <img src="bottommmmm.jpg" alt="Bottom Overlay">
-            </a>
+<div class="bottom-container">
+    <div class="tabs-section">
+        <div class="tabs-links">
+            <a href="#" data-image="444.jpg">New</a>
+            <a href="#" data-image="555.jpg" class="gold-tab">Top Traded</a>
+            <a href="#" data-image="666.jpg" class="gold-tab">Top Market Cap</a>
+            <a href="#" data-image="777.jpg" class="gold-tab">Trending</a>
+            <a href="#" data-image="888.jpg">Graduated</a>
         </div>
     </div>
 
-    <footer>
-        <div class="footer-left">
-            <button class="footer-btn">New</button>
-            <button class="footer-btn">Graduated</button>
-        </div>
-        <div class="footer-right">
-            <button class="footer-btn">Type <i class="fas fa-chevron-down"></i></button>
-            <button class="footer-btn">Bonding <i class="fas fa-chevron-down"></i></button>
-            <button class="footer-btn">Fair <i class="fas fa-chevron-down"></i></button>
-        </div>
-    </footer>
+    <div class="bottom-image-overlay">
+        <a href="https://www.gofundmeme.io/campaigns/rLUC9upP2yww3sBiTwSeQ87JGp3R6TKX3XgwfLGoGFM" target="_blank">
+            <img src="bottommmmm.jpg" alt="Bottom Overlay">
+        </a>
+    </div>
+</div>
 
-    <script>
-        function showNotification(message) {
-            const notification = document.getElementById('notification-popup');
-            notification.textContent = message;
-            notification.classList.add('notification-visible');
-            setTimeout(() => {
-                notification.classList.remove('notification-visible');
-            }, 3000);
-        }
+<footer>
+    <div class="footer-left">
+        <button class="footer-btn">New</button>
+        <button class="footer-btn">Graduated</button>
+    </div>
+    <div class="footer-right">
+        <button class="footer-btn">Type <i class="fas fa-chevron-down"></i></button>
+        <button class="footer-btn">Bonding <i class="fas fa-chevron-down"></i></button>
+        <button class="footer-btn">Fair <i class="fas fa-chevron-down"></i></button>
+    </div>
+</footer>
 
-        const suggestionScroll = document.querySelector('.suggestion-scroll');
-        if (suggestionScroll) {
-            const suggestionItems = document.querySelectorAll('.suggestion-item');
-            suggestionItems.forEach(item => {
-                const clone = item.cloneNode(true);
-                suggestionScroll.appendChild(clone);
-            });
-        }
+<script>
+    function showNotification(message) {
+        const notification = document.getElementById('notification-popup');
+        notification.textContent = message;
+        notification.classList.add('notification-visible');
+        setTimeout(() => {
+            notification.classList.remove('notification-visible');
+        }, 3000);
+    }
 
-        const quotePopup = document.getElementById('quote-popup');
-        const quoteText = document.getElementById('quote-text');
-        const imagePopup = document.getElementById('image-popup');
-        const popupImage = document.getElementById('popup-image');
-        const launchBtn = document.querySelector('.launch-btn');
-        const clickableElements = document.querySelectorAll('.leaderboard-icon, .nav-links a, .tabs-links a, .search-icon');
+    const suggestionScroll = document.querySelector('.suggestion-scroll');
+    if (suggestionScroll) {
+        const suggestionItems = document.querySelectorAll('.suggestion-item');
+        suggestionItems.forEach(item => {
+            const clone = item.cloneNode(true);
+            suggestionScroll.appendChild(clone);
+        });
+    }
 
-        const votingFormPopup = document.getElementById('voting-form-popup');
-        const votingListPopup = document.getElementById('voting-list-popup');
-        const mySubmissionsPopup = document.getElementById('my-submissions-popup');
-        const votingFormBtn = document.getElementById('voting-form-btn');
-        const viewVotingBtn = document.getElementById('view-voting-btn');
-        const backToFormBtn = document.getElementById('back-to-form-btn');
-        const mySubmissionsBtn = document.getElementById('my-submissions-btn');
-        const closeMySubmissionsBtn = document.getElementById('close-my-submissions-btn');
+    const quotePopup = document.getElementById('quote-popup');
+    const quoteText = document.getElementById('quote-text');
+    const imagePopup = document.getElementById('image-popup');
+    const popupImage = document.getElementById('popup-image');
+    const launchBtn = document.querySelector('.launch-btn');
+    const clickableElements = document.querySelectorAll('.leaderboard-icon, .nav-links a, .tabs-links a, .search-icon');
 
-        if (launchBtn) {
-            launchBtn.addEventListener('click', (e) => {
+    const votingFormPopup = document.getElementById('voting-form-popup');
+    const votingListPopup = document.getElementById('voting-list-popup');
+    const mySubmissionsPopup = document.getElementById('my-submissions-popup');
+    const votingFormBtn = document.getElementById('voting-form-btn');
+    const viewVotingBtn = document.getElementById('view-voting-btn');
+    const backToFormBtn = document.getElementById('back-to-form-btn');
+    const mySubmissionsBtn = document.getElementById('my-submissions-btn');
+    const closeMySubmissionsBtn = document.getElementById('close-my-submissions-btn');
+
+    if (launchBtn) {
+        launchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            quoteText.textContent = "This week is a time to JUST DOIT.\n\nWeekly message to GFM:\n\nWe want a top market cap tab.\n\nWe want a top traded & trending tab.\n\nWe want you to highlight the committed projects that launched here.\n\nLots of love for GFM. Stay pure. Stay hard. DOIT";
+            quotePopup.style.display = 'flex';
+            imagePopup.style.display = 'none';
+            votingFormPopup.style.display = 'none';
+            votingListPopup.style.display = 'none';
+            mySubmissionsPopup.style.display = 'none';
+        });
+    }
+
+    if (clickableElements.length > 0) {
+        clickableElements.forEach(element => {
+            element.addEventListener('click', (e) => {
                 e.preventDefault();
-                quoteText.textContent = "This week is a time to JUST DOIT.\n\nWeekly message to GFM:\n\nWe want a top market cap tab.\n\nWe want a top traded & trending tab.\n\nWe want you to highlight the committed projects that launched here.\n\nLots of love for GFM. Stay pure. Stay hard. DOIT";
-                quotePopup.style.display = 'flex';
-                imagePopup.style.display = 'none';
-                votingFormPopup.style.display = 'none';
-                votingListPopup.style.display = 'none';
-                mySubmissionsPopup.style.display = 'none';
-            });
-        }
-
-        if (clickableElements.length > 0) {
-            clickableElements.forEach(element => {
-                element.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    const imageSrc = element.getAttribute('data-image');
-                    if (imageSrc) {
-                        popupImage.src = imageSrc;
-                        imagePopup.style.display = 'flex';
-                        quotePopup.style.display = 'none';
-                        votingFormPopup.style.display = 'none';
-                        votingListPopup.style.display = 'none';
-                        mySubmissionsPopup.style.display = 'none';
-                    }
-                });
-            });
-        }
-
-        votingFormBtn.addEventListener('click', () => {
-            votingFormPopup.style.display = 'flex';
-            quotePopup.style.display = 'none';
-            imagePopup.style.display = 'none';
-            votingListPopup.style.display = 'none';
-            mySubmissionsPopup.style.display = 'none';
-        });
-
-        viewVotingBtn.addEventListener('click', () => {
-            votingListPopup.style.display = 'flex';
-            quotePopup.style.display = 'none';
-            imagePopup.style.display = 'none';
-            votingFormPopup.style.display = 'none';
-            mySubmissionsPopup.style.display = 'none';
-            window.startProposalsListener();
-        });
-
-        backToFormBtn.addEventListener('click', () => {
-            votingListPopup.style.display = 'none';
-            votingFormPopup.style.display = 'flex';
-            window.stopProposalsListener();
-        });
-
-        mySubmissionsBtn.addEventListener('click', () => {
-            const userId = localStorage.getItem('authUserId');
-            if (!userId) {
-                showNotification('Please log in with X to view your submissions.');
-                return;
-            }
-            mySubmissionsPopup.style.display = 'flex';
-            quotePopup.style.display = 'none';
-            imagePopup.style.display = 'none';
-            votingFormPopup.style.display = 'none';
-            votingListPopup.style.display = 'none';
-            window.loadMySubmissions(userId);
-        });
-
-        closeMySubmissionsBtn.addEventListener('click', () => {
-            mySubmissionsPopup.style.display = 'none';
-            window.stopSubmissionsListener();
-        });
-
-        [quotePopup, imagePopup, votingFormPopup, votingListPopup, mySubmissionsPopup].forEach(popup => {
-            popup.addEventListener('click', (e) => {
-                if (e.target === popup) {
-                    popup.style.display = 'none';
-                    if (popup === votingListPopup) {
-                        window.stopProposalsListener();
-                    }
-                    if (popup === mySubmissionsPopup) {
-                        window.stopSubmissionsListener();
-                    }
+                const imageSrc = element.getAttribute('data-image');
+                if (imageSrc) {
+                    popupImage.src = imageSrc;
+                    imagePopup.style.display = 'flex';
+                    quotePopup.style.display = 'none';
+                    votingFormPopup.style.display = 'none';
+                    votingListPopup.style.display = 'none';
+                    mySubmissionsPopup.style.display = 'none';
                 }
             });
         });
+    }
 
-        function getUserId() {
-            let userId = localStorage.getItem('userId');
-            if (!userId) {
-                userId = 'user-' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('userId', userId);
-            }
-            return userId;
+    votingFormBtn.addEventListener('click', () => {
+        votingFormPopup.style.display = 'flex';
+        quotePopup.style.display = 'none';
+        imagePopup.style.display = 'none';
+        votingListPopup.style.display = 'none';
+        mySubmissionsPopup.style.display = 'none';
+    });
+
+    viewVotingBtn.addEventListener('click', () => {
+        votingListPopup.style.display = 'flex';
+        quotePopup.style.display = 'none';
+        imagePopup.style.display = 'none';
+        votingFormPopup.style.display = 'none';
+        mySubmissionsPopup.style.display = 'none';
+        window.startProposalsListener();
+    });
+
+    backToFormBtn.addEventListener('click', () => {
+        votingListPopup.style.display = 'none';
+        votingFormPopup.style.display = 'flex';
+        window.stopProposalsListener();
+    });
+
+    mySubmissionsBtn.addEventListener('click', () => {
+        const userId = localStorage.getItem('authUserId');
+        if (!userId) {
+            showNotification('Please log in with X to view your submissions.');
+            return;
         }
-        window.getUserId = getUserId;
+        mySubmissionsPopup.style.display = 'flex';
+        quotePopup.style.display = 'none';
+        imagePopup.style.display = 'none';
+        votingFormPopup.style.display = 'none';
+        votingListPopup.style.display = 'none';
+        window.loadMySubmissions(userId);
+    });
 
-        const customSelect = document.querySelector('.custom-select');
-        const selectButton = customSelect.querySelector('.select-button');
-        const options = customSelect.querySelector('.options');
+    closeMySubmissionsBtn.addEventListener('click', () => {
+        mySubmissionsPopup.style.display = 'none';
+        window.stopSubmissionsListener();
+    });
 
-        selectButton.addEventListener('click', () => {
-            customSelect.classList.toggle('open');
-        });
-
-        options.querySelectorAll('div').forEach(option => {
-            option.addEventListener('click', () => {
-                selectButton.textContent = option.textContent;
-                customSelect.dataset.value = option.dataset.value;
-                customSelect.classList.remove('open');
-                window.updateVotingSort(customSelect.dataset.value);
-            });
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!customSelect.contains(e.target)) {
-                customSelect.classList.remove('open');
+    [quotePopup, imagePopup, votingFormPopup, votingListPopup, mySubmissionsPopup].forEach(popup => {
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) {
+                popup.style.display = 'none';
+                if (popup === votingListPopup) {
+                    window.stopProposalsListener();
+                }
+                if (popup === mySubmissionsPopup) {
+                    window.stopSubmissionsListener();
+                }
             }
         });
+    });
 
-        const leaderboardItems = document.querySelectorAll('.leaderboard-item');
-        leaderboardItems.forEach(item => {
-            const tooltip = item.querySelector('.leaderboard-tooltip');
-            let timeout;
+    function getUserId() {
+        let userId = localStorage.getItem('userId');
+        if (!userId) {
+            userId = 'user-' + Math.random().toString(36).substr(2, 9);
+            localStorage.setItem('userId', userId);
+        }
+        return userId;
+    }
+    window.getUserId = getUserId;
 
-            item.addEventListener('mouseenter', () => {
-                clearTimeout(timeout);
-                tooltip.style.display = 'block';
-                tooltip.style.opacity = '1';
-            });
+    const customSelect = document.querySelector('.custom-select');
+    const selectButton = customSelect.querySelector('.select-button');
+    const options = customSelect.querySelector('.options');
 
-            item.addEventListener('mouseleave', () => {
-                timeout = setTimeout(() => {
-                    tooltip.style.opacity = '0';
-                    setTimeout(() => {
-                        tooltip.style.display = 'none';
-                    }, 300);
-                }, 500);
-            });
+    selectButton.addEventListener('click', () => {
+        customSelect.classList.toggle('open');
+    });
 
-            tooltip.addEventListener('click', () => {
-                document.getElementById('voting-list-popup').style.display = 'flex';
-                window.startProposalsListener();
-                clearTimeout(timeout);
+    options.querySelectorAll('div').forEach(option => {
+        option.addEventListener('click', () => {
+            selectButton.textContent = option.textContent;
+            customSelect.dataset.value = option.dataset.value;
+            customSelect.classList.remove('open');
+            window.updateVotingSort(customSelect.dataset.value);
+        });
+    });
+
+    document.addEventListener('click', (e) => {
+        if (!customSelect.contains(e.target)) {
+            customSelect.classList.remove('open');
+        }
+    });
+
+    const leaderboardItems = document.querySelectorAll('.leaderboard-item');
+    leaderboardItems.forEach(item => {
+        const tooltip = item.querySelector('.leaderboard-tooltip');
+        let timeout;
+
+        item.addEventListener('mouseenter', () => {
+            clearTimeout(timeout);
+            tooltip.style.display = 'block';
+            tooltip.style.opacity = '1';
+        });
+
+        item.addEventListener('mouseleave', () => {
+            timeout = setTimeout(() => {
                 tooltip.style.opacity = '0';
                 setTimeout(() => {
                     tooltip.style.display = 'none';
                 }, 300);
-            });
+            }, 500);
         });
-    </script>
 
-    <script type="module">
+        tooltip.addEventListener('click', () => {
+            document.getElementById('voting-list-popup').style.display = 'flex';
+            window.startProposalsListener();
+            clearTimeout(timeout);
+            tooltip.style.opacity = '0';
+            setTimeout(() => {
+                tooltip.style.display = 'none';
+            }, 300);
+        });
+    });
+</script>
+
+<script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
     import { getAuth, signInWithPopup, TwitterAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
     import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, getDoc, updateDoc, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
@@ -1433,20 +1434,6 @@
     let unsubscribeProposals = null;
     let unsubscribeSubmissions = null;
 
-    // Generate or retrieve a unique user ID for both auth and non-auth users
-    function getUserId() {
-        let userId = localStorage.getItem('authUserId');
-        if (!userId) {
-            userId = localStorage.getItem('anonymousUserId');
-            if (!userId) {
-                userId = 'anon-' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('anonymousUserId', userId);
-            }
-        }
-        return userId;
-    }
-    window.getUserId = getUserId;
-
     onAuthStateChanged(auth, (user) => {
         if (user) {
             document.getElementById('x-signin-btn').style.display = 'none';
@@ -1455,7 +1442,6 @@
             document.getElementById('user-profile').style.display = 'inline-block';
             document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
             localStorage.setItem('authUserId', user.uid);
-            localStorage.removeItem('anonymousUserId'); // Clear anonymous ID when authenticated
             loadMySubmissions(user.uid);
             syncLeaderboardWithVoting();
         } else {
@@ -1501,7 +1487,7 @@
             let submissionCount = 0;
             querySnapshot.forEach((doc) => {
                 const data = doc.data();
-                const hasVoted = data.voters && data.voters.includes(getUserId());
+                const hasVoted = data.voters && data.voters.includes(window.getUserId());
                 const div = document.createElement('div');
                 div.className = 'proposal';
                 div.innerHTML = `
@@ -1592,7 +1578,7 @@
 
                     topThree.forEach((p, index) => {
                         const textData = truncateText(p.text);
-                        const hasVoted = p.voters && p.voters.includes(getUserId());
+                        const hasVoted = p.voters && p.voters.includes(window.getUserId());
                         const div = document.createElement('div');
                         div.className = `proposal rank-${index + 1}`;
                         div.setAttribute('data-rank', `#${index + 1}`);
@@ -1621,7 +1607,7 @@
 
                     others.forEach((p) => {
                         const textData = truncateText(p.text);
-                        const hasVoted = p.voters && p.voters.includes(getUserId());
+                        const hasVoted = p.voters && p.voters.includes(window.getUserId());
                         const div = document.createElement('div');
                         div.className = 'proposal';
                         div.innerHTML = `
@@ -1649,7 +1635,7 @@
                 } else {
                     proposals.forEach((p) => {
                         const textData = truncateText(p.text);
-                        const hasVoted = p.voters && p.voters.includes(getUserId());
+                        const hasVoted = p.voters && p.voters.includes(window.getUserId());
                         const div = document.createElement('div');
                         div.className = 'proposal';
                         div.innerHTML = `
@@ -1740,7 +1726,7 @@
     }
 
     async function upvote(proposalId) {
-        const userId = getUserId();
+        const userId = window.getUserId();
         const proposalRef = doc(db, "proposals", proposalId);
         try {
             const docSnap = await getDoc(proposalRef);
@@ -1789,7 +1775,7 @@
         e.preventDefault();
         const title = document.getElementById('proposal-title').value;
         const text = document.getElementById('proposal-text').value;
-        const userId = getUserId();
+        const userId = localStorage.getItem('authUserId') || window.getUserId();
         const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
         
         if (wordCount > 500) {
@@ -1837,5 +1823,7 @@
     window.loadMySubmissions = loadMySubmissions;
     window.stopSubmissionsListener = stopSubmissionsListener;
 </script>
+
 </body>
 </html>
+
