@@ -1410,417 +1410,432 @@
     </script>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-        import { getAuth, signInWithPopup, TwitterAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, getDoc, updateDoc, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
+    import { getAuth, signInWithPopup, TwitterAuthProvider, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-auth.js";
+    import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, doc, getDoc, updateDoc, serverTimestamp, where } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-firestore.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyAo6_0DUw8OMm4aiNxUtxO7Q660GowCr4o",
-            authDomain: "officialdoit.firebaseapp.com",
-            projectId: "officialdoit",
-            storageBucket: "officialdoit.firebasestorage.app",
-            messagingSenderId: "1034242279014",
-            appId: "1:1034242279014:web:30efccc9b08acb3a98cfa7",
-            measurementId: "G-NVSJD6HC3F"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyAo6_0DUw8OMm4aiNxUtxO7Q660GowCr4o",
+        authDomain: "officialdoit.firebaseapp.com",
+        projectId: "officialdoit",
+        storageBucket: "officialdoit.firebasestorage.app",
+        messagingSenderId: "1034242279014",
+        appId: "1:1034242279014:web:30efccc9b08acb3a98cfa7",
+        measurementId: "G-NVSJD6HC3F"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
 
-        let unsubscribeProposals = null;
-        let unsubscribeSubmissions = null;
+    let unsubscribeProposals = null;
+    let unsubscribeSubmissions = null;
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('x-signin-btn').style.display = 'none';
-                document.getElementById('my-submissions-btn').style.display = 'flex';
-                document.getElementById('logout-btn').style.display = 'flex';
-                document.getElementById('user-profile').style.display = 'inline-block';
-                document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
-                localStorage.setItem('authUserId', user.uid);
-                loadMySubmissions(user.uid);
-                syncLeaderboardWithVoting();
-            } else {
-                document.getElementById('x-signin-btn').style.display = 'flex';
-                document.getElementById('my-submissions-btn').style.display = 'none';
-                document.getElementById('logout-btn').style.display = 'none';
-                document.getElementById('user-profile').style.display = 'none';
-                document.getElementById('user-profile').textContent = '';
-                document.getElementById('submission-count-badge').textContent = '';
-                localStorage.removeItem('authUserId');
-                if (unsubscribeSubmissions) {
-                    unsubscribeSubmissions();
-                    unsubscribeSubmissions = null;
-                }
+    // Generate or retrieve a unique user ID for both auth and non-auth users
+    function getUserId() {
+        let userId = localStorage.getItem('authUserId');
+        if (!userId) {
+            userId = localStorage.getItem('anonymousUserId');
+            if (!userId) {
+                userId = 'anon-' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem('anonymousUserId', userId);
             }
-        });
-
-        const twitterProvider = new TwitterAuthProvider();
-        document.getElementById('x-signin-btn').addEventListener('click', async () => {
-            try {
-                const result = await signInWithPopup(auth, twitterProvider);
-                const user = result.user;
-                localStorage.setItem('authUserId', user.uid);
-                showNotification(`Signed in as @${user.providerData[0].displayName}`);
-            } catch (error) {
-                console.error("X Sign-in error:", error.code, error.message);
-                showNotification(`Failed to sign in with X: ${error.message}`);
-            }
-        });
-
-        document.getElementById('logout-btn').addEventListener('click', async () => {
-            await signOut(auth);
-            showNotification('Logged out successfully!');
-        });
-
-        function loadMySubmissions(userId) {
-            if (unsubscribeSubmissions) unsubscribeSubmissions();
-            const mySubmissionsList = document.getElementById('my-submissions-list');
-            mySubmissionsList.innerHTML = '';
-            const q = query(collection(db, "proposals"), where("submitter", "==", userId), orderBy("createdAt", "desc"));
-            unsubscribeSubmissions = onSnapshot(q, (querySnapshot) => {
-                mySubmissionsList.innerHTML = '';
-                let submissionCount = 0;
-                querySnapshot.forEach((doc) => {
-                    const data = doc.data();
-                    const hasVoted = data.voters && data.voters.includes(window.getUserId());
-                    const div = document.createElement('div');
-                    div.className = 'proposal';
-                    div.innerHTML = `
-                        <div class="proposal-title">${data.title || 'Untitled'}</div>
-                        <div class="proposal-text">${data.text || ''}</div>
-                        <div class="proposal-votes">
-                            <button class="upvote-btn" data-proposal-id="${doc.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
-                            <span>Votes: <span id="vote-count-${doc.id}">${data.votes || 0}</span></span>
-                        </div>
-                    `;
-                    mySubmissionsList.appendChild(div);
-                    submissionCount++;
-                });
-                document.getElementById('submission-count-badge').textContent = submissionCount;
-                addUpvoteListeners();
-            }, (error) => {
-                console.error("Error loading submissions:", error);
-                showNotification("Error loading your submissions.");
-            });
         }
+        return userId;
+    }
+    window.getUserId = getUserId;
 
-        function stopSubmissionsListener() {
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            document.getElementById('x-signin-btn').style.display = 'none';
+            document.getElementById('my-submissions-btn').style.display = 'flex';
+            document.getElementById('logout-btn').style.display = 'flex';
+            document.getElementById('user-profile').style.display = 'inline-block';
+            document.getElementById('user-profile').textContent = `@${user.providerData[0].displayName}`;
+            localStorage.setItem('authUserId', user.uid);
+            localStorage.removeItem('anonymousUserId'); // Clear anonymous ID when authenticated
+            loadMySubmissions(user.uid);
+            syncLeaderboardWithVoting();
+        } else {
+            document.getElementById('x-signin-btn').style.display = 'flex';
+            document.getElementById('my-submissions-btn').style.display = 'none';
+            document.getElementById('logout-btn').style.display = 'none';
+            document.getElementById('user-profile').style.display = 'none';
+            document.getElementById('user-profile').textContent = '';
+            document.getElementById('submission-count-badge').textContent = '';
+            localStorage.removeItem('authUserId');
             if (unsubscribeSubmissions) {
                 unsubscribeSubmissions();
                 unsubscribeSubmissions = null;
             }
         }
+    });
 
-        function truncateText(text, wordLimit = 50) {
-            const words = text.split(/\s+/);
-            if (words.length > wordLimit) {
-                return {
-                    short: words.slice(0, wordLimit).join(' '),
-                    full: text,
-                    isTruncated: true
-                };
-            }
+    const twitterProvider = new TwitterAuthProvider();
+    document.getElementById('x-signin-btn').addEventListener('click', async () => {
+        try {
+            const result = await signInWithPopup(auth, twitterProvider);
+            const user = result.user;
+            localStorage.setItem('authUserId', user.uid);
+            showNotification(`Signed in as @${user.providerData[0].displayName}`);
+        } catch (error) {
+            console.error("X Sign-in error:", error.code, error.message);
+            showNotification(`Failed to sign in with X: ${error.message}`);
+        }
+    });
+
+    document.getElementById('logout-btn').addEventListener('click', async () => {
+        await signOut(auth);
+        showNotification('Logged out successfully!');
+    });
+
+    function loadMySubmissions(userId) {
+        if (unsubscribeSubmissions) unsubscribeSubmissions();
+        const mySubmissionsList = document.getElementById('my-submissions-list');
+        mySubmissionsList.innerHTML = '';
+        const q = query(collection(db, "proposals"), where("submitter", "==", userId), orderBy("createdAt", "desc"));
+        unsubscribeSubmissions = onSnapshot(q, (querySnapshot) => {
+            mySubmissionsList.innerHTML = '';
+            let submissionCount = 0;
+            querySnapshot.forEach((doc) => {
+                const data = doc.data();
+                const hasVoted = data.voters && data.voters.includes(getUserId());
+                const div = document.createElement('div');
+                div.className = 'proposal';
+                div.innerHTML = `
+                    <div class="proposal-title">${data.title || 'Untitled'}</div>
+                    <div class="proposal-text">${data.text || ''}</div>
+                    <div class="proposal-votes">
+                        <button class="upvote-btn" data-proposal-id="${doc.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
+                        <span>Votes: <span id="vote-count-${doc.id}">${data.votes || 0}</span></span>
+                    </div>
+                `;
+                mySubmissionsList.appendChild(div);
+                submissionCount++;
+            });
+            document.getElementById('submission-count-badge').textContent = submissionCount;
+            addUpvoteListeners();
+        }, (error) => {
+            console.error("Error loading submissions:", error);
+            showNotification("Error loading your submissions.");
+        });
+    }
+
+    function stopSubmissionsListener() {
+        if (unsubscribeSubmissions) {
+            unsubscribeSubmissions();
+            unsubscribeSubmissions = null;
+        }
+    }
+
+    function truncateText(text, wordLimit = 50) {
+        const words = text.split(/\s+/);
+        if (words.length > wordLimit) {
             return {
-                short: text,
+                short: words.slice(0, wordLimit).join(' '),
                 full: text,
-                isTruncated: false
+                isTruncated: true
             };
         }
+        return {
+            short: text,
+            full: text,
+            isTruncated: false
+        };
+    }
 
-        function truncateDescription(text, charLimit = 50) {
-            if (text.length > charLimit) {
-                return text.substring(0, charLimit) + '...';
-            }
-            return text;
+    function truncateDescription(text, charLimit = 50) {
+        if (text.length > charLimit) {
+            return text.substring(0, charLimit) + '...';
         }
+        return text;
+    }
 
-        function startProposalsListener() {
-            if (unsubscribeProposals) unsubscribeProposals();
-            const customSelect = document.getElementById('sort-voting');
-            let sortField = 'votes';
-            let sortDirection = 'desc';
+    function startProposalsListener() {
+        if (unsubscribeProposals) unsubscribeProposals();
+        const customSelect = document.getElementById('sort-voting');
+        let sortField = 'votes';
+        let sortDirection = 'desc';
 
-            function updateQuery(sortValue = customSelect.dataset.value || 'votes-desc') {
-                if (sortValue === 'votes-desc') {
-                    sortField = 'votes';
-                    sortDirection = 'desc';
-                } else if (sortValue === 'votes-asc') {
-                    sortField = 'votes';
-                    sortDirection = 'asc';
-                } else if (sortValue === 'date-desc') {
-                    sortField = 'createdAt';
-                    sortDirection = 'desc';
-                } else {
-                    sortField = 'createdAt';
-                    sortDirection = 'asc';
-                }
-
-                const q = query(collection(db, "proposals"), orderBy(sortField, sortDirection));
-                unsubscribeProposals = onSnapshot(q, (querySnapshot) => {
-                    const topProposalsContainer = document.getElementById('top-proposals');
-                    const otherProposalsContainer = document.getElementById('proposals-list');
-                    topProposalsContainer.innerHTML = '';
-                    otherProposalsContainer.innerHTML = '';
-
-                    const proposals = [];
-                    querySnapshot.forEach((doc) => {
-                        proposals.push({ id: doc.id, ...doc.data() });
-                    });
-
-                    if (sortValue === 'votes-desc') {
-                        const topThree = proposals.slice(0, 3);
-                        const others = proposals.slice(3);
-
-                        topThree.forEach((p, index) => {
-                            const textData = truncateText(p.text);
-                            const hasVoted = p.voters && p.voters.includes(window.getUserId());
-                            const div = document.createElement('div');
-                            div.className = `proposal rank-${index + 1}`;
-                            div.setAttribute('data-rank', `#${index + 1}`);
-                            div.innerHTML = `
-                                <div class="proposal-title">${p.title || 'Untitled'}</div>
-                                <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
-                                <div class="proposal-votes">
-                                    <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
-                                    <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
-                                </div>
-                                <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
-                                    <img src="xlogo.png" alt="X">
-                                </button>
-                            `;
-                            div.addEventListener('click', (e) => {
-                                if (e.target.tagName !== 'BUTTON') {
-                                    const textElement = div.querySelector('.proposal-text');
-                                    if (textData.isTruncated) {
-                                        textElement.classList.toggle('shortened');
-                                        textElement.textContent = textElement.classList.contains('shortened') ? textData.short : textData.full;
-                                    }
-                                }
-                            });
-                            topProposalsContainer.appendChild(div);
-                        });
-
-                        others.forEach((p) => {
-                            const textData = truncateText(p.text);
-                            const hasVoted = p.voters && p.voters.includes(window.getUserId());
-                            const div = document.createElement('div');
-                            div.className = 'proposal';
-                            div.innerHTML = `
-                                <div class="proposal-title">${p.title || 'Untitled'}</div>
-                                <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
-                                <div class="proposal-votes">
-                                    <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
-                                    <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
-                                </div>
-                                <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
-                                    <img src="xlogo.png" alt="X">
-                                </button>
-                            `;
-                            div.addEventListener('click', (e) => {
-                                if (e.target.tagName !== 'BUTTON') {
-                                    const textElement = div.querySelector('.proposal-text');
-                                    if (textData.isTruncated) {
-                                        textElement.classList.toggle('shortened');
-                                        textElement.textContent = textElement.classList.contains('shortened') ? textData.short : textData.full;
-                                    }
-                                }
-                            });
-                            otherProposalsContainer.appendChild(div);
-                        });
-                    } else {
-                        proposals.forEach((p) => {
-                            const textData = truncateText(p.text);
-                            const hasVoted = p.voters && p.voters.includes(window.getUserId());
-                            const div = document.createElement('div');
-                            div.className = 'proposal';
-                            div.innerHTML = `
-                                <div class="proposal-title">${p.title || 'Untitled'}</div>
-                                <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
-                                <div class="proposal-votes">
-                                    <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
-                                    <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
-                                </div>
-                                <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
-                                    <img src="xlogo.png" alt="X">
-                                </button>
-                            `;
-                            div.addEventListener('click', (e) => {
-                                if (e.target.tagName !== 'BUTTON') {
-                                    const textElement = div.querySelector('.proposal-text');
-                                    if (textData.isTruncated) {
-                                        textElement.classList.toggle('shortened');
-                                        textElement.textContent = textElement.classList.contains('shortened') ? textData.short : textData.full;
-                                    }
-                                }
-                            });
-                            otherProposalsContainer.appendChild(div);
-                        });
-                    }
-                    addUpvoteListeners();
-                });
+        function updateQuery(sortValue = customSelect.dataset.value || 'votes-desc') {
+            if (sortValue === 'votes-desc') {
+                sortField = 'votes';
+                sortDirection = 'desc';
+            } else if (sortValue === 'votes-asc') {
+                sortField = 'votes';
+                sortDirection = 'asc';
+            } else if (sortValue === 'date-desc') {
+                sortField = 'createdAt';
+                sortDirection = 'desc';
+            } else {
+                sortField = 'createdAt';
+                sortDirection = 'asc';
             }
 
-            window.updateVotingSort = updateQuery;
-            updateQuery();
-        }
+            const q = query(collection(db, "proposals"), orderBy(sortField, sortDirection));
+            unsubscribeProposals = onSnapshot(q, (querySnapshot) => {
+                const topProposalsContainer = document.getElementById('top-proposals');
+                const otherProposalsContainer = document.getElementById('proposals-list');
+                topProposalsContainer.innerHTML = '';
+                otherProposalsContainer.innerHTML = '';
 
-        function stopProposalsListener() {
-            if (unsubscribeProposals) {
-                unsubscribeProposals();
-                unsubscribeProposals = null;
-            }
-        }
-
-        function syncLeaderboardWithVoting() {
-            const q = query(collection(db, "proposals"), orderBy("votes", "desc"));
-            onSnapshot(q, (querySnapshot) => {
                 const proposals = [];
                 querySnapshot.forEach((doc) => {
                     proposals.push({ id: doc.id, ...doc.data() });
                 });
 
-                const topThree = proposals.slice(0, 3);
-                const leaderboardMap = [
-                    { idPrefix: "1", rank: "#1" },
-                    { idPrefix: "2", rank: "#2" },
-                    { idPrefix: "3", rank: "#3" }
-                ];
+                if (sortValue === 'votes-desc') {
+                    const topThree = proposals.slice(0, 3);
+                    const others = proposals.slice(3);
 
-                topThree.forEach((proposal, index) => {
-                    const map = leaderboardMap[index];
-                    const icon = document.getElementById(`leaderboard-icon-${map.idPrefix}`);
-                    const bar = document.getElementById(`leaderboard-bar-${map.idPrefix}`);
-                    const tooltip = document.getElementById(`tooltip-${map.idPrefix}`);
-                    const rankElement = bar.querySelector(".leaderboard-rank");
+                    topThree.forEach((p, index) => {
+                        const textData = truncateText(p.text);
+                        const hasVoted = p.voters && p.voters.includes(getUserId());
+                        const div = document.createElement('div');
+                        div.className = `proposal rank-${index + 1}`;
+                        div.setAttribute('data-rank', `#${index + 1}`);
+                        div.innerHTML = `
+                            <div class="proposal-title">${p.title || 'Untitled'}</div>
+                            <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
+                            <div class="proposal-votes">
+                                <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
+                                <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
+                            </div>
+                            <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
+                                <img src="xlogo.png" alt="X">
+                            </button>
+                        `;
+                        div.addEventListener('click', (e) => {
+                            if (e.target.tagName !== 'BUTTON') {
+                                const textElement = div.querySelector('.proposal-text');
+                                if (textData.isTruncated) {
+                                    textElement.classList.toggle('shortened');
+                                    textElement.textContent = textElement.classList.contains('shortened') ? textData.short : textData.full;
+                                }
+                            }
+                        });
+                        topProposalsContainer.appendChild(div);
+                    });
 
-                    rankElement.textContent = map.rank;
-                    tooltip.innerHTML = `<div class="title">${proposal.title || "Untitled"}</div><div class="stats">Votes: ${proposal.votes || 0}</div>`;
-
-                    const rect = bar.getBoundingClientRect();
-                    const spaceAbove = rect.top;
-                    const spaceBelow = window.innerHeight - rect.bottom;
-                    tooltip.style.bottom = spaceAbove > 100 ? '125%' : 'auto';
-                    tooltip.style.top = spaceAbove <= 100 ? '125%' : 'auto';
-                });
-
-                for (let i = topThree.length; i < 3; i++) {
-                    const map = leaderboardMap[i];
-                    const tooltip = document.getElementById(`tooltip-${map.idPrefix}`);
-                    const rankElement = document.getElementById(`leaderboard-bar-${map.idPrefix}`).querySelector(".leaderboard-rank");
-                    tooltip.innerHTML = `<div class="title">No proposal yet</div><div class="stats">Votes: 0</div>`;
-                    rankElement.textContent = map.rank;
-
-                    const bar = document.getElementById(`leaderboard-bar-${map.idPrefix}`);
-                    const rect = bar.getBoundingClientRect();
-                    const spaceAbove = rect.top;
-                    const spaceBelow = window.innerHeight - rect.bottom;
-                    tooltip.style.bottom = spaceAbove > 100 ? '125%' : 'auto';
-                    tooltip.style.top = spaceAbove <= 100 ? '125%' : 'auto';
+                    others.forEach((p) => {
+                        const textData = truncateText(p.text);
+                        const hasVoted = p.voters && p.voters.includes(getUserId());
+                        const div = document.createElement('div');
+                        div.className = 'proposal';
+                        div.innerHTML = `
+                            <div class="proposal-title">${p.title || 'Untitled'}</div>
+                            <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
+                            <div class="proposal-votes">
+                                <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
+                                <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
+                            </div>
+                            <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
+                                <img src="xlogo.png" alt="X">
+                            </button>
+                        `;
+                        div.addEventListener('click', (e) => {
+                            if (e.target.tagName !== 'BUTTON') {
+                                const textElement = div.querySelector('.proposal-text');
+                                if (textData.isTruncated) {
+                                    textElement.classList.toggle('shortened');
+                                    textElement.textContent = textElement.classList.contains('shortened') ? textData.short : textData.full;
+                                }
+                            }
+                        });
+                        otherProposalsContainer.appendChild(div);
+                    });
+                } else {
+                    proposals.forEach((p) => {
+                        const textData = truncateText(p.text);
+                        const hasVoted = p.voters && p.voters.includes(getUserId());
+                        const div = document.createElement('div');
+                        div.className = 'proposal';
+                        div.innerHTML = `
+                            <div class="proposal-title">${p.title || 'Untitled'}</div>
+                            <div class="proposal-text ${textData.isTruncated ? 'shortened' : ''}" data-full="${textData.full}">${textData.short}</div>
+                            <div class="proposal-votes">
+                                <button class="upvote-btn" data-proposal-id="${p.id}" ${hasVoted ? 'disabled' : ''}>${hasVoted ? 'Voted' : 'Upvote'}</button>
+                                <span>Votes: <span id="vote-count-${p.id}">${p.votes || 0}</span></span>
+                            </div>
+                            <button class="share-btn" onclick="window.shareOnX('${p.title || 'Untitled'}', '${p.text || ''}', event)">
+                                <img src="xlogo.png" alt="X">
+                            </button>
+                        `;
+                        div.addEventListener('click', (e) => {
+                            if (e.target.tagName !== 'BUTTON') {
+                                const textElement = div.querySelector('.proposal-text');
+                                if (textData.isTruncated) {
+                                    textElement.classList.toggle('shortened');
+                                    textElement.textContent = textElement.classList.contains('shortened') ? textData.short : textData.full;
+                                }
+                            }
+                        });
+                        otherProposalsContainer.appendChild(div);
+                    });
                 }
+                addUpvoteListeners();
             });
         }
 
-        async function upvote(proposalId) {
-            const userId = window.getUserId();
-            const proposalRef = doc(db, "proposals", proposalId);
-            try {
-                const docSnap = await getDoc(proposalRef);
-                if (!docSnap.exists()) {
-                    throw new Error("Proposal does not exist!");
-                }
-                const data = docSnap.data();
-                if (data.voters && data.voters.includes(userId)) {
-                    showNotification("You already voted for this proposal!");
-                    return;
-                }
+        window.updateVotingSort = updateQuery;
+        updateQuery();
+    }
 
-                await updateDoc(proposalRef, {
-                    votes: (data.votes || 0) + 1,
-                    voters: [...(data.voters || []), userId]
-                });
-                showNotification("Vote recorded successfully!");
-            } catch (error) {
-                console.error("Error voting: ", error);
-                showNotification(error.message || "Error recording vote");
+    function stopProposalsListener() {
+        if (unsubscribeProposals) {
+            unsubscribeProposals();
+            unsubscribeProposals = null;
+        }
+    }
+
+    function syncLeaderboardWithVoting() {
+        const q = query(collection(db, "proposals"), orderBy("votes", "desc"));
+        onSnapshot(q, (querySnapshot) => {
+            const proposals = [];
+            querySnapshot.forEach((doc) => {
+                proposals.push({ id: doc.id, ...doc.data() });
+            });
+
+            const topThree = proposals.slice(0, 3);
+            const leaderboardMap = [
+                { idPrefix: "1", rank: "#1" },
+                { idPrefix: "2", rank: "#2" },
+                { idPrefix: "3", rank: "#3" }
+            ];
+
+            topThree.forEach((proposal, index) => {
+                const map = leaderboardMap[index];
+                const icon = document.getElementById(`leaderboard-icon-${map.idPrefix}`);
+                const bar = document.getElementById(`leaderboard-bar-${map.idPrefix}`);
+                const tooltip = document.getElementById(`tooltip-${map.idPrefix}`);
+                const rankElement = bar.querySelector(".leaderboard-rank");
+
+                rankElement.textContent = map.rank;
+                tooltip.innerHTML = `<div class="title">${proposal.title || "Untitled"}</div><div class="stats">Votes: ${proposal.votes || 0}</div>`;
+
+                const rect = bar.getBoundingClientRect();
+                const spaceAbove = rect.top;
+                const spaceBelow = window.innerHeight - rect.bottom;
+                tooltip.style.bottom = spaceAbove > 100 ? '125%' : 'auto';
+                tooltip.style.top = spaceAbove <= 100 ? '125%' : 'auto';
+            });
+
+            for (let i = topThree.length; i < 3; i++) {
+                const map = leaderboardMap[i];
+                const tooltip = document.getElementById(`tooltip-${map.idPrefix}`);
+                const rankElement = document.getElementById(`leaderboard-bar-${map.idPrefix}`).querySelector(".leaderboard-rank");
+                tooltip.innerHTML = `<div class="title">No proposal yet</div><div class="stats">Votes: 0</div>`;
+                rankElement.textContent = map.rank;
+
+                const bar = document.getElementById(`leaderboard-bar-${map.idPrefix}`);
+                const rect = bar.getBoundingClientRect();
+                const spaceAbove = rect.top;
+                const spaceBelow = window.innerHeight - rect.bottom;
+                tooltip.style.bottom = spaceAbove > 100 ? '125%' : 'auto';
+                tooltip.style.top = spaceAbove <= 100 ? '125%' : 'auto';
             }
-        }
+        });
+    }
 
-        function addUpvoteListeners() {
-            document.querySelectorAll('.upvote-btn').forEach(button => {
-                button.removeEventListener('click', handleUpvoteClick);
-                button.addEventListener('click', handleUpvoteClick);
-            });
-        }
-
-        function handleUpvoteClick(event) {
-            event.stopPropagation();
-            const proposalId = this.getAttribute('data-proposal-id');
-            upvote(proposalId);
-        }
-
-        function shareOnX(title, text, event) {
-            event.stopPropagation();
-            const truncatedText = truncateDescription(text, 50);
-            const tweetText = `${title}\n\n${truncatedText}\n\nVote for this idea & help improve @gofundmeme - Vote now: https://justdoitgfm.org/\n\n$DOIT @bakabakadi67454`;
-            const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
-            window.open(tweetUrl, '_blank');
-        }
-
-        document.getElementById('voting-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const title = document.getElementById('proposal-title').value;
-            const text = document.getElementById('proposal-text').value;
-            const userId = localStorage.getItem('authUserId') || window.getUserId();
-            const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
-            
-            if (wordCount > 500) {
-                showNotification('Proposal exceeds 500 word limit!');
+    async function upvote(proposalId) {
+        const userId = getUserId();
+        const proposalRef = doc(db, "proposals", proposalId);
+        try {
+            const docSnap = await getDoc(proposalRef);
+            if (!docSnap.exists()) {
+                throw new Error("Proposal does not exist!");
+            }
+            const data = docSnap.data();
+            if (data.voters && data.voters.includes(userId)) {
+                showNotification("You already voted for this proposal!");
                 return;
             }
 
-            try {
-                await addDoc(collection(db, "proposals"), {
-                    title: title,
-                    text: text,
-                    votes: 0,
-                    voters: [],
-                    submitter: userId,
-                    createdAt: serverTimestamp()
-                });
-                document.getElementById('proposal-title').value = '';
-                document.getElementById('proposal-text').value = '';
-                document.getElementById('word-count').textContent = '0/500 words';
-                showNotification('Idea submitted successfully!');
-                if (localStorage.getItem('authUserId')) {
-                    loadMySubmissions(localStorage.getItem('authUserId'));
-                }
-                const viewVotingBtn = document.getElementById('view-voting-btn');
-                if (viewVotingBtn) {
-                    viewVotingBtn.classList.add('glow-effect');
-                }
-            } catch (error) {
-                console.error("Error adding proposal: ", error);
-                showNotification('Error submitting idea. Please try again.');
+            await updateDoc(proposalRef, {
+                votes: (data.votes || 0) + 1,
+                voters: [...(data.voters || []), userId]
+            });
+            showNotification("Vote recorded successfully!");
+        } catch (error) {
+            console.error("Error voting: ", error);
+            showNotification(error.message || "Error recording vote");
+        }
+    }
+
+    function addUpvoteListeners() {
+        document.querySelectorAll('.upvote-btn').forEach(button => {
+            button.removeEventListener('click', handleUpvoteClick);
+            button.addEventListener('click', handleUpvoteClick);
+        });
+    }
+
+    function handleUpvoteClick(event) {
+        event.stopPropagation();
+        const proposalId = this.getAttribute('data-proposal-id');
+        upvote(proposalId);
+    }
+
+    function shareOnX(title, text, event) {
+        event.stopPropagation();
+        const truncatedText = truncateDescription(text, 50);
+        const tweetText = `${title}\n\n${truncatedText}\n\nVote for this idea & help improve @gofundmeme - Vote now: https://justdoitgfm.org/\n\n$DOIT @bakabakadi67454`;
+        const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`;
+        window.open(tweetUrl, '_blank');
+    }
+
+    document.getElementById('voting-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const title = document.getElementById('proposal-title').value;
+        const text = document.getElementById('proposal-text').value;
+        const userId = getUserId();
+        const wordCount = text.split(/\s+/).filter(word => word.length > 0).length;
+        
+        if (wordCount > 500) {
+            showNotification('Proposal exceeds 500 word limit!');
+            return;
+        }
+
+        try {
+            await addDoc(collection(db, "proposals"), {
+                title: title,
+                text: text,
+                votes: 0,
+                voters: [],
+                submitter: userId,
+                createdAt: serverTimestamp()
+            });
+            document.getElementById('proposal-title').value = '';
+            document.getElementById('proposal-text').value = '';
+            document.getElementById('word-count').textContent = '0/500 words';
+            showNotification('Idea submitted successfully!');
+            if (localStorage.getItem('authUserId')) {
+                loadMySubmissions(localStorage.getItem('authUserId'));
             }
-        });
+            const viewVotingBtn = document.getElementById('view-voting-btn');
+            if (viewVotingBtn) {
+                viewVotingBtn.classList.add('glow-effect');
+            }
+        } catch (error) {
+            console.error("Error adding proposal: ", error);
+            showNotification('Error submitting idea. Please try again.');
+        }
+    });
 
-        document.getElementById('proposal-text').addEventListener('input', (e) => {
-            const words = e.target.value.split(/\s+/).filter(word => word.length > 0);
-            document.getElementById('word-count').textContent = `${words.length}/500 words`;
-        });
+    document.getElementById('proposal-text').addEventListener('input', (e) => {
+        const words = e.target.value.split(/\s+/).filter(word => word.length > 0);
+        document.getElementById('word-count').textContent = `${words.length}/500 words`;
+    });
 
-        syncLeaderboardWithVoting();
+    syncLeaderboardWithVoting();
 
-        window.startProposalsListener = startProposalsListener;
-        window.stopProposalsListener = stopProposalsListener;
-        window.upvote = upvote;
-        window.shareOnX = shareOnX;
-        window.loadMySubmissions = loadMySubmissions;
-        window.stopSubmissionsListener = stopSubmissionsListener;
-    </script>
+    window.startProposalsListener = startProposalsListener;
+    window.stopProposalsListener = stopProposalsListener;
+    window.upvote = upvote;
+    window.shareOnX = shareOnX;
+    window.loadMySubmissions = loadMySubmissions;
+    window.stopSubmissionsListener = stopSubmissionsListener;
+</script>
 </body>
 </html>
